@@ -31,8 +31,8 @@ const scripts = [
     "npc.js",
     "inventory.js",
     "ui.js",
-    "quest.js"
-    "enemy.js"
+    "quest.js",
+    "enemy.js",
     "boss.js"
 ];
 
@@ -62,11 +62,11 @@ function startGame() {
     function loop() {
 
         updatePlayer();
-	updateQuest();
+        updateQuest();
         updateNPC();
-	updateItems();
-	updateEnemies();
-	updateBoss();
+        updateItems();
+        updateEnemies();
+        updateBoss();
 
         Game.ctx.clearRect(
             0,
@@ -76,12 +76,11 @@ function startGame() {
         );
 
         drawMap();
-	drawItems();
+        drawItems();
         drawNPC();
-	drawEnemies();
-	drawBoss();
+        drawEnemies();
+        drawBoss();
         drawPlayer();
-
 
         requestAnimationFrame(loop);
 
