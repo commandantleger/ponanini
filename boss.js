@@ -16,7 +16,7 @@ const boss = {
 };
 
 let playerLife = 5;
-let attackCooldown = 0;
+let bossAttackCooldown = 0;
 let playerHitCooldown = 0;
 
 function updateBoss() {
@@ -49,13 +49,13 @@ function updateBoss() {
 
     }
 
-    if (attackCooldown > 0)
-        attackCooldown--;
+    if (bossAttackCooldown > 0)
+        bossAttackCooldown--;
 
-    if (keys[" "] && attackCooldown === 0 && dist < 70) {
+    if (keys[" "] && bossAttackCooldown === 0 && dist < 70) {
 
         boss.hp--;
-        attackCooldown = 20;
+        bossAttackCooldown = 20;
 
         if (boss.hp <= 0) {
 
