@@ -10,15 +10,39 @@ let duckPieces = 0;
 
 const inventory = [];
 
+let typingInterval = null;
+
 function openDialogue(text) {
 
     dialogue.classList.remove("hidden");
 
-    dialogueText.innerHTML = text.replace(/\n/g, "<br>");
+    clearInterval(typingInterval);
+
+    const html = text.replace(/\n/g, "<br>");
+
+    let i = 0;
+
+    dialogueText.innerHTML = "";
+
+    typingInterval = setInterval(() => {
+
+        dialogueText.innerHTML = html.substring(0, i);
+
+        i++;
+
+        if (i > html.length) {
+
+            clearInterval(typingInterval);
+
+        }
+
+    }, 12);
 
 }
 
 function closeDialogue() {
+
+    clearInterval(typingInterval);
 
     dialogue.classList.add("hidden");
 
@@ -55,7 +79,7 @@ function updateInventory() {
 
         const li = document.createElement("li");
 
-        li.textContent = item;
+        li.innerHTML = item;
 
         inventoryList.appendChild(li);
 

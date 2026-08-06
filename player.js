@@ -16,6 +16,9 @@ const player = {
 
 const keys = {};
 
+let portalPressed = false;
+let portalMessage = false;
+
 window.addEventListener("keydown", e => {
 
     keys[e.key.toLowerCase()] = true;
@@ -26,9 +29,16 @@ window.addEventListener("keyup", e => {
 
     keys[e.key.toLowerCase()] = false;
 
+    if (e.key.toLowerCase() === "e")
+        portalPressed = false;
+
 });
 
 function updatePlayer() {
+
+    // Fin du jeu
+    if (gameFinished)
+        return;
 
     let nx = player.x;
     let ny = player.y;
@@ -67,10 +77,10 @@ function updatePlayer() {
     if (!collision(player.x, ny, player.w, player.h))
         player.y = ny;
 
-    // Vérifie la case où se trouve le joueur
-
     const tx = Math.floor(player.x / Game.tileSize);
     const ty = Math.floor(player.y / Game.tileSize);
+
+    let onPortal = false;
 
     if (
         ty >= 0 &&
@@ -87,9 +97,39 @@ function updatePlayer() {
             bridgeOpen
         ) {
 
-            loadForest();
+            onPortal = true;
+
+            if (!portalMessage) {
+
+                portalMessage = true;
+
+                openDialogue(
+                    "🌀 PORTAIL DE LA FORÊT<br><br>Appuie sur E pour entrer."
+                );
+
+            }
+
+            if (keys["e"] && !portalPressed) {
+
+                portalPressed = true;
+
+                if (typeof closeDialogue === "function")
+                    closeDialogue();
+
+                loadForest();
+
+            }
 
         }
+
+    }
+
+    if (!onPortal && portalMessage) {
+
+        portalMessage = false;
+
+        if (typeof closeDialogue === "function")
+            closeDialogue();
 
     }
 

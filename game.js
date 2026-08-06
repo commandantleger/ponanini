@@ -5,8 +5,10 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 window.addEventListener("resize", () => {
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
 });
 
 const Game = {
@@ -17,15 +19,20 @@ const Game = {
     tileSize: 64,
 
     camera: {
+
         x: 0,
         y: 0
-    }
+
+    },
+
+    running: false
 
 };
 
 window.Game = Game;
 
 const scripts = [
+
     "map.js",
     "player.js",
     "npc.js",
@@ -34,6 +41,7 @@ const scripts = [
     "quest.js",
     "enemy.js",
     "boss.js"
+
 ];
 
 let loaded = 0;
@@ -49,7 +57,7 @@ scripts.forEach(file => {
         loaded++;
 
         if (loaded === scripts.length)
-            startGame();
+            startEngine();
 
     };
 
@@ -57,16 +65,32 @@ scripts.forEach(file => {
 
 });
 
-function startGame() {
+function startEngine() {
 
     function loop() {
 
-        updatePlayer();
-        updateQuest();
-        updateNPC();
-        updateItems();
-        updateEnemies();
-        updateBoss();
+        requestAnimationFrame(loop);
+
+        if (!Game.running)
+            return;
+
+        if (typeof updatePlayer === "function")
+            updatePlayer();
+
+        if (typeof updateQuest === "function")
+            updateQuest();
+
+        if (typeof updateNPC === "function")
+            updateNPC();
+
+        if (typeof updateItems === "function")
+            updateItems();
+
+        if (typeof updateEnemies === "function")
+            updateEnemies();
+
+        if (typeof updateBoss === "function")
+            updateBoss();
 
         Game.ctx.clearRect(
             0,
@@ -75,17 +99,37 @@ function startGame() {
             canvas.height
         );
 
-        drawMap();
-        drawItems();
-        drawNPC();
-        drawEnemies();
-        drawBoss();
-        drawPlayer();
+        if (typeof drawMap === "function")
+            drawMap();
 
-        requestAnimationFrame(loop);
+        if (typeof drawItems === "function")
+            drawItems();
+
+        if (typeof drawNPC === "function")
+            drawNPC();
+
+        if (typeof drawEnemies === "function")
+            drawEnemies();
+
+        if (typeof drawBoss === "function")
+            drawBoss();
+
+        if (typeof drawPlayer === "function")
+            drawPlayer();
 
     }
 
     loop();
 
 }
+
+window.startGame = function () {
+
+    const menu = document.getElementById("menu");
+
+    if (menu)
+        menu.style.display = "none";
+
+    Game.running = true;
+
+};

@@ -8,16 +8,40 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>PONAN's Legacy</title>
+    <title>PONAN'S LEGACY</title>
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
+    <!-- ================= MENU ================= -->
+
+    <div id="menu">
+
+        <h1>🦆 PONAN'S LEGACY</h1>
+
+        <h2>Le Royaume des Canards</h2>
+
+        <button id="playButton">
+            ▶ JOUER
+        </button>
+
+        <p class="credits">
+            Trouvez les 3 objets du costume.<br>
+            Réparez le portail.<br>
+            Traversez la forêt.<br>
+            Vainquez le Seigneur Démon.
+        </p>
+
+    </div>
+
+    <!-- ================= JEU ================= -->
+
     <canvas id="game"></canvas>
+
+    <!-- ================= HUD ================= -->
 
     <div id="hud">
 
@@ -26,7 +50,7 @@
         </div>
 
         <div id="quest">
-            📜 Trouver le Canard Ponanini 4e du nom
+            📜 Trouver Ponanini IV
         </div>
 
         <div id="pieces">
@@ -34,6 +58,8 @@
         </div>
 
     </div>
+
+    <!-- ================= DIALOGUE ================= -->
 
     <div id="dialogue" class="hidden">
 
@@ -43,6 +69,8 @@
 
     </div>
 
+    <!-- ================= INVENTAIRE ================= -->
+
     <div id="inventory" class="hidden">
 
         <h2>Inventaire</h2>
@@ -51,7 +79,22 @@
 
     </div>
 
-   <script src="game.js"></script>
+    <!-- ================= JEU ================= -->
+
+    <script src="game.js"></script>
+
+    <script>
+
+        document.getElementById("playButton").addEventListener("click", () => {
+
+            document.getElementById("menu").style.display = "none";
+
+            if (window.Game)
+                Game.running = true;
+
+        });
+
+    </script>
 
 </body>
 
