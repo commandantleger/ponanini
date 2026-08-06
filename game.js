@@ -30,7 +30,8 @@ const scripts = [
     "player.js",
     "npc.js",
     "inventory.js",
-    "ui.js"
+    "ui.js",
+    "quest.js"
 ];
 
 let loaded = 0;

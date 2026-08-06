@@ -26,9 +26,8 @@ function updateQuest() {
             "📜 Quête terminée !<br><br>Retourne voir Ponanini IV."
         );
 
-        document.getElementById("quest").innerHTML =
-            "✅ Retourner voir Ponanini IV";
-
+       document.getElementById("quest").innerHTML =
+    "👑 Retourner parler à Ponanini IV";
     }
 
 }

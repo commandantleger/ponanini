@@ -67,6 +67,30 @@ function updatePlayer() {
     if (!collision(player.x, ny, player.w, player.h))
         player.y = ny;
 
+    // ==========================
+    // Téléporteur vers la forêt
+    // ==========================
+
+    const tx = Math.floor(player.x / Game.tileSize);
+    const ty = Math.floor(player.y / Game.tileSize);
+
+    if (
+        ty >= 0 &&
+        ty < WORLD.length &&
+        tx >= 0 &&
+        tx < WORLD[0].length
+    ) {
+
+        const tile = WORLD[ty][tx];
+
+        if (tile === "D" && currentMap === "village") {
+
+            loadForest();
+
+        }
+
+    }
+
 }
 
 function drawPlayer() {
