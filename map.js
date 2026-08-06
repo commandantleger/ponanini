@@ -1,3 +1,5 @@
+let bridgeOpen = false;
+
 let WORLD = [
 "############################################################",
 "#..........................................................#",
@@ -26,89 +28,6 @@ let WORLD = [
 "#..........................................................#",
 "############################################################"
 ];
-
-function solid(tile){
-
-    return tile=="#"||
-           tile=="T"||
-           tile=="H"||
-           tile=="~";
-
-}
-
-function collision(x,y,w,h){
-
-    const T=Game.tileSize;
-
-    let left=Math.floor(x/T);
-    let right=Math.floor((x+w-1)/T);
-
-    let top=Math.floor(y/T);
-    let bottom=Math.floor((y+h-1)/T);
-
-    if(top<0||left<0||bottom>=WORLD.length||right>=WORLD[0].length)
-        return true;
-
-    return(
-        solid(WORLD[top][left])||
-        solid(WORLD[top][right])||
-        solid(WORLD[bottom][left])||
-        solid(WORLD[bottom][right])
-    );
-
-}
-
-function drawMap(){
-
-    const ctx=Game.ctx;
-    const T=Game.tileSize;
-
-    Game.camera.x=player.x-Game.canvas.width/2;
-    Game.camera.y=player.y-Game.canvas.height/2;
-
-    for(let y=0;y<WORLD.length;y++){
-
-        for(let x=0;x<WORLD[y].length;x++){
-
-            let tile=WORLD[y][x];
-
-            let dx=x*T-Game.camera.x;
-            let dy=y*T-Game.camera.y;
-
-            switch(tile){
-
-                case ".":
-                    ctx.fillStyle="#72d45c";
-                    break;
-
-                case "#":
-                    ctx.fillStyle="#4e342e";
-                    break;
-
-                case "T":
-                    ctx.fillStyle="#1b5e20";
-                    break;
-
-                case "~":
-                    ctx.fillStyle="#29b6f6";
-                    break;
-
-                case "H":
-                    ctx.fillStyle="#bc8f5c";
-                    break;
-
-                default:
-                    ctx.fillStyle="#72d45c";
-
-            }
-
-            ctx.fillRect(dx,dy,T,T);
-
-        }
-
-    }
-
-}
 
 const FOREST = [
 "############################################################",
@@ -139,5 +58,100 @@ function loadForest() {
 
     player.x = 2 * Game.tileSize;
     player.y = 2 * Game.tileSize;
+
+}
+
+function solid(tile){
+
+    if(tile == "D")
+        return !bridgeOpen;
+
+    return tile=="#"||
+           tile=="T"||
+           tile=="H"||
+           tile=="~";
+
+}
+
+function collision(x,y,w,h){
+
+    const T = Game.tileSize;
+
+    let left = Math.floor(x/T);
+    let right = Math.floor((x+w-1)/T);
+
+    let top = Math.floor(y/T);
+    let bottom = Math.floor((y+h-1)/T);
+
+    if(top<0||left<0||bottom>=WORLD.length||right>=WORLD[0].length)
+        return true;
+
+    return(
+        solid(WORLD[top][left])||
+        solid(WORLD[top][right])||
+        solid(WORLD[bottom][left])||
+        solid(WORLD[bottom][right])
+    );
+
+}
+
+function drawMap(){
+
+    const ctx = Game.ctx;
+    const T = Game.tileSize;
+
+    Game.camera.x = player.x - Game.canvas.width/2;
+    Game.camera.y = player.y - Game.canvas.height/2;
+
+    for(let y=0;y<WORLD.length;y++){
+
+        for(let x=0;x<WORLD[y].length;x++){
+
+            let tile = WORLD[y][x];
+
+            // Lorsque le pont est réparé,
+            // la case D devient un chemin.
+            if(tile=="D" && bridgeOpen)
+                tile=".";
+
+            let dx = x*T - Game.camera.x;
+            let dy = y*T - Game.camera.y;
+
+            switch(tile){
+
+                case ".":
+                    ctx.fillStyle="#72d45c";
+                    break;
+
+                case "#":
+                    ctx.fillStyle="#4e342e";
+                    break;
+
+                case "T":
+                    ctx.fillStyle="#1b5e20";
+                    break;
+
+                case "~":
+                    ctx.fillStyle="#29b6f6";
+                    break;
+
+                case "H":
+                    ctx.fillStyle="#bc8f5c";
+                    break;
+
+                case "D":
+                    ctx.fillStyle="#795548";
+                    break;
+
+                default:
+                    ctx.fillStyle="#72d45c";
+
+            }
+
+            ctx.fillRect(dx,dy,T,T);
+
+        }
+
+    }
 
 }

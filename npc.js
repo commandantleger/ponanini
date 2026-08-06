@@ -13,7 +13,7 @@ const npcs = [
         dialogue: [
             "🦆 Bonjour aventurier !<br><br>Retrouve les 3 morceaux de mon costume.",
             "🦆 Il te manque encore des morceaux.",
-            "🎉 Bravo !<br><br>Tu as retrouvé mon costume.<br>Le royaume est sauvé !"
+            "🎉 Merci !<br><br>Tu as retrouvé mon costume !<br><br>Le pont vers la forêt est maintenant réparé !"
         ]
     },
 
@@ -28,9 +28,9 @@ const npcs = [
         y: 8 * Game.tileSize,
 
         dialogue: [
-            "👴 Bienvenue dans le royaume des canards.",
+            "👴 Bienvenue dans le royaume des canards ponansseurs.",
             "👴 Les coffres du village contiennent des objets importants.",
-            "👴 Reviens me voir quand tu les auras tous."
+            "👴 Va maintenant explorer la forêt."
         ]
     }
 
@@ -77,9 +77,9 @@ function updateNPC() {
 
                 } else {
 
-                    openDialogue(npc.dialogue[2]);
+                    bridgeOpen = true;
 
-                    gameFinished = true;
+                    openDialogue(npc.dialogue[2]);
 
                 }
 
@@ -87,7 +87,7 @@ function updateNPC() {
 
             case "oldman":
 
-                if (duckPieces < 3) {
+                if (!bridgeOpen) {
 
                     openDialogue(npc.dialogue[1]);
 
@@ -117,12 +117,19 @@ function drawNPC() {
     npcs.forEach(npc => {
 
         ctx.fillText(
+
             npc.icon,
+
             npc.x - Game.camera.x,
+
             npc.y - Game.camera.y + 48
+
         );
 
     });
+
+    // On garde ce bloc pour plus tard,
+    // lorsque le boss final sera vaincu.
 
     if (gameFinished) {
 
@@ -140,7 +147,7 @@ function drawNPC() {
         ctx.font = "50px Arial";
 
         ctx.fillText(
-            "VICTOIRE !",
+            "CHAUDDDD PONANN !",
             Game.canvas.width / 2 - 130,
             Game.canvas.height / 2
         );

@@ -67,9 +67,7 @@ function updatePlayer() {
     if (!collision(player.x, ny, player.w, player.h))
         player.y = ny;
 
-    // ==========================
-    // Téléporteur vers la forêt
-    // ==========================
+    // Vérifie la case où se trouve le joueur
 
     const tx = Math.floor(player.x / Game.tileSize);
     const ty = Math.floor(player.y / Game.tileSize);
@@ -83,7 +81,11 @@ function updatePlayer() {
 
         const tile = WORLD[ty][tx];
 
-        if (tile === "D" && currentMap === "village") {
+        if (
+            tile === "D" &&
+            currentMap === "village" &&
+            bridgeOpen
+        ) {
 
             loadForest();
 

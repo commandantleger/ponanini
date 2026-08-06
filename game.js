@@ -32,6 +32,8 @@ const scripts = [
     "inventory.js",
     "ui.js",
     "quest.js"
+    "enemy.js"
+    "boss.js"
 ];
 
 let loaded = 0;
@@ -63,6 +65,8 @@ function startGame() {
 	updateQuest();
         updateNPC();
 	updateItems();
+	updateEnemies();
+	updateBoss();
 
         Game.ctx.clearRect(
             0,
@@ -74,6 +78,8 @@ function startGame() {
         drawMap();
 	drawItems();
         drawNPC();
+	drawEnemies();
+	drawBoss();
         drawPlayer();
 
 
