@@ -426,8 +426,8 @@ const Prologue = {
                 Game.canvas.width,
                 Game.canvas.height
             );
-        }
-drawWindParticles(count) {
+        },
+        drawWindParticles(count) {
 
     const ctx = Game.ctx;
 
