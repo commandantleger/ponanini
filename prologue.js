@@ -1,21 +1,17 @@
 const Prologue = {
 
     villageBackground: null,
-
     villageBackgroundLoaded: false,
 
     active: false,
 
     scene: 0,
-
     timer: 0,
 
     textIndex: 0,
-
     finishedText: false,
 
     fade: 1,
-
     fadeDirection: -1,
 
     visualTime: 0,
@@ -39,120 +35,101 @@ const Prologue = {
         {
             title: "LE ROYAUME DE PONAN",
             text:
-                "Autour du palais s'étendait un village vivant. " +
-                "Des marchands, des artisans, des soldats et des familles " +
-                "y avaient bâti leur existence. " +
-                "Tous regardaient la couronne comme un symbole de protection.",
+                "Depuis des générations, la couronne appartenait " +
+                "à la lignée des Ponanini. " +
+                "Mais derrière les murs du palais, " +
+                "la paix n'était déjà plus qu'un souvenir.",
+            duration: 15000,
+            speed: 48
+        },
+
+        {
+            title: "LE ROI JUSTE",
+            text:
+                "Ponanini III régnait avec justice. " +
+                "Son peuple l'aimait. " +
+                "Son royaume prospérait. " +
+                "Et pourtant, dans l'ombre, quelqu'un attendait son heure.",
             duration: 16000,
             speed: 48
         },
 
         {
-            title: "PONANINI III",
+            title: "LE FRÈRE",
             text:
-                "Sur ce trône régnait Ponanini III. " +
-                "Un roi imparfait, mais juste. " +
-                "Il écoutait son peuple, protégeait ses terres " +
-                "et croyait encore qu'un royaume pouvait être gouverné " +
-                "sans sacrifier ceux qui y vivaient.",
-            duration: 17500,
-            speed: 47
-        },
-
-        {
-            title: "DANS L'OMBRE",
-            text:
-                "Mais derrière les murs du palais, quelqu'un attendait. " +
-                "Un frère qui regardait la couronne depuis trop longtemps. " +
-                "Il ne rêvait pas de servir le royaume. " +
-                "Il rêvait de le posséder.",
-            duration: 15500,
-            speed: 47
-        },
-
-        {
-            title: "LE COMPLOT",
-            text:
-                "La couronne fut retirée de son écrin. " +
-                "Les premiers mensonges furent préparés. " +
-                "Chaque accusation devait paraître crédible. " +
-                "Chaque témoin devait avoir une raison de se taire.",
+                "Son propre frère observait le trône. " +
+                "Il ne voulait ni patience, ni héritage. " +
+                "Il voulait le pouvoir. " +
+                "Et pour l'obtenir, il était prêt à sacrifier son propre sang.",
             duration: 16000,
-            speed: 46
+            speed: 48
         },
 
         {
-            title: "LA TRAHISON",
+            title: "LE MENSONGE",
             text:
-                "Ponanini IV descendit alors parmi le peuple. " +
-                "Il parla aux villageois, leur promit la sécurité " +
-                "et leur raconta une histoire fabriquée. " +
-                "Puis, dans l'ombre, il acheta le silence des gardes.",
-            duration: 18000,
-            speed: 45
+                "Les rumeurs commencèrent à courir dans les rues. " +
+                "Puis vinrent les accusations. " +
+                "Un mensonge répété assez longtemps finit toujours " +
+                "par ressembler à la vérité.",
+            duration: 16000,
+            speed: 48
+        },
+
+        {
+            title: "LA CHUTE",
+            text:
+                "Ponanini III fut accusé de trahison. " +
+                "Ses sujets se retournèrent contre lui. " +
+                "Les gardes reçurent l'ordre de l'arrêter. " +
+                "Et son frère prit enfin sa place.",
+            duration: 17000,
+            speed: 48
         },
 
         {
             title: "LE BANNISSEMENT",
             text:
-                "Le lendemain, Ponanini III fut arrêté devant son peuple. " +
-                "Quatre gardes l'escortèrent jusqu'à la cour du palais. " +
-                "Personne n'osa intervenir. " +
-                "Un portail s'ouvrit devant lui. " +
-                "Et derrière ce portail attendait un monde sans retour.",
-            duration: 18500,
-            speed: 44
+                "Dans la cour du palais, un portail interdit fut ouvert. " +
+                "Ponanini III fut traîné jusqu'à ses portes. " +
+                "Il fut jeté dans le Nether, sans procès et sans retour.",
+            duration: 17000,
+            speed: 48
         },
 
-     {
-    title: "LE SCEAU DU NETHER",
-
-    text:
-        "Le Nether ne fut pas seulement son exil. " +
-        "Avant d'être banni, un ancien sceau fut gravé sur son destin. " +
-        "Même si quelqu'un venait jusqu'à lui, " +
-        "même si une porte s'ouvrait devant lui, " +
-        "Ponanini III ne pourrait pas franchir le passage. " +
-        "Le sceau ne peut être brisé que par trois fragments anciens.",
-
-    duration: 19000,
-
-    speed: 45
-},
         {
-    title: "LES TROIS FRAGMENTS",
+            title: "LE SCEAU",
+            text:
+                "Mais le Nether ne fut pas sa seule prison. " +
+                "Un ancien sceau fut gravé sur les portes du royaume. " +
+                "Même si quelqu'un venait le libérer, " +
+                "Ponanini III ne pourrait jamais franchir le portail.",
+            duration: 18000,
+            speed: 48
+        },
 
-    text:
-        "Le premier fragment repose dans les cendres du Nether. " +
-        "Il porte la marque de la Terre et peut affaiblir le sceau. " +
-        "Le second fut perdu dans les profondeurs du royaume. " +
-        "Il porte la marque du Passage. " +
-        "Le troisième, plus ancien que les deux autres, " +
-        "porte la marque de la Couronne. " +
-        "Réunis, les trois fragments peuvent enfin briser le sceau.",
+        {
+            title: "LES TROIS FRAGMENTS",
+            text:
+                "Trois fragments furent dispersés à travers les terres. " +
+                "Ils sont les seuls capables de briser le sceau. " +
+                "Sans eux, aucun chemin ne mène hors du Nether.",
+            duration: 18000,
+            speed: 48
+        },
 
-    duration: 22000,
+        {
+            title: "L'HÉRITAGE",
+            text:
+                "Alors Ponanini III attendit. " +
+                "Il lui fallait quelqu'un du monde des vivants. " +
+                "Quelqu'un capable de retrouver les trois fragments. " +
+                "Et cette personne... c'est vous.",
+            duration: 19000,
+            speed: 48
+        }
 
-    speed: 43
-},
-     {
-    title: "LA PORTE",
-
-    text:
-        "Pendant des années, Ponanini III attendit. " +
-        "Puis il comprit qu'il ne pouvait briser le sceau seul. " +
-        "Il lui fallait quelqu'un du monde extérieur. " +
-        "Quelqu'un capable de retrouver les trois fragments. " +
-        "Quelqu'un qui croirait encore à son histoire. " +
-        "Il choisit alors de t'appeler. " +
-        "Mais il ne te raconta pas toute la vérité.",
-
-    duration: 21000,
-
-    speed: 43
-},
     ],
-
 
     start() {
 
