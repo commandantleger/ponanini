@@ -1,253 +1,855 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-
-    overflow:hidden;
-    background:#111;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-
+html,
+body {
+    width: 100%;
+    height: 100%;
 }
 
-#game{
-
-    display:block;
-    width:100vw;
-    height:100vh;
-
-    image-rendering:pixelated;
-
-    background:#72d45c;
-
+body {
+    overflow: hidden;
+    background: #000;
+    font-family: Georgia, "Times New Roman", serif;
 }
 
-/* ========================= */
-/* MENU */
-/* ========================= */
+/* =========================================================
+   CANVAS
+========================================================= */
 
-#menu{
+#game {
+    display: block;
 
-    position:fixed;
-    inset:0;
+    width: 100vw;
+    height: 100vh;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    image-rendering: pixelated;
+
+    background: #000;
+}
+
+
+/* =========================================================
+   MENU PRINCIPAL
+========================================================= */
+
+#menu {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    align-items: center;
+
+    background: #000;
+
+    color: #d8c9a3;
+
+    z-index: 999;
+
+    overflow: hidden;
+
+    isolation: isolate;
+
+    animation: menuAppear 1.8s ease forwards;
+}
+
+
+/* =========================================================
+   LÉGÈRE BRUME DU MENU
+========================================================= */
+
+#menu::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 65vw;
+    height: 65vw;
+
+    max-width: 900px;
+    max-height: 900px;
+
+    left: 50%;
+    top: 46%;
+
+    transform: translate(-50%, -50%);
 
     background:
-    linear-gradient(#4caf50,#1b5e20);
+        radial-gradient(
+            ellipse,
+            rgba(55, 48, 40, 0.10) 0%,
+            rgba(20, 18, 16, 0.045) 35%,
+            transparent 70%
+        );
 
-    color:white;
+    pointer-events: none;
 
-    z-index:999;
+    z-index: -3;
+
+    animation: breathing 7s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   IMMENSE BOUCHE DANS L'OMBRE
+========================================================= */
+
+#menu::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: min(720px, 65vw);
+
+    height: min(260px, 24vw);
+
+    left: 68%;
+
+    top: 48%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(0deg);
+
+    border-top:
+        8px solid rgba(125, 112, 91, 0.22);
+
+    border-radius:
+        50% 50% 45% 45%;
+
+    box-shadow:
+
+        0 -12px 45px
+        rgba(70, 60, 48, 0.04),
+
+        inset 0 -25px 35px
+        rgba(0, 0, 0, 0.9);
+
+    opacity: 0.75;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    animation:
+        mouthBreathing
+        8s
+        ease-in-out
+        infinite;
+}
+
+
+/* =========================================================
+   TITRE
+========================================================= */
+
+#menu h1 {
+
+    position: relative;
+
+    margin-top: 9vh;
+
+    margin-bottom: 8px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(42px, 5vw, 72px);
+
+    font-weight: bold;
+
+    letter-spacing: 5px;
+
+    text-align: center;
+
+    color: #d7b96d;
+
+    text-shadow:
+
+        0 0 8px
+        rgba(207, 170, 87, 0.25),
+
+        0 0 30px
+        rgba(160, 120, 50, 0.10),
+
+        2px 3px 4px
+        rgba(0, 0, 0, 0.95);
+
+    z-index: 5;
+
+    animation:
+        titleAppear
+        2s
+        ease
+        forwards;
+}
+
+
+/* =========================================================
+   SOUS-TITRE
+========================================================= */
+
+#menu h2 {
+
+    position: relative;
+
+    margin-bottom: 7vh;
+
+    font-size:
+        clamp(13px, 1.3vw, 18px);
+
+    font-weight: normal;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+    color:
+        rgba(190, 178, 150, 0.65);
+
+    text-shadow:
+        0 2px 5px #000;
+
+    z-index: 5;
+
+    animation:
+        subtitleAppear
+        2.5s
+        ease
+        forwards;
+}
+
+
+/* =========================================================
+   LIGNE DÉCORATIVE
+========================================================= */
+
+#menu h2::after {
+
+    content: "◆";
+
+    display: block;
+
+    margin-top: 15px;
+
+    font-size: 9px;
+
+    color: rgba(194, 159, 84, 0.65);
 
 }
 
-#menu h1{
 
-    font-size:72px;
+/* =========================================================
+   BOUTONS
+========================================================= */
 
-    text-shadow:4px 4px 8px black;
+#menu button {
 
-    margin-bottom:15px;
+    position: relative;
+
+    width:
+        min(390px, 75vw);
+
+    min-height: 55px;
+
+    margin: 7px;
+
+    padding:
+        13px 35px;
+
+    background:
+        rgba(4, 4, 5, 0.72);
+
+    color:
+        rgba(205, 196, 174, 0.82);
+
+    border:
+
+        1px solid
+        rgba(150, 130, 91, 0.32);
+
+    border-left:
+
+        2px solid
+        rgba(150, 130, 91, 0.18);
+
+    border-right:
+
+        2px solid
+        rgba(150, 130, 91, 0.18);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(16px, 1.5vw, 20px);
+
+    font-weight: normal;
+
+    letter-spacing: 3px;
+
+    cursor: pointer;
+
+    transition:
+
+        color .25s ease,
+
+        background .25s ease,
+
+        border-color .25s ease,
+
+        transform .25s ease,
+
+        box-shadow .25s ease;
+
+    z-index: 5;
+
+    animation:
+        buttonAppear
+        .8s
+        ease
+        forwards;
+
+    opacity: 0;
+
+    overflow: hidden;
+}
+
+
+/* Ligne lumineuse intérieure */
+
+#menu button::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 2px;
+
+    height: 100%;
+
+    background:
+        rgba(204, 169, 91, 0.0);
+
+    transition:
+        background .25s ease;
 
 }
 
-#menu h2{
 
-    font-size:24px;
+/* Petit reflet */
 
-    margin-bottom:40px;
+#menu button::after {
 
-    color:#ffe082;
+    content: "";
 
-}
+    position: absolute;
 
-#menu button{
+    top: 0;
 
-    font-size:28px;
+    left: -100%;
 
-    padding:18px 55px;
+    width: 70%;
 
-    border:none;
+    height: 100%;
 
-    border-radius:12px;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(210, 184, 120, 0.08),
+            transparent
+        );
 
-    cursor:pointer;
-
-    background:#ffca28;
-
-    transition:.2s;
-
-}
-
-#menu button:hover{
-
-    transform:scale(1.08);
+    transition:
+        left .6s ease;
 
 }
 
-/* ========================= */
-/* HUD */
-/* ========================= */
 
-#hud{
+/* =========================================================
+   HOVER
+========================================================= */
 
-    position:fixed;
+#menu button:hover {
 
-    top:15px;
-    left:15px;
+    color: #e3ca8b;
 
-    display:flex;
-    flex-direction:column;
+    background:
+        rgba(30, 26, 21, 0.78);
 
-    gap:10px;
+    border-color:
+        rgba(193, 157, 82, 0.65);
 
-    padding:15px 20px;
+    transform:
+        translateX(5px);
 
-    background:rgba(0,0,0,.55);
+    box-shadow:
 
-    color:white;
-
-    border:3px solid gold;
-
-    border-radius:12px;
-
-    backdrop-filter:blur(4px);
-
-    z-index:100;
+        0 0 18px
+        rgba(157, 120, 52, 0.08);
 
 }
+
+
+#menu button:hover::before {
+
+    background:
+        rgba(208, 172, 91, 0.85);
+
+}
+
+
+#menu button:hover::after {
+
+    left: 130%;
+
+}
+
+
+/* =========================================================
+   CLIC
+========================================================= */
+
+#menu button:active {
+
+    transform:
+        translateX(5px)
+        scale(0.98);
+
+    background:
+        rgba(65, 53, 35, 0.5);
+
+}
+
+
+/* =========================================================
+   ORDRE D'APPARITION
+========================================================= */
+
+#menu button:nth-of-type(1) {
+    animation-delay: .35s;
+}
+
+#menu button:nth-of-type(2) {
+    animation-delay: .48s;
+}
+
+#menu button:nth-of-type(3) {
+    animation-delay: .61s;
+}
+
+#menu button:nth-of-type(4) {
+    animation-delay: .74s;
+}
+
+#menu button:nth-of-type(5) {
+    animation-delay: .87s;
+}
+
+
+/* =========================================================
+   TEXTE DU BAS
+========================================================= */
+
+#menu .credits {
+
+    position: absolute;
+
+    bottom: 28px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 90%;
+
+    text-align: center;
+
+    color:
+        rgba(170, 160, 140, 0.35);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+    letter-spacing: 2px;
+
+    z-index: 5;
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+#hud {
+
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 15px 20px;
+
+    background:
+        rgba(5, 5, 5, 0.72);
+
+    color: #eee;
+
+    border:
+        2px solid
+        rgba(186, 151, 74, 0.7);
+
+    border-radius: 4px;
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index: 100;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.45);
+}
+
 
 #life,
 #quest,
-#pieces{
+#pieces {
 
-    font-size:18px;
-    font-weight:bold;
+    font-size: 18px;
 
-}
-
-/* ========================= */
-/* DIALOGUE */
-/* ========================= */
-
-#dialogue{
-
-    position:fixed;
-
-    left:50%;
-    bottom:20px;
-
-    transform:translateX(-50%);
-
-    width:78%;
-
-    min-height:140px;
-
-    background:rgba(15,15,15,.93);
-
-    color:white;
-
-    border:4px solid gold;
-
-    border-radius:15px;
-
-    padding:22px;
-
-    z-index:250;
-
-    box-shadow:0 0 25px rgba(0,0,0,.6);
+    font-weight: bold;
 
 }
 
-#dialogueText{
 
-    font-size:24px;
+/* =========================================================
+   DIALOGUE
+========================================================= */
 
-    line-height:1.5;
+#dialogue {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform:
+        translateX(-50%);
+
+    width: 78%;
+
+    min-height: 140px;
+
+    background:
+        rgba(10, 9, 8, 0.96);
+
+    color: #eee;
+
+    border:
+        2px solid
+        rgba(193, 158, 82, 0.85);
+
+    border-radius: 4px;
+
+    padding: 22px;
+
+    z-index: 250;
+
+    box-shadow:
+        0 0 35px
+        rgba(0, 0, 0, 0.8);
+}
+
+
+#dialogueText {
+
+    font-size: 24px;
+
+    line-height: 1.5;
 
 }
 
-#dialogue span{
 
-    float:right;
+#dialogue span {
 
-    margin-top:15px;
+    float: right;
 
-    color:#ffd54f;
+    margin-top: 15px;
 
-    font-weight:bold;
+    color:
+        #d4b46b;
 
-}
-
-/* ========================= */
-/* INVENTAIRE */
-/* ========================= */
-
-#inventory{
-
-    position:fixed;
-
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%,-50%);
-
-    width:500px;
-
-    min-height:360px;
-
-    background:#faf6ea;
-
-    border:5px solid #5d4037;
-
-    border-radius:15px;
-
-    padding:25px;
-
-    z-index:400;
-
-    box-shadow:0 0 35px rgba(0,0,0,.6);
+    font-weight: bold;
 
 }
 
-#inventory h2{
 
-    text-align:center;
+/* =========================================================
+   INVENTAIRE
+========================================================= */
 
-    margin-bottom:25px;
+#inventory {
 
-    color:#5d4037;
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 500px;
+
+    min-height: 360px;
+
+    background:
+        #11100e;
+
+    color:
+        #e8dfcc;
+
+    border:
+        3px solid
+        #80683c;
+
+    border-radius: 4px;
+
+    padding: 25px;
+
+    z-index: 400;
+
+    box-shadow:
+        0 0 50px
+        rgba(0, 0, 0, .8);
+}
+
+
+#inventory h2 {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    color:
+        #d5b66d;
+
+    font-family:
+        Georgia,
+        serif;
 
 }
 
-#inventory ul{
 
-    list-style:none;
+#inventory ul {
 
-}
-
-#inventory li{
-
-    font-size:24px;
-
-    margin:15px 0;
-
-    padding:10px;
-
-    border-bottom:1px solid #bbb;
+    list-style: none;
 
 }
 
-/* ========================= */
 
-.hidden{
+#inventory li {
 
-    display:none;
+    font-size: 24px;
+
+    margin: 15px 0;
+
+    padding: 10px;
+
+    border-bottom:
+        1px solid
+        rgba(150, 130, 100, .25);
+
+}
+
+
+/* =========================================================
+   HIDDEN
+========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes menuAppear {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes titleAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+@keyframes subtitleAppear {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes buttonAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+@keyframes breathing {
+
+    0%,
+    100% {
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+        opacity: .65;
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.08);
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes mouthBreathing {
+
+    0%,
+    100% {
+        opacity: .45;
+        transform:
+            translate(-50%, -50%)
+            scaleX(1);
+    }
+
+    50% {
+        opacity: .78;
+        transform:
+            translate(-50%, -50%)
+            scaleX(1.025);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    #menu h1 {
+
+        font-size: 38px;
+
+        letter-spacing: 3px;
+
+    }
+
+    #menu h2 {
+
+        font-size: 11px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 5vh;
+
+    }
+
+    #menu button {
+
+        width: 75vw;
+
+        min-height: 48px;
+
+        font-size: 15px;
+
+    }
+
+    #menu::after {
+
+        left: 70%;
+
+        opacity: .55;
+
+    }
 
 }
