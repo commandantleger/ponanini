@@ -10,55 +10,152 @@
 
     <title>PONAN'S LEGACY</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
 
 <body>
 
-    <!-- ================= MENU ================= -->
+    <!-- ========================================= -->
+    <!-- MENU PRINCIPAL -->
+    <!-- ========================================= -->
 
     <div id="menu">
 
-        <h1>🦆 PONAN'S LEGACY</h1>
+        <div class="menu-overlay"></div>
 
-        <h2>L'Héritage des Plumes</h2>
+        <div class="menu-content">
 
-        <button id="playButton">
-            ▶ NOUVELLE PARTIE
-        </button>
+            <div class="menu-logo">
 
-        <button id="continueButton">
-            ▶ CONTINUER
-        </button>
+                <div class="logo-duck">
+                    🦆
+                </div>
 
-        <button id="optionsButton">
-            ⚙ OPTIONS
-        </button>
+                <h1>
+                    PONAN'S LEGACY
+                </h1>
 
-        <button id="creditsButton">
-            ★ CRÉDITS
-        </button>
+                <h2>
+                    L'Héritage des Plumes
+                </h2>
 
-        <button id="quitButton">
-            ✕ QUITTER
-        </button>
+                <div class="logo-line"></div>
 
-        <p class="credits">
-            Un royaume.<br>
-            Une trahison.<br>
-            Un héritage oublié.
-        </p>
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- BOUTONS -->
+            <!-- ============================= -->
+
+            <div class="menu-buttons">
+
+                <button id="playButton">
+                    <span>▶</span>
+                    NOUVELLE PARTIE
+                </button>
+
+                <button id="continueButton">
+                    <span>▶</span>
+                    CONTINUER
+                </button>
+
+                <button id="optionsButton">
+                    <span>⚙</span>
+                    OPTIONS
+                </button>
+
+                <button id="creditsButton">
+                    <span>★</span>
+                    CRÉDITS
+                </button>
+
+                <button id="quitButton">
+                    <span>✕</span>
+                    QUITTER
+                </button>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- TEXTE -->
+            <!-- ============================= -->
+
+            <div class="menu-story">
+
+                <p>
+                    Un royaume.
+                </p>
+
+                <p>
+                    Une trahison.
+                </p>
+
+                <p>
+                    Trois fragments.
+                </p>
+
+                <p>
+                    Un héritage oublié.
+                </p>
+
+            </div>
+
+
+            <div class="menu-version">
+                PONAN'S LEGACY
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- ================= JEU ================= -->
+    <!-- ========================================= -->
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <!-- ========================================= -->
+
+    <div id="loadingScreen"
+         class="hidden">
+
+        <div class="loading-content">
+
+            <div class="loading-title">
+                PONAN'S LEGACY
+            </div>
+
+            <div class="loading-text">
+                Préparation du royaume...
+            </div>
+
+            <div class="loading-bar">
+
+                <div id="loadingProgress"></div>
+
+            </div>
+
+            <div class="loading-tip">
+                « Certaines histoires sont écrites par les vainqueurs. »
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- JEU -->
+    <!-- ========================================= -->
 
     <canvas id="game"></canvas>
 
 
-    <!-- ================= HUD ================= -->
+    <!-- ========================================= -->
+    <!-- HUD -->
+    <!-- ========================================= -->
 
     <div id="hud">
 
@@ -77,59 +174,339 @@
     </div>
 
 
-    <!-- ================= DIALOGUE ================= -->
+    <!-- ========================================= -->
+    <!-- DIALOGUE -->
+    <!-- ========================================= -->
 
-    <div id="dialogue" class="hidden">
+    <div id="dialogue"
+         class="hidden">
 
         <p id="dialogueText"></p>
 
-        <span>Appuie sur E</span>
+        <span>
+            Appuie sur E
+        </span>
 
     </div>
 
 
-    <!-- ================= INVENTAIRE ================= -->
+    <!-- ========================================= -->
+    <!-- INVENTAIRE -->
+    <!-- ========================================= -->
 
-    <div id="inventory" class="hidden">
+    <div id="inventory"
+         class="hidden">
 
-        <h2>Inventaire</h2>
+        <h2>
+            Inventaire
+        </h2>
 
         <ul id="inventoryList"></ul>
 
     </div>
 
 
-    <!-- ================= SCRIPTS ================= -->
+    <!-- ========================================= -->
+    <!-- SCRIPTS -->
+    <!-- ========================================= -->
 
-    <!-- La prologue est chargée AVANT le moteur -->
     <script src="prologue.js"></script>
 
-    <!-- Le moteur charge ensuite le reste -->
     <script src="game.js"></script>
 
 
-    <!-- ================= MENU ================= -->
+    <!-- ========================================= -->
+    <!-- MENU CONTROLLER -->
+    <!-- ========================================= -->
 
     <script>
+
+        const menu =
+            document.getElementById("menu");
 
         const playButton =
             document.getElementById("playButton");
 
-        playButton.addEventListener("click", () => {
+        const continueButton =
+            document.getElementById("continueButton");
 
-            if (typeof startGame === "function") {
+        const optionsButton =
+            document.getElementById("optionsButton");
 
-                startGame();
+        const creditsButton =
+            document.getElementById("creditsButton");
+
+        const quitButton =
+            document.getElementById("quitButton");
+
+        const loadingScreen =
+            document.getElementById("loadingScreen");
+
+        const loadingProgress =
+            document.getElementById("loadingProgress");
+
+
+        /*
+         * =====================================
+         * NOUVELLE PARTIE
+         * =====================================
+         */
+
+        playButton.addEventListener(
+            "click",
+            () => {
+
+                startNewGame();
+
+            }
+        );
+
+
+        function startNewGame() {
+
+            /*
+             * Empêche les doubles clics
+             */
+
+            playButton.disabled = true;
+
+
+            /*
+             * Menu disparaît
+             */
+
+            menu.classList.add(
+                "menu-hide"
+            );
+
+
+            /*
+             * Petit écran de chargement
+             */
+
+            setTimeout(() => {
+
+                loadingScreen.classList.remove(
+                    "hidden"
+                );
+
+                simulateLoading();
+
+            }, 500);
+
+        }
+
+
+        /*
+         * =====================================
+         * CHARGEMENT
+         * =====================================
+         */
+
+        function simulateLoading() {
+
+            let progress = 0;
+
+            const messages = [
+
+                "Préparation du royaume...",
+
+                "Chargement des terres de Ponan...",
+
+                "Les anciennes légendes se réveillent...",
+
+                "Préparation de la destinée...",
+
+                "L'histoire va commencer..."
+
+            ];
+
+            const loadingText =
+                document.querySelector(
+                    ".loading-text"
+                );
+
+
+            const interval =
+                setInterval(() => {
+
+                    progress += 4;
+
+                    if (progress > 100)
+                        progress = 100;
+
+
+                    loadingProgress.style.width =
+                        progress + "%";
+
+
+                    const index =
+                        Math.min(
+                            Math.floor(
+                                progress / 25
+                            ),
+                            messages.length - 1
+                        );
+
+
+                    loadingText.textContent =
+                        messages[index];
+
+
+                    if (progress >= 100) {
+
+                        clearInterval(
+                            interval
+                        );
+
+                        setTimeout(
+                            startPrologue,
+                            700
+                        );
+
+                    }
+
+                }, 80);
+
+        }
+
+
+        /*
+         * =====================================
+         * PROLOGUE
+         * =====================================
+         */
+
+        function startPrologue() {
+
+            loadingScreen.classList.add(
+                "hidden"
+            );
+
+
+            /*
+             * Le prologue prend le contrôle
+             */
+
+            if (
+                typeof Prologue !==
+                "undefined"
+            ) {
+
+                Prologue.start();
 
             } else {
 
                 console.error(
-                    "startGame() n'existe pas."
+                    "Prologue introuvable."
                 );
 
             }
 
-        });
+        }
+
+
+        /*
+         * =====================================
+         * CONTINUER
+         * =====================================
+         */
+
+        continueButton.addEventListener(
+            "click",
+            () => {
+
+                const save =
+                    localStorage.getItem(
+                        "ponan_save"
+                    );
+
+
+                if (!save) {
+
+                    alert(
+                        "Aucune partie sauvegardée."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                 * Pour l'instant,
+                 * on utilisera le même système
+                 * que Nouvelle Partie.
+                 *
+                 * Le vrai système de sauvegarde
+                 * sera ajouté ensuite.
+                 */
+
+                startNewGame();
+
+            }
+        );
+
+
+        /*
+         * =====================================
+         * OPTIONS
+         * =====================================
+         */
+
+        optionsButton.addEventListener(
+            "click",
+            () => {
+
+                alert(
+                    "OPTIONS\n\n" +
+                    "Les options seront disponibles prochainement."
+                );
+
+            }
+        );
+
+
+        /*
+         * =====================================
+         * CRÉDITS
+         * =====================================
+         */
+
+        creditsButton.addEventListener(
+            "click",
+            () => {
+
+                alert(
+                    "PONAN'S LEGACY\n\n" +
+                    "Un RPG créé avec JavaScript + Canvas.\n\n" +
+                    "Merci d'avoir joué."
+                );
+
+            }
+        );
+
+
+        /*
+         * =====================================
+         * QUITTER
+         * =====================================
+         */
+
+        quitButton.addEventListener(
+            "click",
+            () => {
+
+                /*
+                 * Un navigateur ne permet pas
+                 * toujours de fermer une page
+                 * ouverte normalement.
+                 */
+
+                window.close();
+
+            }
+        );
 
     </script>
 

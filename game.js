@@ -11,6 +11,11 @@ window.addEventListener("resize", () => {
 
 });
 
+
+/* ==========================================
+   OBJET GLOBAL DU JEU
+========================================== */
+
 const Game = {
 
     canvas: canvas,
@@ -24,7 +29,19 @@ const Game = {
         y: 0
     },
 
-    running: false
+    /*
+     * false = menu / prologue
+     * true  = gameplay
+     */
+
+    running: false,
+
+    /*
+     * Permet de savoir si le moteur
+     * est prêt.
+     */
+
+    ready: false
 
 };
 
@@ -65,11 +82,15 @@ scripts.forEach(file => {
             "Chargé : " + file
         );
 
-        if (loaded === scripts.length) {
+        if (
+            loaded === scripts.length
+        ) {
 
             console.log(
                 "Tous les scripts sont chargés."
             );
+
+            Game.ready = true;
 
             startEngine();
 
@@ -80,7 +101,8 @@ scripts.forEach(file => {
     script.onerror = () => {
 
         console.error(
-            "ERREUR : impossible de charger " + file
+            "ERREUR : impossible de charger " +
+            file
         );
 
     };
@@ -91,16 +113,43 @@ scripts.forEach(file => {
 
 
 /* ==========================================
-   MOTEUR
+   MOTEUR PRINCIPAL
 ========================================== */
 
 function startEngine() {
 
-    console.log("Moteur démarré.");
+    console.log(
+        "Moteur prêt. En attente du lancement."
+    );
 
-    function loop(time) {
+    let lastTime = performance.now();
+
+    function loop(currentTime) {
 
         requestAnimationFrame(loop);
+
+        /*
+         * Delta time en secondes
+         */
+
+        let dt =
+            (currentTime - lastTime) / 1000;
+
+        lastTime = currentTime;
+
+
+        /*
+         * Évite les gros sauts si
+         * l'onglet a été mis en pause.
+         */
+
+        if (dt > 0.1)
+            dt = 0.1;
+
+
+        /*
+         * Nettoyage de l'écran
+         */
 
         Game.ctx.clearRect(
             0,
@@ -119,7 +168,7 @@ function startEngine() {
             Prologue.active
         ) {
 
-            Prologue.update(1 / 60);
+            Prologue.update(dt);
 
             Prologue.draw();
 
@@ -129,7 +178,7 @@ function startEngine() {
 
 
         /* =================================
-           MENU
+           MENU / ATTENTE
         ================================= */
 
         if (!Game.running) {
@@ -145,38 +194,56 @@ function startEngine() {
 
         if (
             typeof updatePlayer === "function"
-        )
+        ) {
+
             updatePlayer();
+
+        }
 
 
         if (
             typeof updateQuest === "function"
-        )
+        ) {
+
             updateQuest();
+
+        }
 
 
         if (
             typeof updateNPC === "function"
-        )
+        ) {
+
             updateNPC();
+
+        }
 
 
         if (
             typeof updateItems === "function"
-        )
+        ) {
+
             updateItems();
+
+        }
 
 
         if (
             typeof updateEnemies === "function"
-        )
+        ) {
+
             updateEnemies();
+
+        }
 
 
         if (
             typeof updateBoss === "function"
-        )
+        ) {
+
             updateBoss();
+
+        }
 
 
         /* =================================
@@ -185,40 +252,59 @@ function startEngine() {
 
         if (
             typeof drawMap === "function"
-        )
+        ) {
+
             drawMap();
+
+        }
 
 
         if (
             typeof drawItems === "function"
-        )
+        ) {
+
             drawItems();
+
+        }
 
 
         if (
             typeof drawNPC === "function"
-        )
+        ) {
+
             drawNPC();
+
+        }
 
 
         if (
             typeof drawEnemies === "function"
-        )
+        ) {
+
             drawEnemies();
+
+        }
 
 
         if (
             typeof drawBoss === "function"
-        )
+        ) {
+
             drawBoss();
+
+        }
 
 
         if (
             typeof drawPlayer === "function"
-        )
+        ) {
+
             drawPlayer();
 
+        }
+
     }
+
 
     requestAnimationFrame(loop);
 
@@ -226,26 +312,59 @@ function startEngine() {
 
 
 /* ==========================================
-   NOUVELLE PARTIE
+   DÉMARRAGE DE LA PARTIE
 ========================================== */
 
 function startGame() {
 
-    console.log("Nouvelle partie.");
+    console.log(
+        "Demande de nouvelle partie."
+    );
+
+
+    /*
+     * Sécurité :
+     * les scripts doivent être chargés.
+     */
+
+    if (!Game.ready) {
+
+        console.warn(
+            "Le moteur n'est pas encore prêt."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Masquer le menu
+     */
 
     const menu =
         document.getElementById("menu");
 
     if (menu) {
 
-        menu.style.display = "none";
+        menu.classList.add(
+            "menu-hide"
+        );
 
     }
+
+
+    /*
+     * Le gameplay reste bloqué
+     * pendant le prologue.
+     */
 
     Game.running = false;
 
 
-    /* Lancement de la prologue */
+    /*
+     * Lancement du prologue
+     */
 
     if (
         typeof Prologue !== "undefined"
@@ -263,10 +382,85 @@ function startGame() {
             "ERREUR : Prologue introuvable."
         );
 
+        /*
+         * Sécurité :
+         * si le prologue n'existe pas,
+         * on lance quand même le jeu.
+         */
+
         Game.running = true;
 
     }
 
 }
 
-window.startGame = startGame;
+
+/* ==========================================
+   FIN DU PROLOGUE
+========================================== */
+
+function finishPrologue() {
+
+    console.log(
+        "Prologue terminée."
+    );
+
+
+    /*
+     * Le jeu devient actif.
+     */
+
+    Game.running = true;
+
+
+    /*
+     * On s'assure que le menu est caché.
+     */
+
+    const menu =
+        document.getElementById("menu");
+
+    if (menu) {
+
+        menu.style.display = "none";
+
+    }
+
+
+    /*
+     * On s'assure que le canvas
+     * est visible.
+     */
+
+    Game.canvas.style.display =
+        "block";
+
+
+    /*
+     * Position de départ du joueur.
+     */
+
+    if (typeof player !== "undefined") {
+
+        player.x = 128;
+        player.y = 128;
+
+    }
+
+
+    console.log(
+        "Gameplay lancé."
+    );
+
+}
+
+
+/* ==========================================
+   ACCÈS GLOBAL
+========================================== */
+
+window.startGame =
+    startGame;
+
+window.finishPrologue =
+    finishPrologue;
