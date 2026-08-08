@@ -411,7 +411,7 @@ const Prologue = {
         }
 
 
-        this.drawVignette();
+                this.drawVignette();
 
         this.drawNarration();
 
@@ -426,9 +426,75 @@ const Prologue = {
                 Game.canvas.width,
                 Game.canvas.height
             );
-        },
-        drawWindParticles(count) {
 
+        }
+
+    },
+
+
+    /* =====================================================
+       PARTICULES DE VENT
+    ===================================================== */
+
+    drawWindParticles(count) {
+
+        const ctx = Game.ctx;
+
+        const width =
+            Game.canvas.width;
+
+        const height =
+            Game.canvas.height;
+
+
+        ctx.save();
+
+        ctx.strokeStyle =
+            "rgba(170,180,190,0.20)";
+
+        ctx.lineWidth = 1;
+
+
+        for (
+            let i = 0;
+            i < count;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 91 +
+                    this.visualTime * 30
+                ) % width;
+
+
+            const y =
+                (
+                    i * 53 +
+                    this.visualTime * 11
+                ) % height;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                y
+            );
+
+            ctx.lineTo(
+                x + 18,
+                y - 3
+            );
+
+            ctx.stroke();
+
+        }
+
+
+        ctx.restore();
+
+    },
     const ctx = Game.ctx;
 
     const width =
@@ -486,7 +552,6 @@ const Prologue = {
     ctx.restore();
 
 },
-    },
 
 
     /* =====================================================
