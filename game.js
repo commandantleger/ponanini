@@ -345,14 +345,11 @@ function startGame() {
     const menu =
         document.getElementById("menu");
 
-    if (menu) {
+ if (menu) {
 
-        menu.classList.add(
-            "menu-hide"
-        );
+    menu.style.display = "none";
 
-    }
-
+}
 
     /*
      * Le gameplay reste bloqué
