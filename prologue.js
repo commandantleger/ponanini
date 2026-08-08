@@ -70,7 +70,9 @@ const Prologue = {
                 "des canards connut la paix sous la " +
                 "dynastie des Plumes Dorées.",
 
-            duration: 9500,
+            duration: 12000,
+
+	    visual "castle",
 
             audio: "assets/sounds/prologue/scene2.mp3"
         },
@@ -84,7 +86,9 @@ const Prologue = {
                 "du royaume de Ponan. " +
                 "Un roi aimé de son peuple.",
 
-            duration: 12000,
+            duration: 20000,
+
+	    textSpeed: 60,
 
 	    visual: "throne",
 
@@ -297,12 +301,15 @@ const Prologue = {
 
             this.timer += dt * 1000;
 
-            const characters =
-                Math.floor(
-                    this.timer /
-                    this.textSpeed
-                );
+            const speed =
+    current.textSpeed ||
+    this.textSpeed;
 
+const characters =
+    Math.floor(
+        this.timer /
+        speed
+    );
             this.textIndex =
                 Math.min(
                     characters,
@@ -603,27 +610,44 @@ drawThroneRoom() {
      */
 
     const zoom = Math.min(
-        1.12,
-        1 + this.visualTime * 0.008
+        1.28,
+        1 + this.visualTime * 0.012
     );
 
     ctx.save();
+/*
+ * Mouvement cinématique :
+ * la caméra commence légèrement éloignée.
+ */
 
-    ctx.translate(
-        width / 2,
-        height / 2
+const cinematicOffset =
+    Math.max(
+        0,
+        20 - this.visualTime * 8
     );
 
-    ctx.scale(
-        zoom,
-        zoom
-    );
+ctx.translate(
+    0,
+    cinematicOffset
+);
 
-    ctx.translate(
-        -width / 2,
-        -height / 2
-    );
+   const focusX = width / 2;
+const focusY = height * 0.36;
 
+ctx.translate(
+    focusX,
+    focusY
+);
+
+ctx.scale(
+    zoom,
+    zoom
+);
+
+ctx.translate(
+    -focusX,
+    -focusY
+);
 
     /*
      * ============================
@@ -2029,6 +2053,289 @@ drawKingdom() {
 
 },
 
+
+drawCastle() {
+
+    const ctx = Game.ctx;
+
+    const width = Game.canvas.width;
+    const height = Game.canvas.height;
+
+    const progress =
+        Math.min(
+            this.visualTime / 12,
+            1
+        );
+
+    /*
+     * Ciel
+     */
+
+    const sky =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            height
+        );
+
+    sky.addColorStop(
+        0,
+        "#030611"
+    );
+
+    sky.addColorStop(
+        1,
+        "#142b4b"
+    );
+
+    ctx.fillStyle = sky;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * Lune
+     */
+
+    ctx.fillStyle =
+        "rgba(240,220,150,.9)";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        width * .78,
+        height * .18,
+        45,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * Sol
+     */
+
+    ctx.fillStyle =
+        "#080c13";
+
+    ctx.fillRect(
+        0,
+        height * .72,
+        width,
+        height * .28
+    );
+
+
+    /*
+     * Château
+     */
+
+    const castleScale =
+        .65 + progress * .35;
+
+    const castleWidth =
+        420 * castleScale;
+
+    const castleHeight =
+        280 * castleScale;
+
+    const castleX =
+        width / 2 -
+        castleWidth / 2;
+
+    const castleY =
+        height * .72 -
+        castleHeight;
+
+
+    /*
+     * Corps
+     */
+
+    ctx.fillStyle =
+        "#171d29";
+
+    ctx.fillRect(
+        castleX,
+        castleY + 70 * castleScale,
+        castleWidth,
+        castleHeight
+    );
+
+
+    /*
+     * Tours
+     */
+
+    ctx.fillRect(
+        castleX - 55 * castleScale,
+        castleY,
+        90 * castleScale,
+        castleHeight
+    );
+
+    ctx.fillRect(
+        castleX +
+        castleWidth -
+        35 * castleScale,
+        castleY,
+        90 * castleScale,
+        castleHeight
+    );
+
+
+    /*
+     * Toits
+     */
+
+    ctx.fillStyle =
+        "#090d15";
+
+    this.drawCastleRoof(
+        castleX - 55 * castleScale,
+        castleY,
+        90 * castleScale
+    );
+
+    this.drawCastleRoof(
+        castleX +
+        castleWidth -
+        35 * castleScale,
+        castleY,
+        90 * castleScale
+    );
+
+
+    /*
+     * Fenêtres
+     */
+
+    ctx.fillStyle =
+        "#d8a72e";
+
+    for (
+        let i = 0;
+        i < 5;
+        i++
+    ) {
+
+        ctx.fillRect(
+            castleX +
+            70 * castleScale +
+            i * 60 * castleScale,
+            castleY +
+            120 * castleScale,
+            14 * castleScale,
+            22 * castleScale
+        );
+
+    }
+
+
+    /*
+     * Grande porte
+     */
+
+    ctx.fillStyle =
+        "#080a0e";
+
+    ctx.fillRect(
+        width / 2 -
+        32 * castleScale,
+        castleY +
+        castleHeight -
+        90 * castleScale,
+        64 * castleScale,
+        90 * castleScale
+    );
+
+
+    /*
+     * Pont
+     */
+
+    ctx.fillStyle =
+        "#513c29";
+
+    ctx.fillRect(
+        width / 2 - 110,
+        height * .72,
+        220,
+        35
+    );
+
+
+    /*
+     * Lumière du château
+     */
+
+    const glow =
+        ctx.createRadialGradient(
+            width / 2,
+            castleY + castleHeight * .55,
+            20,
+            width / 2,
+            castleY + castleHeight * .55,
+            350
+        );
+
+    glow.addColorStop(
+        0,
+        "rgba(216,167,46,.12)"
+    );
+
+    glow.addColorStop(
+        1,
+        "rgba(216,167,46,0)"
+    );
+
+    ctx.fillStyle =
+        glow;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+},
+
+drawCastleRoof(x, y, width) {
+
+    const ctx = Game.ctx;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 15,
+        y
+    );
+
+    ctx.lineTo(
+        x + width / 2,
+        y - 75
+    );
+
+    ctx.lineTo(
+        x + width + 15,
+        y
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+},
+
     draw() {
 
         const ctx =
@@ -2103,6 +2410,10 @@ if (current.visual === "kingdom") {
 
     this.drawKingdom();
 
+} else if (current.visual === "castle") {
+
+    this.drawCastle();
+
 } else if (current.visual === "throne") {
 
     this.drawThroneRoom();
@@ -2119,7 +2430,6 @@ if (current.visual === "kingdom") {
     );
 
 }
-
         if (!current)
             return;
 
