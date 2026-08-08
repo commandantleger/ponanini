@@ -852,7 +852,7 @@ drawScene1() {
 
     ctx.restore();
 
-}
+},
     /* =====================================================
        SCÈNE 2
        TRAVELLING AÉRIEN
