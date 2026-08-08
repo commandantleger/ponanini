@@ -100,40 +100,53 @@ const Prologue = {
             speed: 44
         },
 
-        {
-            title: "LE NETHER",
-            text:
-                "Il tomba dans un monde sans ciel. " +
-                "Ses pieds rencontrèrent une terre noire et brûlée. " +
-                "Le portail se referma derrière lui. " +
-                "Pour la première fois de sa vie, le roi était seul.",
-            duration: 16500,
-            speed: 46
-        },
+     {
+    title: "LE SCEAU DU NETHER",
 
-        {
-            title: "LES TROIS FRAGMENTS",
-            text:
-                "Des années passèrent. " +
-                "Puis une ancienne légende lui révéla l'existence " +
-                "de trois fragments capables de rouvrir le passage. " +
-                "Mais les fragments étaient dispersés. " +
-                "Et Ponanini III ne pouvait pas les atteindre seul.",
-            duration: 17500,
-            speed: 45
-        },
+    text:
+        "Le Nether ne fut pas seulement son exil. " +
+        "Avant d'être banni, un ancien sceau fut gravé sur son destin. " +
+        "Même si quelqu'un venait jusqu'à lui, " +
+        "même si une porte s'ouvrait devant lui, " +
+        "Ponanini III ne pourrait pas franchir le passage. " +
+        "Le sceau ne peut être brisé que par trois fragments anciens.",
 
-        {
-            title: "L'HISTOIRE COMMENCE",
-            text:
-                "Alors il trouva un moyen d'appeler quelqu'un depuis l'autre monde. " +
-                "Quelqu'un qui ne connaissait ni Ponanini III, ni son histoire. " +
-                "Quelqu'un qu'il pourrait manipuler pour retrouver les fragments. " +
-                "Et cette personne... c'est toi.",
-            duration: 19000,
-            speed: 44
-        }
+    duration: 19000,
 
+    speed: 45
+},
+        {
+    title: "LES TROIS FRAGMENTS",
+
+    text:
+        "Le premier fragment repose dans les cendres du Nether. " +
+        "Il porte la marque de la Terre et peut affaiblir le sceau. " +
+        "Le second fut perdu dans les profondeurs du royaume. " +
+        "Il porte la marque du Passage. " +
+        "Le troisième, plus ancien que les deux autres, " +
+        "porte la marque de la Couronne. " +
+        "Réunis, les trois fragments peuvent enfin briser le sceau.",
+
+    duration: 22000,
+
+    speed: 43
+},
+     {
+    title: "LA PORTE",
+
+    text:
+        "Pendant des années, Ponanini III attendit. " +
+        "Puis il comprit qu'il ne pouvait briser le sceau seul. " +
+        "Il lui fallait quelqu'un du monde extérieur. " +
+        "Quelqu'un capable de retrouver les trois fragments. " +
+        "Quelqu'un qui croirait encore à son histoire. " +
+        "Il choisit alors de t'appeler. " +
+        "Mais il ne te raconta pas toute la vérité.",
+
+    duration: 21000,
+
+    speed: 43
+},
     ],
 
 
@@ -422,129 +435,492 @@ const Prologue = {
        VUE AÉRIENNE DU VILLAGE
     ===================================================== */
 
-    drawScene1() {
 
-        const ctx = Game.ctx;
+drawScene1() {
 
-        const w =
-            Game.canvas.width;
+    const ctx = Game.ctx;
+    const width = Game.canvas.width;
+    const height = Game.canvas.height;
 
-        const h =
-            Game.canvas.height;
+    /*
+    ======================================================
+    SCÈNE 1
+    VUE AÉRIENNE DU ROYAUME
+    ======================================================
+    */
+
+    const t = this.visualTime;
+
+    /*
+    Ciel nocturne.
+    */
+
+    const sky = ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        height
+    );
+
+    sky.addColorStop(0, "#05070d");
+    sky.addColorStop(.45, "#111827");
+    sky.addColorStop(1, "#070a0f");
+
+    ctx.fillStyle = sky;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
 
-        this.drawNightSky();
+    /*
+    ======================================================
+    LUNE
+    ======================================================
+    */
+
+    ctx.save();
+
+    ctx.globalAlpha = .82;
+
+    ctx.fillStyle = "#ddd3a2";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        width * .82,
+        height * .16,
+        42,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
 
 
-        /*
-         * Montagnes très lointaines.
-         */
+    /*
+    ======================================================
+    MONTAGNES
+    ======================================================
+    */
 
-        ctx.fillStyle =
-            "#0a111b";
+    ctx.fillStyle = "#080d16";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        height * .48
+    );
+
+    ctx.lineTo(
+        width * .12,
+        height * .30
+    );
+
+    ctx.lineTo(
+        width * .23,
+        height * .47
+    );
+
+    ctx.lineTo(
+        width * .36,
+        height * .26
+    );
+
+    ctx.lineTo(
+        width * .49,
+        height * .47
+    );
+
+    ctx.lineTo(
+        width * .63,
+        height * .31
+    );
+
+    ctx.lineTo(
+        width * .76,
+        height * .47
+    );
+
+    ctx.lineTo(
+        width * .90,
+        height * .28
+    );
+
+    ctx.lineTo(
+        width,
+        height * .45
+    );
+
+    ctx.lineTo(
+        width,
+        height
+    );
+
+    ctx.lineTo(
+        0,
+        height
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    ======================================================
+    BRUME LOINTAINE
+    ======================================================
+    */
+
+    ctx.save();
+
+    ctx.globalAlpha = .10;
+
+    for (let i = 0; i < 5; i++) {
+
+        const fogX =
+            ((t * (5 + i) + i * 240) %
+            (width + 500)) - 250;
+
+        ctx.fillStyle = "#b9c0c7";
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            fogX,
+            height * (.42 + i * .045),
+            220,
+            25,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+    }
+
+    ctx.restore();
+
+
+    /*
+    ======================================================
+    VILLAGE
+    ======================================================
+
+    Le village entier est maintenant considéré comme
+    UN SEUL décor.
+
+    Le palais est positionné au centre.
+    */
+
+    const villageScale = .95;
+
+    const villageX =
+        width / 2;
+
+    const villageY =
+        height * .57;
+
+
+    ctx.save();
+
+    ctx.translate(
+        villageX,
+        villageY
+    );
+
+    ctx.scale(
+        villageScale,
+        villageScale
+    );
+
+
+    /*
+    ------------------------------------------------------
+    SOL DU VILLAGE
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle = "#273b28";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        55,
+        width * .43,
+        height * .27,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ------------------------------------------------------
+    RIVIÈRE
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle = "#173b52";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -width * .43,
+        160
+    );
+
+    ctx.quadraticCurveTo(
+        -width * .10,
+        110,
+        width * .10,
+        155
+    );
+
+    ctx.quadraticCurveTo(
+        width * .25,
+        190,
+        width * .43,
+        125
+    );
+
+    ctx.lineTo(
+        width * .43,
+        230
+    );
+
+    ctx.quadraticCurveTo(
+        width * .22,
+        260,
+        width * .05,
+        215
+    );
+
+    ctx.quadraticCurveTo(
+        -width * .15,
+        165,
+        -width * .43,
+        220
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    ------------------------------------------------------
+    PETITS REFLETS DE L'EAU
+    ------------------------------------------------------
+    */
+
+    ctx.strokeStyle =
+        "rgba(130,190,215,.28)";
+
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i < 8; i++) {
+
+        const waterX =
+            -width * .35 +
+            i * width * .10;
+
+        const waterY =
+            175 +
+            Math.sin(
+                t * .7 + i
+            ) * 4;
 
         ctx.beginPath();
 
         ctx.moveTo(
-            0,
-            h * .42
+            waterX,
+            waterY
         );
 
         ctx.lineTo(
-            w * .12,
-            h * .22
+            waterX + 35,
+            waterY
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /*
+    ------------------------------------------------------
+    MAISONS
+    ------------------------------------------------------
+    */
+
+    this.drawVillageHouse(
+        -width * .30,
+        10,
+        .80
+    );
+
+    this.drawVillageHouse(
+        -width * .18,
+        -40,
+        .65
+    );
+
+    this.drawVillageHouse(
+        width * .25,
+        -10,
+        .80
+    );
+
+    this.drawVillageHouse(
+        width * .34,
+        55,
+        .65
+    );
+
+    this.drawVillageHouse(
+        -width * .34,
+        110,
+        .62
+    );
+
+
+    /*
+    ------------------------------------------------------
+    PLACE ROYALE
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle = "#927b58";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        35,
+        width * .18,
+        height * .10,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ------------------------------------------------------
+    PALAIS
+    ------------------------------------------------------
+
+    IMPORTANT :
+    Le palais est dessiné ici dans le même repère
+    que le village.
+
+    Il ne peut donc plus "glisser".
+    */
+
+    this.drawAerialPalace(
+        0,
+        -5,
+        1
+    );
+
+
+    /*
+    ------------------------------------------------------
+    PONT
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle =
+        "#65452f";
+
+    ctx.fillRect(
+        -28,
+        145,
+        56,
+        20
+    );
+
+
+    /*
+    planches
+    */
+
+    ctx.strokeStyle =
+        "#38251b";
+
+    ctx.lineWidth = 3;
+
+    for (
+        let x = -20;
+        x <= 20;
+        x += 10
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            145
         );
 
         ctx.lineTo(
-            w * .25,
-            h * .42
+            x,
+            165
         );
 
-        ctx.lineTo(
-            w * .40,
-            h * .19
-        );
+        ctx.stroke();
 
-        ctx.lineTo(
-            w * .56,
-            h * .42
-        );
-
-        ctx.lineTo(
-            w * .72,
-            h * .24
-        );
-
-        ctx.lineTo(
-            w,
-            h * .42
-        );
-
-        ctx.lineTo(
-            w,
-            h
-        );
-
-        ctx.lineTo(
-            0,
-            h
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
+    }
 
 
-        /*
-         * Village vu du dessus.
-         */
-
-        this.drawAerialVillage(
-            w / 2,
-            h * .57,
-            1
-        );
+    ctx.restore();
 
 
-        /*
-         * Palais au centre.
-         */
+    /*
+    ======================================================
+    BRUME BASSE
+    ======================================================
+    */
 
-        this.drawCastle(
-            w / 2,
-            h * .53,
-            .78
-        );
+    this.drawAerialFog();
 
 
-        /*
-         * Lumières des maisons.
-         */
+    /*
+    ======================================================
+    PLUIE
+    ======================================================
+    */
 
-        this.drawVillageLights();
-
-
-        /*
-         * Brume lente.
-         */
-
-        this.drawAerialFog();
+    this.drawRain(
+        70
+    );
 
 
-        /*
-         * Pluie en profondeur.
-         */
+    /*
+    ======================================================
+    PARTICULES
+    ======================================================
+    */
 
-        this.drawRain(
-            45,
-            .45
-        );
+    this.drawDust(
+        25
+    );
 
-
-        this.drawWind(
-            35
-        );
-    },
+},
 
 
     /* =====================================================
@@ -552,202 +928,388 @@ const Prologue = {
        TRAVELLING AÉRIEN
     ===================================================== */
 
-    drawScene2() {
+drawScene2() {
 
-        const ctx = Game.ctx;
+    const ctx = Game.ctx;
+    const width = Game.canvas.width;
+    const height = Game.canvas.height;
 
-        const w =
-            Game.canvas.width;
+    /*
+    ======================================================
+    SCÈNE 2
+    DESCENTE VERS LE PALAIS
+    ======================================================
+    */
 
-        const h =
-            Game.canvas.height;
+    const duration = 13;
 
-
-        const duration = 13;
-
-        const progress =
-            Math.min(
-                1,
-                this.visualTime /
-                duration
-            );
-
-
-        /*
-         * Courbe douce.
-         */
-
-        const ease =
-            progress *
-            progress *
-            (3 - 2 * progress);
+    const progress =
+        Math.min(
+            1,
+            this.visualTime / duration
+        );
 
 
-        ctx.fillStyle =
-            "#080c14";
+    /*
+    Courbe de caméra douce.
+    */
 
-        ctx.fillRect(
+    const ease =
+        progress *
+        progress *
+        (3 - 2 * progress);
+
+
+    /*
+    ------------------------------------------------------
+    CIEL
+    ------------------------------------------------------
+    */
+
+    const sky =
+        ctx.createLinearGradient(
             0,
             0,
-            w,
-            h
-        );
-
-
-        /*
-         * Montagnes :
-         * presque immobiles.
-         */
-
-        const mountainOffset =
-            -ease * 30;
-
-
-        ctx.save();
-
-        ctx.translate(
             0,
-            mountainOffset
+            height
         );
 
+    sky.addColorStop(
+        0,
+        "#05070d"
+    );
 
-        this.drawDistantMountains();
+    sky.addColorStop(
+        .55,
+        "#101724"
+    );
 
-        ctx.restore();
+    sky.addColorStop(
+        1,
+        "#080b11"
+    );
+
+    ctx.fillStyle =
+        sky;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
 
-        /*
-         * Village :
-         * mouvement moyen.
-         */
+    /*
+    ------------------------------------------------------
+    MONTAGNES
+    ------------------------------------------------------
+    */
 
-        const villageScale =
-            .75 +
-            ease * .52;
+    ctx.fillStyle =
+        "#080d16";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        height * .52
+    );
+
+    ctx.lineTo(
+        width * .15,
+        height * .35
+    );
+
+    ctx.lineTo(
+        width * .31,
+        height * .52
+    );
+
+    ctx.lineTo(
+        width * .48,
+        height * .32
+    );
+
+    ctx.lineTo(
+        width * .66,
+        height * .52
+    );
+
+    ctx.lineTo(
+        width * .83,
+        height * .36
+    );
+
+    ctx.lineTo(
+        width,
+        height * .52
+    );
+
+    ctx.lineTo(
+        width,
+        height
+    );
+
+    ctx.lineTo(
+        0,
+        height
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
 
 
-        const villageY =
-            h * .54 +
-            ease * h * .28;
+    /*
+    ======================================================
+    CAMÉRA
+    ======================================================
+
+    On rapproche toute la scène du même facteur.
+
+    Le palais, les maisons, la place et la rivière
+    restent donc parfaitement solidaires.
+    */
+
+    const cameraScale =
+        1 +
+        ease * .85;
 
 
-        ctx.save();
+    const cameraY =
+        ease * 80;
 
-        ctx.translate(
-            w / 2,
-            villageY
+
+    ctx.save();
+
+
+    ctx.translate(
+        width / 2,
+        height * .62 - cameraY
+    );
+
+
+    ctx.scale(
+        cameraScale,
+        cameraScale
+    );
+
+
+    /*
+    Village entier.
+    */
+
+    ctx.fillStyle =
+        "#273b28";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        55,
+        width * .43,
+        height * .27,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    Rivière.
+    */
+
+    ctx.fillStyle =
+        "#173b52";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -width * .43,
+        160
+    );
+
+    ctx.quadraticCurveTo(
+        -width * .10,
+        110,
+        width * .10,
+        155
+    );
+
+    ctx.quadraticCurveTo(
+        width * .25,
+        190,
+        width * .43,
+        125
+    );
+
+    ctx.lineTo(
+        width * .43,
+        230
+    );
+
+    ctx.quadraticCurveTo(
+        width * .22,
+        260,
+        width * .05,
+        215
+    );
+
+    ctx.quadraticCurveTo(
+        -width * .15,
+        165,
+        -width * .43,
+        220
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    Maisons.
+    */
+
+    this.drawVillageHouse(
+        -width * .30,
+        10,
+        .80
+    );
+
+    this.drawVillageHouse(
+        width * .25,
+        -10,
+        .80
+    );
+
+    this.drawVillageHouse(
+        -width * .34,
+        110,
+        .62
+    );
+
+    this.drawVillageHouse(
+        width * .34,
+        55,
+        .65
+    );
+
+
+    /*
+    Place.
+    */
+
+    ctx.fillStyle =
+        "#927b58";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        35,
+        width * .18,
+        height * .10,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ======================================================
+    PALAIS
+    ======================================================
+    */
+
+    this.drawAerialPalace(
+        0,
+        -5,
+        1
+    );
+
+
+    ctx.restore();
+
+
+    /*
+    ------------------------------------------------------
+    FOCUS LUMINEUX
+    ------------------------------------------------------
+    */
+
+    const focus =
+        ctx.createRadialGradient(
+            width / 2,
+            height * .47,
+            height * .08,
+            width / 2,
+            height * .47,
+            height * .72
         );
 
-        ctx.scale(
-            villageScale,
-            villageScale
-        );
+    focus.addColorStop(
+        0,
+        "rgba(0,0,0,0)"
+    );
 
-        ctx.translate(
-            -w / 2,
-            -h * .54
-        );
+    focus.addColorStop(
+        .7,
+        "rgba(0,0,0,.08)"
+    );
 
+    focus.addColorStop(
+        1,
+        "rgba(0,0,0,.55)"
+    );
 
-        this.drawAerialVillage(
-            w / 2,
-            h * .54,
-            1
-        );
+    ctx.fillStyle =
+        focus;
 
-
-        ctx.restore();
-
-
-        /*
-         * Palais :
-         * mouvement plus rapide.
-         */
-
-        const castleScale =
-            .48 +
-            ease * 1.05;
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
 
-        const castleY =
-            h * .48 +
-            ease * h * .40;
+    /*
+    ------------------------------------------------------
+    BRUME
+    ------------------------------------------------------
+    */
+
+    this.drawAerialFog();
 
 
-        ctx.save();
+    /*
+    ------------------------------------------------------
+    PLUIE
+    ------------------------------------------------------
+    */
 
-        ctx.translate(
-            w / 2,
-            castleY
-        );
-
-        ctx.scale(
-            castleScale,
-            castleScale
-        );
-
-        ctx.translate(
-            -w / 2,
-            -h * .53
-        );
+    this.drawRain(
+        55
+    );
 
 
-        this.drawCastle(
-            w / 2,
-            h * .53,
-            .78
-        );
+    /*
+    ------------------------------------------------------
+    VENT
+    ------------------------------------------------------
+    */
 
+    this.drawWindParticles(
+        25
+    );
 
-        ctx.restore();
-
-
-        /*
-         * Nuages :
-         * parallaxe inverse.
-         */
-
-        ctx.fillStyle =
-            "rgba(16,25,38,.55)";
-
-
-        const cloudX =
-            (
-                this.visualTime * 12
-            ) %
-            (w + 500) -
-            250;
-
-
-        this.drawCloud(
-            cloudX,
-            h * .20,
-            .8
-        );
-
-
-        this.drawCloud(
-            cloudX - 500,
-            h * .31,
-            .55
-        );
-
-
-        /*
-         * Brume qui reste basse.
-         */
-
-        this.drawLowFog(
-            h * .70
-        );
-
-
-        this.drawRain(
-            30,
-            .25
-        );
-    },
-
+},
 
     /* =====================================================
        SCÈNE 3
@@ -1564,194 +2126,353 @@ const Prologue = {
        NETHER
     ===================================================== */
 
-    drawScene8() {
+drawScene8() {
 
-        const ctx = Game.ctx;
+    const ctx = Game.ctx;
 
-        const w =
-            Game.canvas.width;
+    const width =
+        Game.canvas.width;
 
-        const h =
-            Game.canvas.height;
-
-
-        this.drawNetherSky();
+    const height =
+        Game.canvas.height;
 
 
-        /*
-         * Terrain rocheux.
-         */
+    /*
+     * Nether.
+     */
 
-        this.drawBlackGround();
-
-
-        /*
-         * Sol irrégulier.
-         */
-
-        this.drawNetherRocks();
+    this.drawNetherBackground();
 
 
-        /*
-         * Ombre du canard.
-         */
+    /*
+     * Sol noir.
+     */
 
-        ctx.fillStyle =
-            "rgba(0,0,0,.65)";
+    this.drawBlackGround();
 
+
+    this.drawNetherRocks();
+
+
+    /*
+     * Lave uniquement dans le décor lointain.
+     *
+     * Elle ne doit surtout pas former une ligne
+     * juste derrière la tête de Ponanini III.
+     */
+
+    this.drawDistantLava(
+        height * .82
+    );
+
+
+    /*
+     * --------------------------------------------------
+     * SCEAU
+     *
+     * Le symbole est AU SOL.
+     * Il n'est jamais au-dessus du personnage.
+     * --------------------------------------------------
+     */
+
+    const sealX =
+        width * .50;
+
+    const sealY =
+        height * .78;
+
+
+    ctx.save();
+
+    ctx.globalAlpha = .72;
+
+
+    /*
+     * Fissures autour du sceau.
+     */
+
+    ctx.strokeStyle =
+        "#44151b";
+
+    ctx.lineWidth = 3;
+
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        const angle =
+            i * Math.PI / 4;
+
+        const r1 = 30;
+        const r2 = 75;
 
         ctx.beginPath();
 
-        ctx.ellipse(
-            w * .50,
-            h * .765,
-            72,
-            17,
-            0,
-            0,
-            Math.PI * 2
+        ctx.moveTo(
+            sealX +
+            Math.cos(angle) * r1,
+
+            sealY +
+            Math.sin(angle) * r1
         );
 
-        ctx.fill();
+        ctx.lineTo(
+            sealX +
+            Math.cos(angle) * r2,
 
-
-        /*
-         * UN SEUL PONANINI III.
-         */
-
-        const walk =
-            Math.sin(
-                this.visualTime * 2
-            ) * 2;
-
-
-        this.drawDuckKing(
-            w * .50,
-            h * .58 + walk,
-            .80
+            sealY +
+            Math.sin(angle) * r2
         );
 
-
-        /*
-         * Lave uniquement au loin.
-         */
-
-        this.drawDistantLava(
-            h * .56
-        );
+        ctx.stroke();
+    }
 
 
-        this.drawSmoke(
-            w * .18,
-            h * .72,
-            .9
-        );
+    /*
+     * Sceau central.
+     */
+
+    ctx.strokeStyle =
+        "#6b2026";
+
+    ctx.lineWidth = 4;
 
 
-        this.drawSmoke(
-            w * .82,
-            h * .68,
-            1.1
-        );
+    ctx.beginPath();
+
+    ctx.arc(
+        sealX,
+        sealY,
+        38,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
 
 
-        this.drawEmbers(
-            70
-        );
-    },
+    ctx.beginPath();
 
+    ctx.moveTo(
+        sealX - 25,
+        sealY - 25
+    );
+
+    ctx.lineTo(
+        sealX + 25,
+        sealY + 25
+    );
+
+    ctx.moveTo(
+        sealX + 25,
+        sealY - 25
+    );
+
+    ctx.lineTo(
+        sealX - 25,
+        sealY + 25
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+
+    /*
+     * --------------------------------------------------
+     * PONANINI III
+     *
+     * Un seul personnage.
+     * --------------------------------------------------
+     */
+
+    const walk =
+        Math.sin(
+            this.visualTime * 2
+        ) * 2;
+
+
+    const kingX =
+        width * .42;
+
+
+    const kingY =
+        height * .60 +
+        walk;
+
+
+    /*
+     * Ombre sous ses pieds.
+     */
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.72)";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        kingX,
+        height * .75,
+        68,
+        14,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    this.drawDuckKing(
+        kingX,
+        kingY,
+        .88
+    );
+
+
+    /*
+     * Aucun trait rouge derrière lui.
+     * Aucun cercle flottant.
+     */
+
+
+    this.drawSmoke(
+        width * .16,
+        height * .72,
+        .9
+    );
+
+
+    this.drawSmoke(
+        width * .82,
+        height * .67,
+        1.1
+    );
+
+
+    this.drawEmbers(
+        80
+    );
+
+
+    this.drawDust(
+        35
+    );
+},
 
     /* =====================================================
        SCÈNE 9
        FRAGMENTS
     ===================================================== */
 
-    drawScene9() {
+drawScene9() {
 
-        const ctx = Game.ctx;
+    const ctx = Game.ctx;
 
-        const w =
-            Game.canvas.width;
+    const width =
+        Game.canvas.width;
 
-        const h =
-            Game.canvas.height;
+    const height =
+        Game.canvas.height;
 
 
-        this.drawNetherSky();
+    this.drawNetherBackground();
 
-        this.drawBlackGround();
+    this.drawBlackGround();
 
-        this.drawNetherRocks();
+    this.drawNetherRocks();
+
+
+    /*
+     * Ponanini III reste au centre.
+     */
+
+    const kingX =
+        width * .38;
+
+    const kingY =
+        height * .61;
+
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.70)";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        kingX,
+        height * .76,
+        66,
+        14,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    this.drawDuckKing(
+        kingX,
+        kingY,
+        .80
+    );
+
+
+    /*
+     * ==================================================
+     * FRAGMENT 1
+     * ==================================================
+     */
+
+    const fragment1Time =
+        3.0;
+
+
+    if (
+        this.visualTime >
+        fragment1Time
+    ) {
+
+        const p =
+            Math.min(
+                1,
+                (
+                    this.visualTime -
+                    fragment1Time
+                ) / 1.2
+            );
+
+
+        const ease =
+            p * p * (3 - 2 * p);
+
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            ease;
+
+
+        const x =
+            width * .68;
+
+        const y =
+            height * .67;
 
 
         /*
-         * Pas de cercle bleu.
-         * Pas d'autel.
-         * Pas de support.
-         */
-
-
-        /*
-         * III marche.
-         */
-
-        const movement =
-            Math.sin(
-                this.visualTime * 1.8
-            ) * 2;
-
-
-        this.drawDuckKing(
-            w * .50,
-            h * .60 + movement,
-            .76
-        );
-
-
-        /*
-         * Fragment 1 :
-         * fissure à gauche.
-         */
-
-        this.drawFragment(
-            w * .24,
-            h * .66,
-            "#c69c38"
-        );
-
-
-        /*
-         * Fragment 2 :
-         * rocher.
-         */
-
-        this.drawFragment(
-            w * .72,
-            h * .54,
-            "#4f6fd0"
-        );
-
-
-        /*
-         * Fragment 3 :
-         * profondeur.
-         */
-
-        this.drawFragment(
-            w * .56,
-            h * .34,
-            "#7654bd"
-        );
-
-
-        /*
-         * Ligne de fissure
-         * autour du premier fragment.
+         * Petite fissure.
          */
 
         ctx.strokeStyle =
-            "#4e1812";
-
+            "#684127";
 
         ctx.lineWidth = 3;
 
@@ -1759,27 +2480,326 @@ const Prologue = {
         ctx.beginPath();
 
         ctx.moveTo(
-            w * .12,
-            h * .72
+            x - 40,
+            y + 22
         );
 
         ctx.lineTo(
-            w * .24,
-            h * .66
+            x - 10,
+            y
         );
 
         ctx.lineTo(
-            w * .34,
-            h * .71
+            x + 18,
+            y + 12
+        );
+
+        ctx.lineTo(
+            x + 42,
+            y - 12
         );
 
         ctx.stroke();
 
 
-        this.drawEmbers(
-            65
+        this.drawFragment(
+            x,
+            y,
+            "#c79c39"
         );
-    },
+
+
+        ctx.restore();
+
+
+        /*
+         * Petite lumière au moment
+         * de sa découverte.
+         */
+
+        if (p < 1) {
+
+            ctx.fillStyle =
+                `rgba(215,175,70,${(
+                    1 - p
+                ) * .25})`;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                80 * (1 - p),
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+    }
+
+
+    /*
+     * ==================================================
+     * FRAGMENT 2
+     * ==================================================
+     */
+
+    const fragment2Time =
+        9.0;
+
+
+    if (
+        this.visualTime >
+        fragment2Time
+    ) {
+
+        const p =
+            Math.min(
+                1,
+                (
+                    this.visualTime -
+                    fragment2Time
+                ) / 1.2
+            );
+
+
+        const ease =
+            p * p * (3 - 2 * p);
+
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            ease;
+
+
+        const x =
+            width * .77;
+
+        const y =
+            height * .42;
+
+
+        /*
+         * Rocher qui abrite
+         * le fragment.
+         */
+
+        ctx.fillStyle =
+            "#171317";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x - 42,
+            y + 35
+        );
+
+        ctx.lineTo(
+            x - 20,
+            y - 22
+        );
+
+        ctx.lineTo(
+            x + 18,
+            y - 45
+        );
+
+        ctx.lineTo(
+            x + 48,
+            y + 15
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        this.drawFragment(
+            x,
+            y - 8,
+            "#526fd0"
+        );
+
+
+        ctx.restore();
+    }
+
+
+    /*
+     * ==================================================
+     * FRAGMENT 3
+     * ==================================================
+     */
+
+    const fragment3Time =
+        15.0;
+
+
+    if (
+        this.visualTime >
+        fragment3Time
+    ) {
+
+        const p =
+            Math.min(
+                1,
+                (
+                    this.visualTime -
+                    fragment3Time
+                ) / 1.5
+            );
+
+
+        const ease =
+            p * p * (3 - 2 * p);
+
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            ease;
+
+
+        const x =
+            width * .61;
+
+        const y =
+            height * .27;
+
+
+        /*
+         * Fragment suspendu dans une fissure
+         * rocheuse, pas dans un cercle magique.
+         */
+
+        ctx.strokeStyle =
+            "#432033";
+
+        ctx.lineWidth = 3;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x - 35,
+            y - 45
+        );
+
+        ctx.lineTo(
+            x - 12,
+            y - 8
+        );
+
+        ctx.lineTo(
+            x - 28,
+            y + 45
+        );
+
+        ctx.moveTo(
+            x + 32,
+            y - 40
+        );
+
+        ctx.lineTo(
+            x + 8,
+            y
+        );
+
+        ctx.lineTo(
+            x + 30,
+            y + 48
+        );
+
+        ctx.stroke();
+
+
+        this.drawFragment(
+            x,
+            y,
+            "#7955bd"
+        );
+
+
+        ctx.restore();
+    }
+
+
+    /*
+     * ==================================================
+     * LUEUR FINALE
+     * ==================================================
+     */
+
+    if (
+        this.visualTime > 18
+    ) {
+
+        const pulse =
+            .10 +
+            Math.abs(
+                Math.sin(
+                    this.visualTime * 2
+                )
+            ) * .08;
+
+
+        const glow =
+            ctx.createRadialGradient(
+                width * .68,
+                height * .48,
+                10,
+                width * .68,
+                height * .48,
+                300
+            );
+
+
+        glow.addColorStop(
+            0,
+            `rgba(100,85,190,${pulse})`
+        );
+
+
+        glow.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+
+        ctx.fillStyle =
+            glow;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+    }
+
+
+    this.drawSmoke(
+        width * .17,
+        height * .72,
+        .9
+    );
+
+
+    this.drawSmoke(
+        width * .90,
+        height * .65,
+        1
+    );
+
+
+    this.drawEmbers(
+        75
+    );
+}, 
 
 
     /* =====================================================
@@ -3960,6 +4980,613 @@ const Prologue = {
         ctx.fill();
     },
 
+
+drawVillageHouse(x, y, scale = 1) {
+
+    const ctx = Game.ctx;
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+
+    /*
+    Corps.
+    */
+
+    ctx.fillStyle =
+        "#80654b";
+
+    ctx.fillRect(
+        -45,
+        0,
+        90,
+        65
+    );
+
+
+    /*
+    Toit.
+    */
+
+    ctx.fillStyle =
+        "#382d2a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -58,
+        5
+    );
+
+    ctx.lineTo(
+        0,
+        -48
+    );
+
+    ctx.lineTo(
+        58,
+        5
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    Porte.
+    */
+
+    ctx.fillStyle =
+        "#39271e";
+
+    ctx.fillRect(
+        -12,
+        32,
+        24,
+        33
+    );
+
+
+    /*
+    Fenêtres.
+    */
+
+    ctx.fillStyle =
+        "#d4b45c";
+
+    ctx.fillRect(
+        -35,
+        22,
+        17,
+        17
+    );
+
+    ctx.fillRect(
+        18,
+        22,
+        17,
+        17
+    );
+
+
+    /*
+    Petite cheminée.
+    */
+
+    ctx.fillStyle =
+        "#493833";
+
+    ctx.fillRect(
+        22,
+        -38,
+        12,
+        28
+    );
+
+
+    /*
+    Fumée.
+    */
+
+    ctx.globalAlpha =
+        .22;
+
+    ctx.fillStyle =
+        "#b8b8b8";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        28,
+        -52,
+        10,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.arc(
+        38,
+        -70,
+        13,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+},
+
+
+drawAerialPalace(x, y, scale = 1) {
+
+    const ctx = Game.ctx;
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+
+    /*
+    ------------------------------------------------------
+    CORPS CENTRAL
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle =
+        "#302f35";
+
+    ctx.fillRect(
+        -125,
+        -155,
+        250,
+        180
+    );
+
+
+    /*
+    ------------------------------------------------------
+    PIERRES
+    ------------------------------------------------------
+    */
+
+    ctx.strokeStyle =
+        "rgba(15,15,20,.30)";
+
+    ctx.lineWidth = 2;
+
+    for (
+        let row = 0;
+        row < 5;
+        row++
+    ) {
+
+        for (
+            let col = -3;
+            col < 4;
+            col++
+        ) {
+
+            const bx =
+                col * 38 +
+                (row % 2) * 19;
+
+            const by =
+                -145 +
+                row * 35;
+
+            ctx.strokeRect(
+                bx,
+                by,
+                36,
+                33
+            );
+
+        }
+
+    }
+
+
+    /*
+    ------------------------------------------------------
+    TOURS
+    ------------------------------------------------------
+    */
+
+    this.drawAerialTower(
+        -150,
+        -205,
+        72
+    );
+
+    this.drawAerialTower(
+        78,
+        -205,
+        72
+    );
+
+
+    /*
+    ------------------------------------------------------
+    TOUR CENTRALE
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle =
+        "#393940";
+
+    ctx.fillRect(
+        -52,
+        -230,
+        104,
+        255
+    );
+
+
+    /*
+    toit.
+    */
+
+    ctx.fillStyle =
+        "#12131a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -70,
+        -230
+    );
+
+    ctx.lineTo(
+        0,
+        -315
+    );
+
+    ctx.lineTo(
+        70,
+        -230
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    ------------------------------------------------------
+    GRAND PORTAIL
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle =
+        "#111218";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -25,
+        34,
+        Math.PI,
+        0
+    );
+
+    ctx.fill();
+
+    ctx.fillRect(
+        -34,
+        -25,
+        68,
+        50
+    );
+
+
+    /*
+    ------------------------------------------------------
+    FENÊTRES
+    ------------------------------------------------------
+    */
+
+    ctx.fillStyle =
+        "#d4ad45";
+
+    for (
+        let i = -2;
+        i <= 2;
+        i++
+    ) {
+
+        ctx.fillRect(
+            i * 42 - 6,
+            -125,
+            12,
+            28
+        );
+
+    }
+
+
+    /*
+    ------------------------------------------------------
+    DRAPEAUX
+    ------------------------------------------------------
+    */
+
+    this.drawFlag(
+        -152,
+        -270,
+        "#6e2631"
+    );
+
+    this.drawFlag(
+        150,
+        -270,
+        "#6e2631"
+    );
+
+
+    /*
+    Blason.
+    */
+
+    ctx.fillStyle =
+        "#d8b64a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -65,
+        13,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+},
+
+
+drawAerialTower(x, y, width) {
+
+    const ctx = Game.ctx;
+
+    ctx.fillStyle =
+        "#292a31";
+
+    ctx.fillRect(
+        x,
+        y,
+        width,
+        230
+    );
+
+
+    /*
+    Créneaux.
+    */
+
+    ctx.fillStyle =
+        "#222329";
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        ctx.fillRect(
+            x + i * 19,
+            y - 12,
+            14,
+            15
+        );
+
+    }
+
+
+    /*
+    Toit.
+    */
+
+    ctx.fillStyle =
+        "#101117";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 10,
+        y
+    );
+
+    ctx.lineTo(
+        x + width / 2,
+        y - 85
+    );
+
+    ctx.lineTo(
+        x + width + 10,
+        y
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    Fenêtres.
+    */
+
+    ctx.fillStyle =
+        "#c49e42";
+
+    for (
+        let i = 0;
+        i < 3;
+        i++
+    ) {
+
+        ctx.fillRect(
+            x + width / 2 - 5,
+            y + 40 + i * 55,
+            10,
+            22
+        );
+
+    }
+
+},
+
+
+drawAerialFog() {
+
+    const ctx = Game.ctx;
+
+    const width =
+        Game.canvas.width;
+
+    const height =
+        Game.canvas.height;
+
+
+    ctx.save();
+
+    ctx.globalAlpha =
+        .10;
+
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        const movement =
+            Math.sin(
+                this.visualTime * .22 +
+                i * 1.7
+            ) * 80;
+
+
+        const x =
+            width * .15 +
+            i * width * .16 +
+            movement;
+
+
+        const y =
+            height * .69 +
+            i * 14;
+
+
+        ctx.fillStyle =
+            "#b5bbc1";
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            x,
+            y,
+            180,
+            30,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    ctx.restore();
+
+},
+
+
+drawRain(count) {
+
+    const ctx = Game.ctx;
+
+    const width =
+        Game.canvas.width;
+
+    const height =
+        Game.canvas.height;
+
+
+    ctx.save();
+
+    ctx.strokeStyle =
+        "rgba(180,195,210,.18)";
+
+    ctx.lineWidth = 1;
+
+
+    for (
+        let i = 0;
+        i < count;
+        i++
+    ) {
+
+        const x =
+            (
+                i * 97 +
+                this.visualTime * 32
+            ) % width;
+
+
+        const y =
+            (
+                i * 53 +
+                this.visualTime * 105
+            ) % height;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            y
+        );
+
+        ctx.lineTo(
+            x - 5,
+            y + 16
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    ctx.restore();
+
+},
 
     /* =====================================================
        NETHER
