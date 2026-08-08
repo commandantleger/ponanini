@@ -19,10 +19,8 @@ const Game = {
     tileSize: 64,
 
     camera: {
-
         x: 0,
         y: 0
-
     },
 
     running: false
@@ -40,7 +38,8 @@ const scripts = [
     "ui.js",
     "quest.js",
     "enemy.js",
-    "boss.js"
+    "boss.js",
+    "prologue.js"
 
 ];
 
@@ -48,7 +47,8 @@ let loaded = 0;
 
 scripts.forEach(file => {
 
-    const script = document.createElement("script");
+    const script =
+        document.createElement("script");
 
     script.src = file;
 
@@ -61,18 +61,57 @@ scripts.forEach(file => {
 
     };
 
+    script.onerror = () => {
+
+        console.error(
+            "Impossible de charger : " + file
+        );
+
+    };
+
     document.body.appendChild(script);
 
 });
 
 function startEngine() {
 
-    function loop() {
+    function loop(time) {
 
         requestAnimationFrame(loop);
 
+        Game.ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        /*
+         * CINÉMATIQUE
+         */
+
+        if (Prologue.active) {
+
+            Prologue.update(
+                1 / 60
+            );
+
+            Prologue.draw();
+
+            return;
+
+        }
+
+        /*
+         * MENU
+         */
+
         if (!Game.running)
             return;
+
+        /*
+         * GAMEPLAY
+         */
 
         if (typeof updatePlayer === "function")
             updatePlayer();
@@ -92,12 +131,9 @@ function startEngine() {
         if (typeof updateBoss === "function")
             updateBoss();
 
-        Game.ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+        /*
+         * DRAW
+         */
 
         if (typeof drawMap === "function")
             drawMap();
@@ -119,17 +155,20 @@ function startEngine() {
 
     }
 
-    loop();
+    requestAnimationFrame(loop);
 
 }
 
 window.startGame = function () {
 
-    const menu = document.getElementById("menu");
+    const menu =
+        document.getElementById("menu");
 
     if (menu)
         menu.style.display = "none";
 
-    Game.running = true;
+    Game.running = false;
+
+    Prologue.start();
 
 };
