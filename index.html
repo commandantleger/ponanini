@@ -219,297 +219,261 @@
     <!-- MENU CONTROLLER -->
     <!-- ========================================= -->
 
-    <script>
+<script>
 
-        const menu =
-            document.getElementById("menu");
+    const menu =
+        document.getElementById("menu");
 
-        const playButton =
-            document.getElementById("playButton");
+    const playButton =
+        document.getElementById("playButton");
 
-        const continueButton =
-            document.getElementById("continueButton");
+    const continueButton =
+        document.getElementById("continueButton");
 
-        const optionsButton =
-            document.getElementById("optionsButton");
+    const optionsButton =
+        document.getElementById("optionsButton");
 
-        const creditsButton =
-            document.getElementById("creditsButton");
+    const creditsButton =
+        document.getElementById("creditsButton");
 
-        const quitButton =
-            document.getElementById("quitButton");
+    const quitButton =
+        document.getElementById("quitButton");
 
-        const loadingScreen =
-            document.getElementById("loadingScreen");
+    const loadingScreen =
+        document.getElementById("loadingScreen");
 
-        const loadingProgress =
-            document.getElementById("loadingProgress");
+    const loadingProgress =
+        document.getElementById("loadingProgress");
 
-
-        /*
-         * =====================================
-         * NOUVELLE PARTIE
-         * =====================================
-         */
-
-        playButton.addEventListener(
-            "click",
-            () => {
-
-                startNewGame();
-
-            }
-        );
+    const loadingText =
+        document.querySelector(".loading-text");
 
 
-        function startNewGame() {
+    /* ==========================================
+       NOUVELLE PARTIE
+    ========================================== */
 
-            /*
-             * Empêche les doubles clics
-             */
+    playButton.addEventListener("click", () => {
 
-            playButton.disabled = true;
+        console.log("NOUVELLE PARTIE");
 
+        playButton.disabled = true;
 
-            /*
-             * Menu disparaît
-             */
+        menu.classList.add("menu-hide");
 
-            menu.classList.add(
-                "menu-hide"
-            );
+        loadingScreen.classList.remove("hidden");
 
+        startLoading();
 
-            /*
-             * Petit écran de chargement
-             */
-
-            setTimeout(() => {
-
-                loadingScreen.classList.remove(
-                    "hidden"
-                );
-
-                simulateLoading();
-
-            }, 500);
-
-        }
+    });
 
 
-        /*
-         * =====================================
-         * CHARGEMENT
-         * =====================================
-         */
+    /* ==========================================
+       CHARGEMENT
+    ========================================== */
 
-        function simulateLoading() {
+    function startLoading() {
 
-            let progress = 0;
+        let progress = 0;
 
-            const messages = [
+        const messages = [
 
-                "Préparation du royaume...",
+            "Préparation du royaume...",
 
-                "Chargement des terres de Ponan...",
+            "Chargement des terres de Ponan...",
 
-                "Les anciennes légendes se réveillent...",
+            "Les anciennes légendes se réveillent...",
 
-                "Préparation de la destinée...",
+            "Préparation de la destinée...",
 
-                "L'histoire va commencer..."
+            "L'histoire va commencer..."
 
-            ];
+        ];
 
-            const loadingText =
-                document.querySelector(
-                    ".loading-text"
+
+        const interval = setInterval(() => {
+
+            progress += 2;
+
+            if (progress > 100)
+                progress = 100;
+
+
+            loadingProgress.style.width =
+                progress + "%";
+
+
+            const index =
+                Math.min(
+                    Math.floor(progress / 20),
+                    messages.length - 1
                 );
 
 
-            const interval =
-                setInterval(() => {
-
-                    progress += 4;
-
-                    if (progress > 100)
-                        progress = 100;
+            loadingText.textContent =
+                messages[index];
 
 
-                    loadingProgress.style.width =
-                        progress + "%";
+            if (progress >= 100) {
 
+                clearInterval(interval);
 
-                    const index =
-                        Math.min(
-                            Math.floor(
-                                progress / 25
-                            ),
-                            messages.length - 1
-                        );
-
-
-                    loadingText.textContent =
-                        messages[index];
-
-
-                    if (progress >= 100) {
-
-                        clearInterval(
-                            interval
-                        );
-
-                        setTimeout(
-                            startPrologue,
-                            700
-                        );
-
-                    }
-
-                }, 80);
-
-        }
-
-
-        /*
-         * =====================================
-         * PROLOGUE
-         * =====================================
-         */
-
-        function startPrologue() {
-
-            loadingScreen.classList.add(
-                "hidden"
-            );
-
-
-            /*
-             * Le prologue prend le contrôle
-             */
-
-            if (
-                typeof Prologue !==
-                "undefined"
-            ) {
-
-                Prologue.start();
-
-            } else {
-
-                console.error(
-                    "Prologue introuvable."
-                );
+                waitForEngine();
 
             }
 
-        }
+        }, 50);
+
+    }
 
 
-        /*
-         * =====================================
-         * CONTINUER
-         * =====================================
-         */
+    /* ==========================================
+       ATTENDRE QUE GAME.JS SOIT PRÊT
+    ========================================== */
 
-        continueButton.addEventListener(
-            "click",
-            () => {
+    function waitForEngine() {
 
-                const save =
-                    localStorage.getItem(
-                        "ponan_save"
-                    );
+        loadingText.textContent =
+            "Le royaume vous attend...";
 
 
-                if (!save) {
+        const check =
+            setInterval(() => {
 
-                    alert(
-                        "Aucune partie sauvegardée."
-                    );
+                if (
+                    typeof Game !== "undefined" &&
+                    Game.ready === true
+                ) {
 
-                    return;
+                    clearInterval(check);
+
+                    setTimeout(() => {
+
+                        loadingScreen.classList.add(
+                            "hidden"
+                        );
+
+                        launchGame();
+
+                    }, 500);
 
                 }
 
+            }, 100);
 
-                /*
-                 * Pour l'instant,
-                 * on utilisera le même système
-                 * que Nouvelle Partie.
-                 *
-                 * Le vrai système de sauvegarde
-                 * sera ajouté ensuite.
-                 */
+    }
 
-                startNewGame();
 
-            }
+    /* ==========================================
+       LANCEMENT
+    ========================================== */
+
+    function launchGame() {
+
+        console.log(
+            "Lancement de la nouvelle partie..."
         );
 
 
-        /*
-         * =====================================
-         * OPTIONS
-         * =====================================
-         */
+        if (
+            typeof startGame === "function"
+        ) {
 
-        optionsButton.addEventListener(
-            "click",
-            () => {
+            startGame();
 
-                alert(
-                    "OPTIONS\n\n" +
-                    "Les options seront disponibles prochainement."
+        } else {
+
+            console.error(
+                "ERREUR : startGame() introuvable."
+            );
+
+        }
+
+    }
+
+
+    /* ==========================================
+       CONTINUER
+    ========================================== */
+
+    continueButton.addEventListener(
+        "click",
+        () => {
+
+            const save =
+                localStorage.getItem(
+                    "ponan_save"
                 );
 
-            }
-        );
 
-
-        /*
-         * =====================================
-         * CRÉDITS
-         * =====================================
-         */
-
-        creditsButton.addEventListener(
-            "click",
-            () => {
+            if (!save) {
 
                 alert(
-                    "PONAN'S LEGACY\n\n" +
-                    "Un RPG créé avec JavaScript + Canvas.\n\n" +
-                    "Merci d'avoir joué."
+                    "Aucune partie sauvegardée."
                 );
 
-            }
-        );
-
-
-        /*
-         * =====================================
-         * QUITTER
-         * =====================================
-         */
-
-        quitButton.addEventListener(
-            "click",
-            () => {
-
-                /*
-                 * Un navigateur ne permet pas
-                 * toujours de fermer une page
-                 * ouverte normalement.
-                 */
-
-                window.close();
+                return;
 
             }
-        );
 
-    </script>
 
-</body>
+            /*
+             * Pour le moment, on lancera
+             * le même flux que Nouvelle Partie.
+             */
 
-</html>
+            playButton.click();
+
+        }
+    );
+
+
+    /* ==========================================
+       OPTIONS
+    ========================================== */
+
+    optionsButton.addEventListener(
+        "click",
+        () => {
+
+            alert(
+                "OPTIONS\n\n" +
+                "Les options seront disponibles prochainement."
+            );
+
+        }
+    );
+
+
+    /* ==========================================
+       CRÉDITS
+    ========================================== */
+
+    creditsButton.addEventListener(
+        "click",
+        () => {
+
+            alert(
+                "PONAN'S LEGACY\n\n" +
+                "Un RPG créé avec JavaScript + Canvas.\n\n" +
+                "Merci d'avoir joué."
+            );
+
+        }
+    );
+
+
+    /* ==========================================
+       QUITTER
+    ========================================== */
+
+    quitButton.addEventListener(
+        "click",
+        () => {
+
+            window.close();
+
+        }
+    );
+
+</script>
