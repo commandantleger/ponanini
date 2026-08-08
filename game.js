@@ -5,21 +5,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 window.addEventListener("resize", () => {
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
 });
 
-
-/* ==========================================
-   OBJET GLOBAL DU JEU
-========================================== */
-
 const Game = {
-
     canvas: canvas,
-
     ctx: ctx,
 
     tileSize: 64,
@@ -29,31 +20,105 @@ const Game = {
         y: 0
     },
 
-    /*
-     * false = menu / prologue
-     * true  = gameplay
-     */
-
     running: false,
-
-    /*
-     * Permet de savoir si le moteur
-     * est prêt.
-     */
-
-    ready: false
-
+    scriptsLoaded: false
 };
 
 window.Game = Game;
 
 
-/* ==========================================
-   CHARGEMENT DES SCRIPTS DU JEU
-========================================== */
+/* =========================================================
+   ÉCRAN DE CHARGEMENT
+========================================================= */
+
+function createLoadingScreen() {
+
+    let screen = document.getElementById("loading-screen");
+
+    if (screen)
+        return screen;
+
+    screen = document.createElement("div");
+
+    screen.id = "loading-screen";
+
+    screen.innerHTML = `
+        <div class="loading-content">
+
+            <div class="loading-title">
+                PONAN'S LEGACY
+            </div>
+
+            <div class="loading-subtitle">
+                L'Héritage des Plumes
+            </div>
+
+            <div class="loading-bar">
+                <div id="loading-progress"></div>
+            </div>
+
+            <div id="loading-text">
+                Chargement du royaume...
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(screen);
+
+    return screen;
+}
+
+
+function updateLoading(percent, text) {
+
+    const progress =
+        document.getElementById("loading-progress");
+
+    const label =
+        document.getElementById("loading-text");
+
+    if (progress)
+        progress.style.width =
+            Math.max(0, Math.min(100, percent)) + "%";
+
+    if (label && text)
+        label.textContent = text;
+}
+
+
+function hideLoading() {
+
+    const screen =
+        document.getElementById("loading-screen");
+
+    if (!screen)
+        return;
+
+    screen.classList.add("loading-hidden");
+
+    setTimeout(() => {
+
+        if (screen.parentNode)
+            screen.parentNode.removeChild(screen);
+
+    }, 700);
+}
+
+
+/* =========================================================
+   CHARGEMENT DU JEU
+========================================================= */
+
+createLoadingScreen();
+
+updateLoading(
+    5,
+    "Ouverture des archives..."
+);
+
 
 const scripts = [
-
     "map.js",
     "player.js",
     "npc.js",
@@ -62,10 +127,11 @@ const scripts = [
     "quest.js",
     "enemy.js",
     "boss.js"
-
 ];
 
-let loaded = 0;
+
+let loadedScripts = 0;
+
 
 scripts.forEach(file => {
 
@@ -76,80 +142,74 @@ scripts.forEach(file => {
 
     script.onload = () => {
 
-        loaded++;
+        loadedScripts++;
 
-        console.log(
-            "Chargé : " + file
+        const percent =
+            10 +
+            (loadedScripts / scripts.length) * 70;
+
+        updateLoading(
+            percent,
+            "Chargement : " +
+            file.replace(".js", "").toUpperCase()
         );
 
         if (
-            loaded === scripts.length
+            loadedScripts === scripts.length
         ) {
 
-            console.log(
-                "Tous les scripts sont chargés."
+            Game.scriptsLoaded = true;
+
+            updateLoading(
+                100,
+                "Le royaume est prêt."
             );
 
-            Game.ready = true;
-
             startEngine();
-
         }
-
     };
+
 
     script.onerror = () => {
 
         console.error(
-            "ERREUR : impossible de charger " +
-            file
+            "Impossible de charger : " + file
         );
 
+        updateLoading(
+            100,
+            "Erreur de chargement : " + file
+        );
     };
+
 
     document.body.appendChild(script);
 
 });
 
 
-/* ==========================================
-   MOTEUR PRINCIPAL
-========================================== */
+/* =========================================================
+   MOTEUR
+========================================================= */
 
 function startEngine() {
 
-    console.log(
-        "Moteur prêt. En attente du lancement."
-    );
+    console.log("Moteur démarré.");
 
-    let lastTime = performance.now();
-
-    function loop(currentTime) {
-
-        requestAnimationFrame(loop);
-
-        /*
-         * Delta time en secondes
-         */
-
-        let dt =
-            (currentTime - lastTime) / 1000;
-
-        lastTime = currentTime;
+    let lastTime =
+        performance.now();
 
 
-        /*
-         * Évite les gros sauts si
-         * l'onglet a été mis en pause.
-         */
+    function loop(time) {
 
-        if (dt > 0.1)
-            dt = 0.1;
+        const dt =
+            Math.min(
+                (time - lastTime) / 1000,
+                0.05
+            );
 
+        lastTime = time;
 
-        /*
-         * Nettoyage de l'écran
-         */
 
         Game.ctx.clearRect(
             0,
@@ -159,9 +219,9 @@ function startEngine() {
         );
 
 
-        /* =================================
-           PROLOGUE
-        ================================= */
+        /*
+         * PROLOGUE
+         */
 
         if (
             typeof Prologue !== "undefined" &&
@@ -169,232 +229,261 @@ function startEngine() {
         ) {
 
             Prologue.update(dt);
-
             Prologue.draw();
 
-            return;
+            requestAnimationFrame(loop);
 
+            return;
         }
 
 
-        /* =================================
-           MENU / ATTENTE
-        ================================= */
+        /*
+         * MENU
+         */
 
         if (!Game.running) {
 
-            return;
+            requestAnimationFrame(loop);
 
+            return;
         }
 
 
-        /* =================================
-           GAMEPLAY
-        ================================= */
+        /*
+         * GAMEPLAY
+         */
 
         if (
             typeof updatePlayer === "function"
-        ) {
-
+        )
             updatePlayer();
-
-        }
 
 
         if (
             typeof updateQuest === "function"
-        ) {
-
+        )
             updateQuest();
-
-        }
 
 
         if (
             typeof updateNPC === "function"
-        ) {
-
+        )
             updateNPC();
-
-        }
 
 
         if (
             typeof updateItems === "function"
-        ) {
-
+        )
             updateItems();
-
-        }
 
 
         if (
             typeof updateEnemies === "function"
-        ) {
-
+        )
             updateEnemies();
-
-        }
 
 
         if (
             typeof updateBoss === "function"
-        ) {
-
+        )
             updateBoss();
 
-        }
 
-
-        /* =================================
-           AFFICHAGE
-        ================================= */
+        /*
+         * DESSIN
+         */
 
         if (
             typeof drawMap === "function"
-        ) {
-
+        )
             drawMap();
-
-        }
 
 
         if (
             typeof drawItems === "function"
-        ) {
-
+        )
             drawItems();
-
-        }
 
 
         if (
             typeof drawNPC === "function"
-        ) {
-
+        )
             drawNPC();
-
-        }
 
 
         if (
             typeof drawEnemies === "function"
-        ) {
-
+        )
             drawEnemies();
-
-        }
 
 
         if (
             typeof drawBoss === "function"
-        ) {
-
+        )
             drawBoss();
-
-        }
 
 
         if (
             typeof drawPlayer === "function"
-        ) {
-
+        )
             drawPlayer();
 
-        }
 
+        requestAnimationFrame(loop);
     }
 
 
     requestAnimationFrame(loop);
 
+
+    /*
+     * Le moteur est maintenant prêt.
+     * On retire seulement le premier écran
+     * de chargement.
+     */
+
+    setTimeout(() => {
+
+        hideLoading();
+
+    }, 400);
 }
 
 
-/* ==========================================
-   DÉMARRAGE DE LA PARTIE
-========================================== */
+/* =========================================================
+   NOUVELLE PARTIE
+========================================================= */
 
 function startGame() {
 
     console.log(
-        "Demande de nouvelle partie."
+        "Nouvelle partie..."
     );
 
-
-    /*
-     * Sécurité :
-     * les scripts doivent être chargés.
-     */
-
-    if (!Game.ready) {
-
-        console.warn(
-            "Le moteur n'est pas encore prêt."
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Masquer le menu
-     */
 
     const menu =
         document.getElementById("menu");
 
- if (menu) {
+    if (menu)
+        menu.style.display = "none";
 
-    menu.style.display = "none";
-
-}
 
     /*
-     * Le gameplay reste bloqué
-     * pendant le prologue.
+     * Pendant la cinématique,
+     * le gameplay reste arrêté.
      */
 
     Game.running = false;
 
 
     /*
-     * Lancement du prologue
+     * Évite que les anciennes quêtes
+     * apparaissent pendant la prologue.
      */
 
-    if (
-        typeof Prologue !== "undefined"
-    ) {
+    const hud =
+        document.getElementById("hud");
 
-        Prologue.start();
+    if (hud)
+        hud.style.display = "none";
 
-        console.log(
-            "Prologue lancée."
+
+    const quest =
+        document.getElementById("quest");
+
+    if (quest)
+        quest.style.display = "none";
+
+
+    const inventory =
+        document.getElementById("inventory");
+
+    if (inventory)
+        inventory.style.display = "none";
+
+
+    /*
+     * Chargement avant la cinématique.
+     */
+
+    createLoadingScreen();
+
+    updateLoading(
+        10,
+        "Préparation de l'histoire..."
+    );
+
+
+    setTimeout(() => {
+
+        updateLoading(
+            35,
+            "Les archives de Ponan s'ouvrent..."
         );
 
-    } else {
+    }, 150);
 
-        console.error(
-            "ERREUR : Prologue introuvable."
+
+    setTimeout(() => {
+
+        updateLoading(
+            65,
+            "Le passé refait surface..."
         );
 
-        /*
-         * Sécurité :
-         * si le prologue n'existe pas,
-         * on lance quand même le jeu.
-         */
+    }, 400);
 
-        Game.running = true;
 
-    }
+    setTimeout(() => {
 
+        updateLoading(
+            90,
+            "Une histoire oubliée..."
+        );
+
+    }, 650);
+
+
+    setTimeout(() => {
+
+        updateLoading(
+            100,
+            "PONAN'S LEGACY"
+        );
+
+
+        setTimeout(() => {
+
+            hideLoading();
+
+
+            if (
+                typeof Prologue !== "undefined"
+            ) {
+
+                Prologue.start();
+
+            } else {
+
+                console.error(
+                    "Prologue introuvable."
+                );
+
+                Game.running = true;
+            }
+
+        }, 350);
+
+    }, 850);
 }
 
 
-/* ==========================================
-   FIN DU PROLOGUE
-========================================== */
+window.startGame = startGame;
+
+
+/* =========================================================
+   FIN DE PROLOGUE
+========================================================= */
 
 function finishPrologue() {
 
@@ -403,61 +492,187 @@ function finishPrologue() {
     );
 
 
-    /*
-     * Le jeu devient actif.
-     */
+    if (
+        typeof Prologue !== "undefined"
+    ) {
+
+        Prologue.active = false;
+    }
+
 
     Game.running = true;
 
 
     /*
-     * On s'assure que le menu est caché.
+     * On affiche enfin le HUD.
      */
 
-    const menu =
-        document.getElementById("menu");
+    const hud =
+        document.getElementById("hud");
 
-    if (menu) {
+    if (hud)
+        hud.style.display = "flex";
 
-        menu.style.display = "none";
 
-    }
+    const quest =
+        document.getElementById("quest");
+
+    if (quest)
+        quest.style.display = "block";
 
 
     /*
-     * On s'assure que le canvas
-     * est visible.
+     * Le joueur commence réellement
+     * après la cinématique.
      */
 
-    Game.canvas.style.display =
-        "block";
+    const inventory =
+        document.getElementById("inventory");
 
-
-    /*
-     * Position de départ du joueur.
-     */
-
-    if (typeof player !== "undefined") {
-
-        player.x = 128;
-        player.y = 128;
-
-    }
-
-
-    console.log(
-        "Gameplay lancé."
-    );
-
+    if (inventory)
+        inventory.classList.add("hidden");
 }
 
 
-/* ==========================================
-   ACCÈS GLOBAL
-========================================== */
-
-window.startGame =
-    startGame;
-
 window.finishPrologue =
     finishPrologue;
+
+
+/* =========================================================
+   BOUTONS DU MENU
+========================================================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const playButton =
+            document.getElementById(
+                "playButton"
+            );
+
+
+        if (playButton) {
+
+            /*
+             * On supprime les anciens listeners
+             * impossibles à supprimer directement
+             * en utilisant un clone.
+             */
+
+            const newButton =
+                playButton.cloneNode(true);
+
+            playButton.parentNode.replaceChild(
+                newButton,
+                playButton
+            );
+
+
+            newButton.addEventListener(
+                "click",
+                startGame
+            );
+        }
+
+
+        /*
+         * CONTINUER
+         */
+
+        const continueButton =
+            document.getElementById(
+                "continueButton"
+            );
+
+
+        if (continueButton) {
+
+            continueButton.addEventListener(
+                "click",
+                () => {
+
+                    alert(
+                        "Aucune sauvegarde disponible."
+                    );
+
+                }
+            );
+        }
+
+
+        /*
+         * OPTIONS
+         */
+
+        const optionsButton =
+            document.getElementById(
+                "optionsButton"
+            );
+
+
+        if (optionsButton) {
+
+            optionsButton.addEventListener(
+                "click",
+                () => {
+
+                    alert(
+                        "Les options arrivent bientôt."
+                    );
+
+                }
+            );
+        }
+
+
+        /*
+         * CRÉDITS
+         */
+
+        const creditsButton =
+            document.getElementById(
+                "creditsButton"
+            );
+
+
+        if (creditsButton) {
+
+            creditsButton.addEventListener(
+                "click",
+                () => {
+
+                    alert(
+                        "PONAN'S LEGACY\n\n" +
+                        "Une aventure née du royaume de Ponan."
+                    );
+
+                }
+            );
+        }
+
+
+        /*
+         * QUITTER
+         */
+
+        const quitButton =
+            document.getElementById(
+                "quitButton"
+            );
+
+
+        if (quitButton) {
+
+            quitButton.addEventListener(
+                "click",
+                () => {
+
+                    window.close();
+
+                }
+            );
+        }
+
+    }
+);

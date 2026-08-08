@@ -4,8 +4,7 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
     width: 100%;
     height: 100%;
 }
@@ -13,843 +12,329 @@ body {
 body {
     overflow: hidden;
     background: #000;
+    color: #e8dfc8;
     font-family: Georgia, "Times New Roman", serif;
 }
 
-/* =========================================================
-   CANVAS
-========================================================= */
-
 #game {
     display: block;
-
     width: 100vw;
     height: 100vh;
-
     image-rendering: pixelated;
-
     background: #000;
 }
 
-
 /* =========================================================
-   MENU PRINCIPAL
+   MENU : NOIR + GRANDE BOUCHE DANS L'OMBRE
 ========================================================= */
 
 #menu {
-
     position: fixed;
-
     inset: 0;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: flex-start;
-
     align-items: center;
-
     background: #000;
-
     color: #d8c9a3;
-
     z-index: 999;
-
     overflow: hidden;
-
     isolation: isolate;
-
-    animation: menuAppear 1.8s ease forwards;
+    animation: menuFadeIn 1.2s ease forwards;
 }
 
-
-/* =========================================================
-   LÉGÈRE BRUME DU MENU
-========================================================= */
-
+/* Halo presque invisible derrière la bouche */
 #menu::before {
-
     content: "";
-
     position: absolute;
-
-    width: 65vw;
-    height: 65vw;
-
-    max-width: 900px;
-    max-height: 900px;
-
-    left: 50%;
-    top: 46%;
-
+    width: min(900px, 80vw);
+    height: min(500px, 55vh);
+    left: 69%;
+    top: 52%;
     transform: translate(-50%, -50%);
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(55, 48, 40, 0.10) 0%,
-            rgba(20, 18, 16, 0.045) 35%,
-            transparent 70%
-        );
-
+    background: radial-gradient(
+        ellipse,
+        rgba(74, 58, 43, .10) 0%,
+        rgba(25, 20, 18, .045) 38%,
+        transparent 72%
+    );
     pointer-events: none;
-
     z-index: -3;
-
-    animation: breathing 7s ease-in-out infinite;
+    animation: breathing 8s ease-in-out infinite;
 }
 
-
-/* =========================================================
-   IMMENSE BOUCHE DANS L'OMBRE
-========================================================= */
-
+/* La bouche : aucune tête, aucun œil, uniquement le sourire */
 #menu::after {
-
     content: "";
-
     position: absolute;
-
-    width: min(720px, 65vw);
-
-    height: min(260px, 24vw);
-
-    left: 68%;
-
-    top: 48%;
-
-    transform:
-        translate(-50%, -50%)
-        rotate(0deg);
-
-    border-top:
-        8px solid rgba(125, 112, 91, 0.22);
-
-    border-radius:
-        50% 50% 45% 45%;
-
+    left: 69%;
+    top: 51%;
+    width: min(650px, 58vw);
+    height: min(190px, 20vh);
+    transform: translate(-50%, -50%);
+    border-top: 8px solid rgba(137, 121, 94, .20);
+    border-radius: 50% 50% 48% 48%;
     box-shadow:
-
-        0 -12px 45px
-        rgba(70, 60, 48, 0.04),
-
-        inset 0 -25px 35px
-        rgba(0, 0, 0, 0.9);
-
-    opacity: 0.75;
-
+        0 24px 50px rgba(0, 0, 0, .95),
+        0 0 40px rgba(91, 65, 43, .035),
+        inset 0 -20px 35px rgba(0, 0, 0, .9);
+    opacity: .82;
     pointer-events: none;
-
     z-index: -1;
-
-    animation:
-        mouthBreathing
-        8s
-        ease-in-out
-        infinite;
+    animation: mouthBreath 7s ease-in-out infinite;
 }
-
-
-/* =========================================================
-   TITRE
-========================================================= */
 
 #menu h1 {
-
     position: relative;
-
-    margin-top: 9vh;
-
+    margin-top: 8vh;
     margin-bottom: 8px;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size:
-        clamp(42px, 5vw, 72px);
-
-    font-weight: bold;
-
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 700;
     letter-spacing: 5px;
-
     text-align: center;
-
-    color: #d7b96d;
-
+    color: #d6b86d;
     text-shadow:
-
-        0 0 8px
-        rgba(207, 170, 87, 0.25),
-
-        0 0 30px
-        rgba(160, 120, 50, 0.10),
-
-        2px 3px 4px
-        rgba(0, 0, 0, 0.95);
-
+        0 0 10px rgba(210, 171, 87, .22),
+        0 0 32px rgba(170, 125, 50, .08),
+        2px 3px 4px rgba(0, 0, 0, .95);
     z-index: 5;
-
-    animation:
-        titleAppear
-        2s
-        ease
-        forwards;
 }
-
-
-/* =========================================================
-   SOUS-TITRE
-========================================================= */
 
 #menu h2 {
-
     position: relative;
-
-    margin-bottom: 7vh;
-
-    font-size:
-        clamp(13px, 1.3vw, 18px);
-
+    margin-bottom: 6vh;
+    font-size: clamp(12px, 1.25vw, 17px);
     font-weight: normal;
-
     letter-spacing: 5px;
-
     text-transform: uppercase;
-
-    color:
-        rgba(190, 178, 150, 0.65);
-
-    text-shadow:
-        0 2px 5px #000;
-
+    color: rgba(196, 183, 153, .62);
     z-index: 5;
-
-    animation:
-        subtitleAppear
-        2.5s
-        ease
-        forwards;
 }
-
-
-/* =========================================================
-   LIGNE DÉCORATIVE
-========================================================= */
 
 #menu h2::after {
-
     content: "◆";
-
     display: block;
-
-    margin-top: 15px;
-
-    font-size: 9px;
-
-    color: rgba(194, 159, 84, 0.65);
-
+    margin-top: 13px;
+    font-size: 8px;
+    color: rgba(200, 163, 89, .60);
 }
 
+#menu button {
+    position: relative;
+    width: min(390px, 72vw);
+    min-height: 54px;
+    margin: 6px;
+    padding: 12px 30px;
+    border: 1px solid rgba(154, 132, 88, .30);
+    border-left: 2px solid rgba(154, 132, 88, .16);
+    border-right: 2px solid rgba(154, 132, 88, .16);
+    background: rgba(4, 4, 5, .70);
+    color: rgba(207, 197, 174, .82);
+    font: normal 18px Georgia, "Times New Roman", serif;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: .25s ease;
+    z-index: 5;
+}
+
+#menu button:hover {
+    color: #ecd79b;
+    background: rgba(31, 26, 21, .82);
+    border-color: rgba(205, 169, 91, .70);
+    transform: translateX(5px);
+    box-shadow: 0 0 22px rgba(170, 125, 50, .08);
+}
+
+#menu button:active {
+    transform: translateX(5px) scale(.98);
+}
+
+/* Le bouton Quitter est retiré du menu principal */
+#quitButton {
+    display: none;
+}
+
+#menu .credits {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    color: rgba(175, 164, 143, .30);
+    font-size: 11px;
+    line-height: 1.8;
+    letter-spacing: 2px;
+    z-index: 5;
+}
 
 /* =========================================================
-   BOUTONS
+   LOADING
 ========================================================= */
 
-#menu button {
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    color: #d7b96d;
+    z-index: 5000;
+    opacity: 1;
+    transition: opacity .6s ease;
+}
 
-    position: relative;
-
-    width:
-        min(390px, 75vw);
-
-    min-height: 55px;
-
-    margin: 7px;
-
-    padding:
-        13px 35px;
-
-    background:
-        rgba(4, 4, 5, 0.72);
-
-    color:
-        rgba(205, 196, 174, 0.82);
-
-    border:
-
-        1px solid
-        rgba(150, 130, 91, 0.32);
-
-    border-left:
-
-        2px solid
-        rgba(150, 130, 91, 0.18);
-
-    border-right:
-
-        2px solid
-        rgba(150, 130, 91, 0.18);
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size:
-        clamp(16px, 1.5vw, 20px);
-
-    font-weight: normal;
-
-    letter-spacing: 3px;
-
-    cursor: pointer;
-
-    transition:
-
-        color .25s ease,
-
-        background .25s ease,
-
-        border-color .25s ease,
-
-        transform .25s ease,
-
-        box-shadow .25s ease;
-
-    z-index: 5;
-
-    animation:
-        buttonAppear
-        .8s
-        ease
-        forwards;
-
+#loading-screen.hidden {
+    display: flex !important;
     opacity: 0;
+    pointer-events: none;
+}
 
+#loading-title {
+    font: bold 28px Georgia, serif;
+    letter-spacing: 5px;
+    margin-bottom: 24px;
+}
+
+#loading-bar {
+    width: min(360px, 65vw);
+    height: 3px;
+    background: rgba(255,255,255,.12);
     overflow: hidden;
 }
 
-
-/* Ligne lumineuse intérieure */
-
-#menu button::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 2px;
-
+#loading-progress {
+    width: 0%;
     height: 100%;
-
-    background:
-        rgba(204, 169, 91, 0.0);
-
-    transition:
-        background .25s ease;
-
+    background: #caa85c;
+    transition: width .35s ease;
 }
 
-
-/* Petit reflet */
-
-#menu button::after {
-
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-
-    left: -100%;
-
-    width: 70%;
-
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(210, 184, 120, 0.08),
-            transparent
-        );
-
-    transition:
-        left .6s ease;
-
+#loading-text {
+    margin-top: 13px;
+    font: 12px Georgia, serif;
+    letter-spacing: 3px;
+    color: rgba(220,210,188,.45);
 }
-
-
-/* =========================================================
-   HOVER
-========================================================= */
-
-#menu button:hover {
-
-    color: #e3ca8b;
-
-    background:
-        rgba(30, 26, 21, 0.78);
-
-    border-color:
-        rgba(193, 157, 82, 0.65);
-
-    transform:
-        translateX(5px);
-
-    box-shadow:
-
-        0 0 18px
-        rgba(157, 120, 52, 0.08);
-
-}
-
-
-#menu button:hover::before {
-
-    background:
-        rgba(208, 172, 91, 0.85);
-
-}
-
-
-#menu button:hover::after {
-
-    left: 130%;
-
-}
-
-
-/* =========================================================
-   CLIC
-========================================================= */
-
-#menu button:active {
-
-    transform:
-        translateX(5px)
-        scale(0.98);
-
-    background:
-        rgba(65, 53, 35, 0.5);
-
-}
-
-
-/* =========================================================
-   ORDRE D'APPARITION
-========================================================= */
-
-#menu button:nth-of-type(1) {
-    animation-delay: .35s;
-}
-
-#menu button:nth-of-type(2) {
-    animation-delay: .48s;
-}
-
-#menu button:nth-of-type(3) {
-    animation-delay: .61s;
-}
-
-#menu button:nth-of-type(4) {
-    animation-delay: .74s;
-}
-
-#menu button:nth-of-type(5) {
-    animation-delay: .87s;
-}
-
-
-/* =========================================================
-   TEXTE DU BAS
-========================================================= */
-
-#menu .credits {
-
-    position: absolute;
-
-    bottom: 28px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    width: 90%;
-
-    text-align: center;
-
-    color:
-        rgba(170, 160, 140, 0.35);
-
-    font-family:
-        Georgia,
-        serif;
-
-    font-size: 12px;
-
-    line-height: 1.8;
-
-    letter-spacing: 2px;
-
-    z-index: 5;
-
-}
-
 
 /* =========================================================
    HUD
 ========================================================= */
 
 #hud {
-
     position: fixed;
-
     top: 15px;
     left: 15px;
-
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
-
     padding: 15px 20px;
-
-    background:
-        rgba(5, 5, 5, 0.72);
-
-    color: #eee;
-
-    border:
-        2px solid
-        rgba(186, 151, 74, 0.7);
-
+    background: rgba(5,5,5,.72);
+    color: white;
+    border: 2px solid rgba(186,151,74,.7);
     border-radius: 4px;
-
-    backdrop-filter:
-        blur(5px);
-
+    backdrop-filter: blur(5px);
     z-index: 100;
-
-    box-shadow:
-        0 5px 20px
-        rgba(0, 0, 0, 0.45);
 }
 
-
-#life,
-#quest,
-#pieces {
-
+#life, #quest, #pieces {
     font-size: 18px;
-
     font-weight: bold;
-
 }
-
 
 /* =========================================================
    DIALOGUE
 ========================================================= */
 
 #dialogue {
-
     position: fixed;
-
     left: 50%;
     bottom: 20px;
-
-    transform:
-        translateX(-50%);
-
+    transform: translateX(-50%);
     width: 78%;
-
     min-height: 140px;
-
-    background:
-        rgba(10, 9, 8, 0.96);
-
-    color: #eee;
-
-    border:
-        2px solid
-        rgba(193, 158, 82, 0.85);
-
+    background: rgba(10,9,8,.96);
+    color: white;
+    border: 2px solid rgba(193,158,82,.85);
     border-radius: 4px;
-
     padding: 22px;
-
     z-index: 250;
-
-    box-shadow:
-        0 0 35px
-        rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 35px rgba(0,0,0,.8);
 }
-
 
 #dialogueText {
-
     font-size: 24px;
-
     line-height: 1.5;
-
 }
-
 
 #dialogue span {
-
     float: right;
-
     margin-top: 15px;
-
-    color:
-        #d4b46b;
-
+    color: #d4b46b;
     font-weight: bold;
-
 }
-
 
 /* =========================================================
    INVENTAIRE
 ========================================================= */
 
 #inventory {
-
     position: fixed;
-
     top: 50%;
     left: 50%;
-
-    transform:
-        translate(-50%, -50%);
-
+    transform: translate(-50%,-50%);
     width: 500px;
-
     min-height: 360px;
-
-    background:
-        #11100e;
-
-    color:
-        #e8dfcc;
-
-    border:
-        3px solid
-        #80683c;
-
+    background: #11100e;
+    color: #e8dfcc;
+    border: 3px solid #80683c;
     border-radius: 4px;
-
     padding: 25px;
-
     z-index: 400;
-
-    box-shadow:
-        0 0 50px
-        rgba(0, 0, 0, .8);
+    box-shadow: 0 0 50px rgba(0,0,0,.8);
 }
-
 
 #inventory h2 {
-
     text-align: center;
-
     margin-bottom: 25px;
-
-    color:
-        #d5b66d;
-
-    font-family:
-        Georgia,
-        serif;
-
+    color: #d5b66d;
 }
-
 
 #inventory ul {
-
     list-style: none;
-
 }
-
 
 #inventory li {
-
     font-size: 24px;
-
     margin: 15px 0;
-
     padding: 10px;
-
-    border-bottom:
-        1px solid
-        rgba(150, 130, 100, .25);
-
+    border-bottom: 1px solid rgba(150,130,100,.25);
 }
-
-
-/* =========================================================
-   HIDDEN
-========================================================= */
 
 .hidden {
     display: none !important;
 }
 
-
-/* =========================================================
-   ANIMATIONS
-========================================================= */
-
-@keyframes menuAppear {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
+@keyframes menuFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
-
-
-@keyframes titleAppear {
-
-    from {
-        opacity: 0;
-        transform:
-            translateY(-15px);
-    }
-
-    to {
-        opacity: 1;
-        transform:
-            translateY(0);
-    }
-
-}
-
-
-@keyframes subtitleAppear {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
-}
-
-
-@keyframes buttonAppear {
-
-    from {
-        opacity: 0;
-        transform:
-            translateY(12px);
-    }
-
-    to {
-        opacity: 1;
-        transform:
-            translateY(0);
-    }
-
-}
-
 
 @keyframes breathing {
-
-    0%,
-    100% {
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-        opacity: .65;
-    }
-
-    50% {
-        transform:
-            translate(-50%, -50%)
-            scale(1.08);
-        opacity: 1;
-    }
-
+    0%,100% { transform: translate(-50%,-50%) scale(1); opacity: .55; }
+    50% { transform: translate(-50%,-50%) scale(1.05); opacity: .9; }
 }
 
-
-@keyframes mouthBreathing {
-
-    0%,
-    100% {
-        opacity: .45;
-        transform:
-            translate(-50%, -50%)
-            scaleX(1);
-    }
-
-    50% {
-        opacity: .78;
-        transform:
-            translate(-50%, -50%)
-            scaleX(1.025);
-    }
-
+@keyframes mouthBreath {
+    0%,100% { opacity: .38; transform: translate(-50%,-50%) scaleX(1); }
+    50% { opacity: .72; transform: translate(-50%,-50%) scaleX(1.025); }
 }
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
 
 @media (max-width: 800px) {
-
-    #menu h1 {
-
-        font-size: 38px;
-
-        letter-spacing: 3px;
-
-    }
-
-    #menu h2 {
-
-        font-size: 11px;
-
-        letter-spacing: 3px;
-
-        margin-bottom: 5vh;
-
-    }
-
-    #menu button {
-
-        width: 75vw;
-
-        min-height: 48px;
-
-        font-size: 15px;
-
-    }
-
-    #menu::after {
-
-        left: 70%;
-
-        opacity: .55;
-
-    }
-
+    #menu h1 { font-size: 38px; letter-spacing: 3px; }
+    #menu h2 { font-size: 10px; letter-spacing: 3px; }
+    #menu button { width: 76vw; font-size: 15px; }
+    #menu::after { left: 72%; opacity: .55; }
 }
