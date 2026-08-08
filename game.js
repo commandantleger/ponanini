@@ -353,130 +353,112 @@ function startEngine() {
 /* =========================================================
    NOUVELLE PARTIE
 ========================================================= */
-
 function startGame() {
 
-    console.log(
-        "Nouvelle partie..."
-    );
+    console.log("Nouvelle partie...");
 
-
-    const menu =
-        document.getElementById("menu");
+    const menu = document.getElementById("menu");
 
     if (menu)
         menu.style.display = "none";
 
-
-    /*
-     * Pendant la cinématique,
-     * le gameplay reste arrêté.
-     */
-
     Game.running = false;
 
-
-    /*
-     * Évite que les anciennes quêtes
-     * apparaissent pendant la prologue.
-     */
-
-    const hud =
-        document.getElementById("hud");
+    const hud = document.getElementById("hud");
 
     if (hud)
         hud.style.display = "none";
 
-
-    const quest =
-        document.getElementById("quest");
+    const quest = document.getElementById("quest");
 
     if (quest)
         quest.style.display = "none";
 
-
-    const inventory =
-        document.getElementById("inventory");
+    const inventory = document.getElementById("inventory");
 
     if (inventory)
         inventory.style.display = "none";
 
 
-    /*
-     * Chargement avant la cinématique.
-     */
-
     createLoadingScreen();
 
     updateLoading(
-        10,
-        "Préparation de l'histoire..."
+        5,
+        "Les chroniques de Ponan..."
     );
 
 
     setTimeout(() => {
 
         updateLoading(
-            35,
-            "Les archives de Ponan s'ouvrent..."
+            22,
+            "Le royaume s'éveille..."
         );
 
-    }, 150);
+    }, 450);
 
 
     setTimeout(() => {
 
         updateLoading(
-            65,
-            "Le passé refait surface..."
+            43,
+            "Les archives royales sont ouvertes..."
         );
 
-    }, 400);
+    }, 950);
 
 
     setTimeout(() => {
 
         updateLoading(
-            90,
-            "Une histoire oubliée..."
+            67,
+            "Une ancienne trahison refait surface..."
         );
 
-    }, 650);
+    }, 1450);
+
+
+    setTimeout(() => {
+
+        updateLoading(
+            84,
+            "Le destin de Ponanini III..."
+        );
+
+    }, 2050);
 
 
     setTimeout(() => {
 
         updateLoading(
             100,
-            "PONAN'S LEGACY"
+            "L'histoire commence."
         );
 
-
-        setTimeout(() => {
-
-            hideLoading();
+    }, 2550);
 
 
-            if (
-                typeof Prologue !== "undefined"
-            ) {
+    setTimeout(() => {
 
-                Prologue.start();
+        hideLoading();
 
-            } else {
+        if (
+            typeof Prologue !== "undefined"
+        ) {
 
-                console.error(
-                    "Prologue introuvable."
-                );
+            Prologue.start();
 
-                Game.running = true;
-            }
+        } else {
 
-        }, 350);
+            console.error(
+                "Prologue introuvable."
+            );
 
-    }, 850);
+            Game.running = true;
+        }
+
+    }, 3200);
 }
-
 
 window.startGame = startGame;
 
