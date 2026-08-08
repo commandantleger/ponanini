@@ -84,7 +84,9 @@ const Prologue = {
                 "du royaume de Ponan. " +
                 "Un roi aimé de son peuple.",
 
-            duration: 9500,
+            duration: 12000,
+
+	    visual: "throne",
 
             audio: "assets/sounds/prologue/scene3.mp3"
         },
@@ -583,6 +585,973 @@ updateVisuals(dt) {
             particle.x = 0;
 
     });
+
+},
+
+
+drawThroneRoom() {
+
+    const ctx = Game.ctx;
+
+    const width = Game.canvas.width;
+    const height = Game.canvas.height;
+
+    /*
+     * ============================
+     * CAMERA CINÉMATIQUE
+     * ============================
+     */
+
+    const zoom = Math.min(
+        1.12,
+        1 + this.visualTime * 0.008
+    );
+
+    ctx.save();
+
+    ctx.translate(
+        width / 2,
+        height / 2
+    );
+
+    ctx.scale(
+        zoom,
+        zoom
+    );
+
+    ctx.translate(
+        -width / 2,
+        -height / 2
+    );
+
+
+    /*
+     * ============================
+     * FOND
+     * ============================
+     */
+
+    ctx.fillStyle = "#070b14";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * ============================
+     * MURS
+     * ============================
+     */
+
+    ctx.fillStyle = "#151c29";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height * 0.78
+    );
+
+
+    /*
+     * PIERRES
+     */
+
+    ctx.strokeStyle =
+        "rgba(60,75,95,.45)";
+
+    ctx.lineWidth = 2;
+
+    const stoneSize = 70;
+
+    for (
+        let y = 0;
+        y < height * 0.78;
+        y += stoneSize
+    ) {
+
+        for (
+            let x = 0;
+            x < width;
+            x += stoneSize
+        ) {
+
+            const offset =
+                (Math.floor(y / stoneSize) % 2)
+                    * 35;
+
+            ctx.strokeRect(
+                x - offset,
+                y,
+                stoneSize,
+                stoneSize
+            );
+
+        }
+
+    }
+
+
+    /*
+     * ============================
+     * GRANDES ARCHES
+     * ============================
+     */
+
+    ctx.strokeStyle = "#303b4d";
+
+    ctx.lineWidth = 12;
+
+    const arches = [
+        width * .15,
+        width * .50,
+        width * .85
+    ];
+
+    arches.forEach(x => {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x - 110,
+            height * .58
+        );
+
+        ctx.lineTo(
+            x - 110,
+            height * .20
+        );
+
+        ctx.quadraticCurveTo(
+            x,
+            height * .03,
+            x + 110,
+            height * .20
+        );
+
+        ctx.lineTo(
+            x + 110,
+            height * .58
+        );
+
+        ctx.stroke();
+
+    });
+
+
+    /*
+     * ============================
+     * FENÊTRES
+     * ============================
+     */
+
+    this.drawThroneWindow(
+        width * .18,
+        height * .15
+    );
+
+    this.drawThroneWindow(
+        width * .82,
+        height * .15
+    );
+
+
+    /*
+     * ============================
+     * TAPIS
+     * ============================
+     */
+
+    ctx.fillStyle = "#641d26";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        width * .42,
+        height * .48
+    );
+
+    ctx.lineTo(
+        width * .58,
+        height * .48
+    );
+
+    ctx.lineTo(
+        width * .75,
+        height
+    );
+
+    ctx.lineTo(
+        width * .25,
+        height
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+     * BORDURE DU TAPIS
+     */
+
+    ctx.strokeStyle = "#c29a38";
+
+    ctx.lineWidth = 5;
+
+    ctx.stroke();
+
+
+    /*
+     * ============================
+     * TRÔNE
+     * ============================
+     */
+
+    this.drawThrone(
+        width / 2,
+        height * .42
+    );
+
+
+    /*
+     * ============================
+     * PONANINI III
+     * ============================
+     */
+
+    this.drawDuckKing(
+        width / 2,
+        height * .36
+    );
+
+
+    /*
+     * ============================
+     * GARDES
+     * ============================
+     */
+
+    this.drawGuard(
+        width * .25,
+        height * .58
+    );
+
+    this.drawGuard(
+        width * .75,
+        height * .58
+    );
+
+
+    /*
+     * ============================
+     * TORCHES
+     * ============================
+     */
+
+    this.drawTorch(
+        width * .08,
+        height * .55
+    );
+
+    this.drawTorch(
+        width * .92,
+        height * .55
+    );
+
+
+    /*
+     * ============================
+     * LUMIÈRE
+     * ============================
+     */
+
+    const light =
+        ctx.createRadialGradient(
+            width / 2,
+            height * .35,
+            30,
+            width / 2,
+            height * .35,
+            width * .65
+        );
+
+    light.addColorStop(
+        0,
+        "rgba(220,175,70,.13)"
+    );
+
+    light.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    ctx.fillStyle = light;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.restore();
+
+},
+
+drawThroneWindow(x, y) {
+
+    const ctx = Game.ctx;
+
+    ctx.fillStyle = "#050914";
+
+    ctx.fillRect(
+        x - 45,
+        y,
+        90,
+        220
+    );
+
+    ctx.strokeStyle = "#9d7a32";
+
+    ctx.lineWidth = 5;
+
+    ctx.strokeRect(
+        x - 45,
+        y,
+        90,
+        220
+    );
+
+    /*
+     * lumière extérieure
+     */
+
+    ctx.fillStyle =
+        "rgba(50,100,180,.25)";
+
+    ctx.fillRect(
+        x - 38,
+        y + 8,
+        76,
+        204
+    );
+
+    /*
+     * vitraux
+     */
+
+    ctx.strokeStyle =
+        "rgba(190,160,70,.5)";
+
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y + 220);
+
+    ctx.moveTo(
+        x - 45,
+        y + 75
+    );
+
+    ctx.lineTo(
+        x + 45,
+        y + 75
+    );
+
+    ctx.moveTo(
+        x - 45,
+        y + 150
+    );
+
+    ctx.lineTo(
+        x + 45,
+        y + 150
+    );
+
+    ctx.stroke();
+
+},
+
+
+drawThrone(x, y) {
+
+    const ctx = Game.ctx;
+
+    /*
+     * dossier
+     */
+
+    ctx.fillStyle = "#5a4520";
+
+    ctx.fillRect(
+        x - 85,
+        y - 100,
+        170,
+        150
+    );
+
+    /*
+     * intérieur
+     */
+
+    ctx.fillStyle = "#571c27";
+
+    ctx.fillRect(
+        x - 65,
+        y - 82,
+        130,
+        115
+    );
+
+    /*
+     * accoudoirs
+     */
+
+    ctx.fillStyle = "#9d772b";
+
+    ctx.fillRect(
+        x - 100,
+        y + 15,
+        35,
+        25
+    );
+
+    ctx.fillRect(
+        x + 65,
+        y + 15,
+        35,
+        25
+    );
+
+    /*
+     * base
+     */
+
+    ctx.fillRect(
+        x - 105,
+        y + 35,
+        210,
+        25
+    );
+
+    /*
+     * emblème du royaume
+     */
+
+    ctx.fillStyle = "#e1b83d";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 30,
+        18,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle = "#571c27";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 30,
+        12,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+},
+
+
+drawDuckKing(x, y) {
+
+    const ctx = Game.ctx;
+
+    /*
+     * CAPE
+     */
+
+    ctx.fillStyle = "#17131a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 58,
+        y + 30
+    );
+
+    ctx.lineTo(
+        x + 58,
+        y + 30
+    );
+
+    ctx.lineTo(
+        x + 75,
+        y + 125
+    );
+
+    ctx.lineTo(
+        x - 75,
+        y + 125
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+     * CORPS
+     */
+
+    ctx.fillStyle = "#202936";
+
+    ctx.fillRect(
+        x - 42,
+        y + 35,
+        84,
+        85
+    );
+
+
+    /*
+     * TÊTE DU CANARD
+     */
+
+    ctx.fillStyle = "#d7b94b";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        43,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * PLUMAGE SOMBRE
+     */
+
+    ctx.fillStyle = "#1a1c22";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 8,
+        39,
+        Math.PI,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * YEUX
+     */
+
+    ctx.fillStyle = "#f4e7b1";
+
+    ctx.fillRect(
+        x - 22,
+        y - 5,
+        12,
+        9
+    );
+
+    ctx.fillRect(
+        x + 10,
+        y - 5,
+        12,
+        9
+    );
+
+
+    /*
+     * PUPILLES
+     */
+
+    ctx.fillStyle = "#090909";
+
+    ctx.fillRect(
+        x - 17,
+        y - 3,
+        5,
+        7
+    );
+
+    ctx.fillRect(
+        x + 15,
+        y - 3,
+        5,
+        7
+    );
+
+
+    /*
+     * BEC
+     */
+
+    ctx.fillStyle = "#d68b25";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 25,
+        y + 10
+    );
+
+    ctx.lineTo(
+        x,
+        y + 27
+    );
+
+    ctx.lineTo(
+        x + 25,
+        y + 10
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+     * COURONNE
+     */
+
+    ctx.fillStyle = "#d8aa2d";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x - 40,
+        y - 38
+    );
+
+    ctx.lineTo(
+        x - 25,
+        y - 75
+    );
+
+    ctx.lineTo(
+        x - 8,
+        y - 48
+    );
+
+    ctx.lineTo(
+        x + 5,
+        y - 78
+    );
+
+    ctx.lineTo(
+        x + 20,
+        y - 48
+    );
+
+    ctx.lineTo(
+        x + 40,
+        y - 70
+    );
+
+    ctx.lineTo(
+        x + 38,
+        y - 30
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+     * GEMME ROUGE
+     */
+
+    ctx.fillStyle = "#a83232";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 51,
+        6,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * COLLIER
+     */
+
+    ctx.strokeStyle = "#d8aa2d";
+
+    ctx.lineWidth = 5;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y + 32,
+        35,
+        0,
+        Math.PI
+    );
+
+    ctx.stroke();
+
+
+    /*
+     * GEMME DU COLLIER
+     */
+
+    ctx.fillStyle = "#9d2933";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x,
+        y + 35
+    );
+
+    ctx.lineTo(
+        x + 9,
+        y + 48
+    );
+
+    ctx.lineTo(
+        x,
+        y + 61
+    );
+
+    ctx.lineTo(
+        x - 9,
+        y + 48
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+},
+
+
+drawGuard(x, y) {
+
+    const ctx = Game.ctx;
+
+    /*
+     * silhouette
+     */
+
+    ctx.fillStyle = "#090c12";
+
+    ctx.fillRect(
+        x - 20,
+        y,
+        40,
+        90
+    );
+
+
+    /*
+     * casque
+     */
+
+    ctx.fillStyle = "#303949";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 10,
+        25,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * visière
+     */
+
+    ctx.fillStyle = "#080a0d";
+
+    ctx.fillRect(
+        x - 20,
+        y - 5,
+        40,
+        10
+    );
+
+
+    /*
+     * lance
+     */
+
+    ctx.strokeStyle = "#81785d";
+
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + 30,
+        y + 90
+    );
+
+    ctx.lineTo(
+        x + 30,
+        y - 55
+    );
+
+    ctx.stroke();
+
+
+    /*
+     * pointe
+     */
+
+    ctx.fillStyle = "#c7b98b";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + 30,
+        y - 70
+    );
+
+    ctx.lineTo(
+        x + 23,
+        y - 52
+    );
+
+    ctx.lineTo(
+        x + 37,
+        y - 52
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+},
+
+
+drawTorch(x, y) {
+
+    const ctx = Game.ctx;
+
+    const flicker =
+        Math.sin(
+            Date.now() / 100
+        ) * 4;
+
+
+    /*
+     * support
+     */
+
+    ctx.fillStyle = "#4b3320";
+
+    ctx.fillRect(
+        x - 6,
+        y,
+        12,
+        70
+    );
+
+
+    /*
+     * halo
+     */
+
+    const glow =
+        ctx.createRadialGradient(
+            x,
+            y - 10,
+            5,
+            x,
+            y - 10,
+            100
+        );
+
+    glow.addColorStop(
+        0,
+        "rgba(255,180,40,.25)"
+    );
+
+    glow.addColorStop(
+        1,
+        "rgba(255,120,20,0)"
+    );
+
+    ctx.fillStyle = glow;
+
+    ctx.fillRect(
+        x - 100,
+        y - 110,
+        200,
+        200
+    );
+
+
+    /*
+     * flamme
+     */
+
+    ctx.fillStyle = "#f0a42a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 12 + flicker,
+        15,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle = "#ffe28a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - 15 + flicker,
+        8,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
 
 },
 
@@ -1130,11 +2099,13 @@ drawKingdom() {
         const current =
             this.scenes[this.scene];
 
-if (
-    current.visual === "kingdom"
-) {
+if (current.visual === "kingdom") {
 
     this.drawKingdom();
+
+} else if (current.visual === "throne") {
+
+    this.drawThroneRoom();
 
 } else {
 
