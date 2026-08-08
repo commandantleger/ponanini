@@ -22,24 +22,41 @@
 
         <h1>🦆 PONAN'S LEGACY</h1>
 
-        <h2>Le Royaume des Canards</h2>
+        <h2>L'Héritage des Plumes</h2>
 
         <button id="playButton">
-            ▶ JOUER
+            ▶ NOUVELLE PARTIE
+        </button>
+
+        <button id="continueButton">
+            ▶ CONTINUER
+        </button>
+
+        <button id="optionsButton">
+            ⚙ OPTIONS
+        </button>
+
+        <button id="creditsButton">
+            ★ CRÉDITS
+        </button>
+
+        <button id="quitButton">
+            ✕ QUITTER
         </button>
 
         <p class="credits">
-            Trouvez les 3 objets du costume.<br>
-            Réparez le portail.<br>
-            Traversez la forêt.<br>
-            Vainquez le Seigneur Démon.
+            Un royaume.<br>
+            Une trahison.<br>
+            Un héritage oublié.
         </p>
 
     </div>
 
+
     <!-- ================= JEU ================= -->
 
     <canvas id="game"></canvas>
+
 
     <!-- ================= HUD ================= -->
 
@@ -59,6 +76,7 @@
 
     </div>
 
+
     <!-- ================= DIALOGUE ================= -->
 
     <div id="dialogue" class="hidden">
@@ -68,6 +86,7 @@
         <span>Appuie sur E</span>
 
     </div>
+
 
     <!-- ================= INVENTAIRE ================= -->
 
@@ -79,18 +98,36 @@
 
     </div>
 
-    <!-- ================= JEU ================= -->
 
+    <!-- ================= SCRIPTS ================= -->
+
+    <!-- La prologue est chargée AVANT le moteur -->
+    <script src="prologue.js"></script>
+
+    <!-- Le moteur charge ensuite le reste -->
     <script src="game.js"></script>
+
+
+    <!-- ================= MENU ================= -->
 
     <script>
 
-        document.getElementById("playButton").addEventListener("click", () => {
+        const playButton =
+            document.getElementById("playButton");
 
-            document.getElementById("menu").style.display = "none";
+        playButton.addEventListener("click", () => {
 
-            if (window.Game)
-                Game.running = true;
+            if (typeof startGame === "function") {
+
+                startGame();
+
+            } else {
+
+                console.error(
+                    "startGame() n'existe pas."
+                );
+
+            }
 
         });
 

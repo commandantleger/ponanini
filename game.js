@@ -13,8 +13,9 @@ window.addEventListener("resize", () => {
 
 const Game = {
 
-    canvas,
-    ctx,
+    canvas: canvas,
+
+    ctx: ctx,
 
     tileSize: 64,
 
@@ -29,6 +30,11 @@ const Game = {
 
 window.Game = Game;
 
+
+/* ==========================================
+   CHARGEMENT DES SCRIPTS DU JEU
+========================================== */
+
 const scripts = [
 
     "map.js",
@@ -38,8 +44,7 @@ const scripts = [
     "ui.js",
     "quest.js",
     "enemy.js",
-    "boss.js",
-    "prologue.js"
+    "boss.js"
 
 ];
 
@@ -56,15 +61,26 @@ scripts.forEach(file => {
 
         loaded++;
 
-        if (loaded === scripts.length)
+        console.log(
+            "Chargé : " + file
+        );
+
+        if (loaded === scripts.length) {
+
+            console.log(
+                "Tous les scripts sont chargés."
+            );
+
             startEngine();
+
+        }
 
     };
 
     script.onerror = () => {
 
         console.error(
-            "Impossible de charger : " + file
+            "ERREUR : impossible de charger " + file
         );
 
     };
@@ -73,7 +89,14 @@ scripts.forEach(file => {
 
 });
 
+
+/* ==========================================
+   MOTEUR
+========================================== */
+
 function startEngine() {
+
+    console.log("Moteur démarré.");
 
     function loop(time) {
 
@@ -82,19 +105,21 @@ function startEngine() {
         Game.ctx.clearRect(
             0,
             0,
-            canvas.width,
-            canvas.height
+            Game.canvas.width,
+            Game.canvas.height
         );
 
-        /*
-         * CINÉMATIQUE
-         */
 
-        if (Prologue.active) {
+        /* =================================
+           PROLOGUE
+        ================================= */
 
-            Prologue.update(
-                1 / 60
-            );
+        if (
+            typeof Prologue !== "undefined" &&
+            Prologue.active
+        ) {
+
+            Prologue.update(1 / 60);
 
             Prologue.draw();
 
@@ -102,55 +127,95 @@ function startEngine() {
 
         }
 
-        /*
-         * MENU
-         */
 
-        if (!Game.running)
+        /* =================================
+           MENU
+        ================================= */
+
+        if (!Game.running) {
+
             return;
 
-        /*
-         * GAMEPLAY
-         */
+        }
 
-        if (typeof updatePlayer === "function")
+
+        /* =================================
+           GAMEPLAY
+        ================================= */
+
+        if (
+            typeof updatePlayer === "function"
+        )
             updatePlayer();
 
-        if (typeof updateQuest === "function")
+
+        if (
+            typeof updateQuest === "function"
+        )
             updateQuest();
 
-        if (typeof updateNPC === "function")
+
+        if (
+            typeof updateNPC === "function"
+        )
             updateNPC();
 
-        if (typeof updateItems === "function")
+
+        if (
+            typeof updateItems === "function"
+        )
             updateItems();
 
-        if (typeof updateEnemies === "function")
+
+        if (
+            typeof updateEnemies === "function"
+        )
             updateEnemies();
 
-        if (typeof updateBoss === "function")
+
+        if (
+            typeof updateBoss === "function"
+        )
             updateBoss();
 
-        /*
-         * DRAW
-         */
 
-        if (typeof drawMap === "function")
+        /* =================================
+           AFFICHAGE
+        ================================= */
+
+        if (
+            typeof drawMap === "function"
+        )
             drawMap();
 
-        if (typeof drawItems === "function")
+
+        if (
+            typeof drawItems === "function"
+        )
             drawItems();
 
-        if (typeof drawNPC === "function")
+
+        if (
+            typeof drawNPC === "function"
+        )
             drawNPC();
 
-        if (typeof drawEnemies === "function")
+
+        if (
+            typeof drawEnemies === "function"
+        )
             drawEnemies();
 
-        if (typeof drawBoss === "function")
+
+        if (
+            typeof drawBoss === "function"
+        )
             drawBoss();
 
-        if (typeof drawPlayer === "function")
+
+        if (
+            typeof drawPlayer === "function"
+        )
             drawPlayer();
 
     }
@@ -159,16 +224,49 @@ function startEngine() {
 
 }
 
-window.startGame = function () {
+
+/* ==========================================
+   NOUVELLE PARTIE
+========================================== */
+
+function startGame() {
+
+    console.log("Nouvelle partie.");
 
     const menu =
         document.getElementById("menu");
 
-    if (menu)
+    if (menu) {
+
         menu.style.display = "none";
+
+    }
 
     Game.running = false;
 
-    Prologue.start();
 
-};
+    /* Lancement de la prologue */
+
+    if (
+        typeof Prologue !== "undefined"
+    ) {
+
+        Prologue.start();
+
+        console.log(
+            "Prologue lancée."
+        );
+
+    } else {
+
+        console.error(
+            "ERREUR : Prologue introuvable."
+        );
+
+        Game.running = true;
+
+    }
+
+}
+
+window.startGame = startGame;

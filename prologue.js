@@ -6,138 +6,81 @@ const Prologue = {
 
     timer: 0,
 
-    textTimer: 0,
-
-    waiting: false,
-
     scenes: [
 
         {
-            duration: 5000,
-
-            title: "IL ÉTAIT UNE FOIS...",
+            title: "PONAN'S LEGACY",
 
             text:
-                "Il existe des royaumes dont l'histoire " +
-                "est écrite par les vainqueurs."
+                "Il était une fois un royaume " +
+                "où les canards régnaient sur les canards."
         },
 
         {
-
-            duration: 5000,
-
-            title: "LE ROYAUME DE PONAN",
-
-            text:
-                "Pendant des générations, le royaume " +
-                "des canards connut la paix sous la " +
-                "dynastie des Plumes Dorées."
-        },
-
-        {
-
-            duration: 5000,
-
             title: "PONANINI III",
 
             text:
-                "Ponanini III était alors le roi légitime. " +
-                "Aimé de son peuple, il semblait destiné " +
-                "à régner pendant de longues années."
+                "Ponanini III était le roi légitime " +
+                "du royaume de Ponan."
         },
 
         {
-
-            duration: 5000,
-
             title: "LA TRAHISON",
 
             text:
-                "Mais un jour, il fut accusé d'un crime " +
-                "qu'il n'avait pas commis."
+                "Mais il fut accusé d'un crime " +
+                "qu'il n'avait jamais commis."
         },
 
         {
-
-            duration: 5000,
-
             title: "PONANINI IV",
 
             text:
-                "Son propre héritier, Ponanini IV, " +
-                "prit alors sa place sur le trône."
+                "Son successeur prit alors le trône " +
+                "et fit condamner son prédécesseur."
         },
 
         {
-
-            duration: 5000,
-
-            title: "L'EXIL",
-
-            text:
-                "Ponanini III fut condamné à un destin " +
-                "dont personne ne devait revenir."
-        },
-
-        {
-
-            duration: 5000,
-
             title: "LE NETHER",
 
             text:
-                "Il fut envoyé dans une dimension oubliée " +
-                "des hommes et des canards."
+                "Ponanini III fut envoyé dans une " +
+                "dimension dont personne ne revenait."
         },
 
         {
-
-            duration: 5000,
-
-            title: "...DES ANNÉES PASSÈRENT.",
+            title: "DES ANNÉES PASSÈRENT",
 
             text:
                 "Mais dans les ténèbres, l'ancien roi " +
-                "n'avait pas oublié."
+                "n'oublia jamais ce qui lui avait été fait."
         },
 
         {
-
-            duration: 5000,
-
             title: "LES TROIS FRAGMENTS",
 
             text:
-                "Il découvrit l'existence de trois fragments " +
-                "capables d'ouvrir la porte entre les mondes."
+                "Il découvrit trois fragments capables " +
+                "d'ouvrir la porte entre les mondes."
         },
 
         {
-
-            duration: 5000,
-
             title: "LA VENGEANCE",
 
             text:
-                "Il lui fallait seulement quelqu'un capable " +
-                "de les retrouver."
+                "Il avait besoin de quelqu'un dans le " +
+                "monde réel pour les retrouver."
         },
 
         {
-
-            duration: 5000,
-
-            title: "ET QUELQU'UN ARRIVA.",
+            title: "VOUS",
 
             text:
-                "Quelqu'un qui ignorait encore qu'il était " +
-                "déjà devenu une pièce de son plan."
+                "Et sans le savoir, vous êtes devenu " +
+                "la pièce maîtresse de son plan."
         },
 
         {
-
-            duration: 5000,
-
             title: "PONAN'S LEGACY",
 
             text:
@@ -145,6 +88,7 @@ const Prologue = {
         }
 
     ],
+
 
     start() {
 
@@ -154,11 +98,8 @@ const Prologue = {
 
         this.timer = 0;
 
-        this.textTimer = 0;
-
-        this.waiting = false;
-
     },
+
 
     update(dt) {
 
@@ -167,12 +108,7 @@ const Prologue = {
 
         this.timer += dt * 1000;
 
-        const current = this.scenes[this.scene];
-
-        if (!current)
-            return;
-
-        if (this.timer >= current.duration) {
+        if (this.timer >= 4500) {
 
             this.next();
 
@@ -180,15 +116,17 @@ const Prologue = {
 
     },
 
+
     next() {
 
         this.scene++;
 
         this.timer = 0;
 
-        this.textTimer = 0;
-
-        if (this.scene >= this.scenes.length) {
+        if (
+            this.scene >=
+            this.scenes.length
+        ) {
 
             this.finish();
 
@@ -196,14 +134,6 @@ const Prologue = {
 
     },
 
-    skip() {
-
-        if (!this.active)
-            return;
-
-        this.next();
-
-    },
 
     finish() {
 
@@ -211,25 +141,27 @@ const Prologue = {
 
         this.scene = 0;
 
+        this.timer = 0;
+
         Game.running = true;
 
     },
 
-    draw() {
 
-        if (!this.active)
-            return;
+    draw() {
 
         const ctx = Game.ctx;
 
-        const width = Game.canvas.width;
-        const height = Game.canvas.height;
+        const width =
+            Game.canvas.width;
 
-        /*
-         * Fond noir / bleu très sombre
-         */
+        const height =
+            Game.canvas.height;
 
-        ctx.fillStyle = "#05070d";
+
+        /* Fond */
+
+        ctx.fillStyle = "#03050a";
 
         ctx.fillRect(
             0,
@@ -238,15 +170,14 @@ const Prologue = {
             height
         );
 
-        /*
-         * Lumière centrale
-         */
+
+        /* Lumière */
 
         const gradient =
             ctx.createRadialGradient(
                 width / 2,
                 height / 2,
-                50,
+                20,
                 width / 2,
                 height / 2,
                 width * 0.7
@@ -254,7 +185,7 @@ const Prologue = {
 
         gradient.addColorStop(
             0,
-            "rgba(20,35,65,0.45)"
+            "rgba(20,40,80,.35)"
         );
 
         gradient.addColorStop(
@@ -271,76 +202,105 @@ const Prologue = {
             height
         );
 
-        const scene = this.scenes[this.scene];
+
+        const scene =
+            this.scenes[this.scene];
 
         if (!scene)
             return;
 
-        /*
-         * Titre
-         */
+
+        /* Titre */
 
         ctx.textAlign = "center";
 
-        ctx.fillStyle = "#d9a441";
+        ctx.fillStyle = "#d8a72e";
 
         ctx.font =
-            "bold 42px Georgia";
+            "bold 46px Georgia";
 
         ctx.fillText(
             scene.title,
             width / 2,
-            height / 2 - 80
+            height / 2 - 90
         );
 
-        /*
-         * Texte
-         */
 
-        ctx.fillStyle = "#eeeeee";
+        /* Texte */
+
+        ctx.fillStyle = "#ffffff";
 
         ctx.font =
-            "24px Georgia";
+            "25px Georgia";
 
         const lines =
             this.wrapText(
-                ctx,
                 scene.text,
-                width * 0.65
+                width * .65
             );
 
-        lines.forEach((line, index) => {
+        lines.forEach(
+            (line, index) => {
 
-            ctx.fillText(
-                line,
-                width / 2,
-                height / 2 +
-                index * 36
-            );
+                ctx.fillText(
+                    line,
+                    width / 2,
+                    height / 2 +
+                    index * 38
+                );
 
-        });
+            }
+        );
 
-        /*
-         * Indication
-         */
+
+        /* Progression */
+
+        const progress =
+            this.timer / 4500;
 
         ctx.fillStyle =
-            "rgba(255,255,255,0.6)";
+            "rgba(255,255,255,.15)";
+
+        ctx.fillRect(
+            width * .2,
+            height - 55,
+            width * .6,
+            4
+        );
+
+        ctx.fillStyle = "#d8a72e";
+
+        ctx.fillRect(
+            width * .2,
+            height - 55,
+            width * .6 * progress,
+            4
+        );
+
+
+        /* Instruction */
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.5)";
 
         ctx.font =
             "16px Arial";
 
         ctx.fillText(
-            "ESPACE  •  Passer",
+            "ESPACE  •  passer",
             width / 2,
-            height - 40
+            height - 25
         );
 
     },
 
-    wrapText(ctx, text, maxWidth) {
 
-        const words = text.split(" ");
+    wrapText(text, maxWidth) {
+
+        const ctx = Game.ctx;
+
+        const words =
+            text.split(" ");
 
         const lines = [];
 
@@ -349,13 +309,13 @@ const Prologue = {
         words.forEach(word => {
 
             const test =
-                line +
-                (line ? " " : "") +
-                word;
+                line === ""
+                    ? word
+                    : line + " " + word;
 
             if (
-                ctx.measureText(test).width >
-                maxWidth
+                ctx.measureText(test)
+                    .width > maxWidth
             ) {
 
                 lines.push(line);
@@ -379,6 +339,7 @@ const Prologue = {
 
 };
 
+
 window.addEventListener(
     "keydown",
     event => {
@@ -390,7 +351,7 @@ window.addEventListener(
 
             event.preventDefault();
 
-            Prologue.skip();
+            Prologue.next();
 
         }
 
