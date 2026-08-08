@@ -16,12 +16,8 @@ const Prologue = {
 
     visualTime: 0,
 
-    textSpeed: 50,
+    portalParticles: true,
 
-
-    /* =====================================================
-       HISTOIRE
-    ===================================================== */
 
     scenes: [
 
@@ -29,127 +25,117 @@ const Prologue = {
             title: "IL ÉTAIT UNE FOIS...",
             text:
                 "Dans une vallée oubliée des hommes, " +
-                "un ancien royaume survivait derrière " +
-                "ses murailles de pierre. " +
-                "Ponan dormait encore sous la brume, " +
-                "ignorant que son histoire touchait à sa fin.",
+                "un ancien royaume vivait derrière ses murailles. " +
+                "Ponan dormait sous la brume, protégé par ses montagnes. " +
+                "Au centre du royaume s'élevait le palais royal.",
             duration: 15000,
-            speed: 52
+            speed: 48
         },
 
         {
             title: "LE ROYAUME DE PONAN",
             text:
-                "Au centre du village s'élevait le palais royal. " +
-                "Autour de ses tours vivaient marchands, soldats, " +
-                "artisans et familles. " +
-                "Pendant des générations, tous avaient cru " +
-                "que la couronne protégerait le royaume.",
-            duration: 17000,
-            speed: 50
-        },
-
-        {
-            title: "PONANINI III",
-            text:
-                "Ponanini III n'était pas un roi aimé parce qu'il " +
-                "était puissant. Il était aimé parce qu'il écoutait. " +
-                "Il connaissait les visages de son peuple. " +
-                "Et il croyait encore qu'un royaume pouvait être juste.",
-            duration: 18000,
-            speed: 49
-        },
-
-        {
-            title: "DANS L'OMBRE",
-            text:
-                "Mais dans les profondeurs du palais, " +
-                "une autre ambition grandissait. " +
-                "Un regard attendait. " +
-                "Deux yeux rouges observaient le trône " +
-                "depuis une obscurité où personne n'osait regarder.",
+                "Autour du palais s'étendait un village vivant. " +
+                "Des marchands, des artisans, des soldats et des familles " +
+                "y avaient bâti leur existence. " +
+                "Tous regardaient la couronne comme un symbole de protection.",
             duration: 16000,
             speed: 48
         },
 
         {
-            title: "LE FRÈRE",
+            title: "PONANINI III",
             text:
-                "Ponanini IV était son frère. " +
-                "Il ne voulait pas servir la couronne. " +
-                "Il voulait la posséder. " +
-                "Et lorsqu'une couronne devient le désir d'un homme, " +
-                "la vérité devient souvent son premier sacrifice.",
+                "Sur ce trône régnait Ponanini III. " +
+                "Un roi imparfait, mais juste. " +
+                "Il écoutait son peuple, protégeait ses terres " +
+                "et croyait encore qu'un royaume pouvait être gouverné " +
+                "sans sacrifier ceux qui y vivaient.",
             duration: 17500,
-            speed: 48
+            speed: 47
         },
 
         {
-            title: "LE MENSONGE",
+            title: "DANS L'OMBRE",
             text:
-                "Alors les accusations commencèrent. " +
-                "Des témoignages furent achetés. " +
-                "Des preuves furent fabriquées. " +
-                "Et bientôt, celui qui avait protégé Ponan " +
-                "fut présenté comme celui qui l'avait trahi.",
-            duration: 18000,
+                "Mais derrière les murs du palais, quelqu'un attendait. " +
+                "Un frère qui regardait la couronne depuis trop longtemps. " +
+                "Il ne rêvait pas de servir le royaume. " +
+                "Il rêvait de le posséder.",
+            duration: 15500,
             speed: 47
+        },
+
+        {
+            title: "LE COMPLOT",
+            text:
+                "La couronne fut retirée de son écrin. " +
+                "Les premiers mensonges furent préparés. " +
+                "Chaque accusation devait paraître crédible. " +
+                "Chaque témoin devait avoir une raison de se taire.",
+            duration: 16000,
+            speed: 46
+        },
+
+        {
+            title: "LA TRAHISON",
+            text:
+                "Ponanini IV descendit alors parmi le peuple. " +
+                "Il parla aux villageois, leur promit la sécurité " +
+                "et leur raconta une histoire fabriquée. " +
+                "Puis, dans l'ombre, il acheta le silence des gardes.",
+            duration: 18000,
+            speed: 45
         },
 
         {
             title: "LE BANNISSEMENT",
             text:
-                "Devant les portes du palais, la foule se rassembla. " +
-                "Des gardes encerclèrent le roi déchu. " +
-                "Personne ne comprenait encore ce qui se jouait. " +
-                "Puis le portail s'ouvrit. " +
-                "Un passage vers un monde dont aucun homme ne revenait.",
-            duration: 19000,
-            speed: 46
+                "Le lendemain, Ponanini III fut arrêté devant son peuple. " +
+                "Quatre gardes l'escortèrent jusqu'à la cour du palais. " +
+                "Personne n'osa intervenir. " +
+                "Un portail s'ouvrit devant lui. " +
+                "Et derrière ce portail attendait un monde sans retour.",
+            duration: 18500,
+            speed: 44
         },
 
         {
             title: "LE NETHER",
             text:
-                "Ponanini III tomba dans un monde sans ciel. " +
+                "Il tomba dans un monde sans ciel. " +
                 "Ses pieds rencontrèrent une terre noire et brûlée. " +
-                "Derrière lui, le portail disparut. " +
-                "Devant lui, il n'y avait rien. " +
-                "Rien, sinon les ténèbres.",
-            duration: 18000,
-            speed: 47
+                "Le portail se referma derrière lui. " +
+                "Pour la première fois de sa vie, le roi était seul.",
+            duration: 16500,
+            speed: 46
         },
 
         {
             title: "LES TROIS FRAGMENTS",
             text:
                 "Des années passèrent. " +
-                "Puis Ponanini III découvrit une ancienne légende. " +
-                "Trois fragments dormaient quelque part entre les mondes. " +
-                "Réunis, ils pourraient rouvrir le passage. " +
-                "Il ne lui fallait plus qu'une chose : quelqu'un pour les trouver.",
-            duration: 19000,
-            speed: 46
+                "Puis une ancienne légende lui révéla l'existence " +
+                "de trois fragments capables de rouvrir le passage. " +
+                "Mais les fragments étaient dispersés. " +
+                "Et Ponanini III ne pouvait pas les atteindre seul.",
+            duration: 17500,
+            speed: 45
         },
 
         {
             title: "L'HISTOIRE COMMENCE",
             text:
-                "Un soir, une lumière apparut dans le Nether. " +
-                "Un portail. " +
-                "De l'autre côté se tenait quelqu'un qui ignorait encore " +
-                "qu'il venait d'entrer dans une histoire de vengeance. " +
-                "Toi.",
+                "Alors il trouva un moyen d'appeler quelqu'un depuis l'autre monde. " +
+                "Quelqu'un qui ne connaissait ni Ponanini III, ni son histoire. " +
+                "Quelqu'un qu'il pourrait manipuler pour retrouver les fragments. " +
+                "Et cette personne... c'est toi.",
             duration: 19000,
-            speed: 45
+            speed: 44
         }
 
     ],
 
-
-    /* =====================================================
-       START
-    ===================================================== */
 
     start() {
 
@@ -169,26 +155,22 @@ const Prologue = {
 
         this.visualTime = 0;
 
-        this.hideGameplayUI();
+        this.portalParticles = true;
+
+        this.hideHUD();
     },
 
 
-    /* =====================================================
-       UI
-    ===================================================== */
+    hideHUD() {
 
-    hideGameplayUI() {
-
-        const ids = [
+        [
             "hud",
             "life",
             "quest",
             "pieces",
             "inventory",
             "dialogue"
-        ];
-
-        ids.forEach(id => {
+        ].forEach(id => {
 
             const element =
                 document.getElementById(id);
@@ -200,33 +182,16 @@ const Prologue = {
     },
 
 
-    showGameplayUI() {
-
-        const hud =
-            document.getElementById("hud");
-
-        if (hud)
-            hud.style.display = "flex";
-    },
-
-
-    /* =====================================================
-       UPDATE
-    ===================================================== */
-
     update(dt) {
 
         if (!this.active)
             return;
 
-
-        const current =
+        const scene =
             this.scenes[this.scene];
 
-
-        if (!current)
+        if (!scene)
             return;
-
 
         this.timer += dt;
 
@@ -237,29 +202,23 @@ const Prologue = {
          * Texte progressif
          */
 
-        if (!this.finishedText) {
+        this.textIndex =
+            Math.floor(
+                this.timer *
+                1000 /
+                scene.speed
+            );
 
-            const speed =
-                current.speed ||
-                this.textSpeed;
 
+        if (
+            this.textIndex >=
+            scene.text.length
+        ) {
 
             this.textIndex =
-                Math.floor(
-                    this.timer * 1000 / speed
-                );
+                scene.text.length;
 
-
-            if (
-                this.textIndex >=
-                current.text.length
-            ) {
-
-                this.textIndex =
-                    current.text.length;
-
-                this.finishedText = true;
-            }
+            this.finishedText = true;
         }
 
 
@@ -271,7 +230,8 @@ const Prologue = {
             this.fadeDirection === -1
         ) {
 
-            this.fade -= dt * 1.2;
+            this.fade -=
+                dt * .75;
 
             if (this.fade <= 0) {
 
@@ -283,23 +243,29 @@ const Prologue = {
 
 
         /*
-         * Passage automatique
+         * Scène 7 :
+         * fermeture du portail très rapide.
          */
+
+        if (
+            this.scene === 6 &&
+            this.visualTime > 8.7
+        ) {
+
+            this.portalParticles = false;
+        }
+
 
         if (
             this.finishedText &&
             this.timer >=
-            current.duration / 1000
+            scene.duration / 1000
         ) {
 
             this.nextScene();
         }
     },
 
-
-    /* =====================================================
-       SCÈNE SUIVANTE
-    ===================================================== */
 
     nextScene() {
 
@@ -322,32 +288,29 @@ const Prologue = {
 
         this.finishedText = false;
 
-        this.visualTime = 0;
-
         this.fade = 1;
 
         this.fadeDirection = -1;
+
+        this.visualTime = 0;
+
+        this.portalParticles = true;
     },
 
 
-    /* =====================================================
-       ESPACE / ENTER
-    ===================================================== */
-
     skipText() {
 
-        const current =
+        const scene =
             this.scenes[this.scene];
 
-
-        if (!current)
+        if (!scene)
             return;
 
 
         if (!this.finishedText) {
 
             this.textIndex =
-                current.text.length;
+                scene.text.length;
 
             this.finishedText = true;
 
@@ -359,26 +322,11 @@ const Prologue = {
     },
 
 
-    /* =====================================================
-       FIN
-    ===================================================== */
-
     finish() {
 
         this.active = false;
 
-        this.scene = 0;
-
-        this.timer = 0;
-
-        this.textIndex = 0;
-
-        this.finishedText = false;
-
-        this.fade = 0;
-
-        this.showGameplayUI();
-
+        this.portalParticles = false;
 
         if (
             typeof finishPrologue ===
@@ -394,19 +342,16 @@ const Prologue = {
     },
 
 
-    /* =====================================================
-       DRAW PRINCIPAL
-    ===================================================== */
-
     draw() {
 
         const ctx = Game.ctx;
 
-        const width =
-            Game.canvas.width;
-
-        const height =
-            Game.canvas.height;
+        ctx.clearRect(
+            0,
+            0,
+            Game.canvas.width,
+            Game.canvas.height
+        );
 
 
         switch (this.scene) {
@@ -453,85 +398,9 @@ const Prologue = {
         }
 
 
-        /*
-         * Vignette
-         */
+        this.drawVignette();
 
-        const vignette =
-            ctx.createRadialGradient(
-                width / 2,
-                height / 2,
-                height * .15,
-                width / 2,
-                height / 2,
-                height * .80
-            );
-
-
-        vignette.addColorStop(
-            0,
-            "rgba(0,0,0,0)"
-        );
-
-
-        vignette.addColorStop(
-            1,
-            "rgba(0,0,0,.78)"
-        );
-
-
-        ctx.fillStyle = vignette;
-
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
-
-
-        /*
-         * Titre
-         */
-
-        const current =
-            this.scenes[this.scene];
-
-
-        ctx.textAlign = "center";
-
-        ctx.font =
-            "bold 30px Georgia";
-
-
-        ctx.fillStyle =
-            "#d9b441";
-
-
-        ctx.shadowBlur = 12;
-
-        ctx.shadowColor =
-            "rgba(0,0,0,.8)";
-
-
-        ctx.fillText(
-            current.title,
-            width / 2,
-            70
-        );
-
-
-        ctx.shadowBlur = 0;
-
-
-        this.drawNarration(
-            current
-        );
-
-
-        /*
-         * Fade
-         */
+        this.drawNarration();
 
         if (this.fade > 0) {
 
@@ -541,205 +410,16 @@ const Prologue = {
             ctx.fillRect(
                 0,
                 0,
-                width,
-                height
+                Game.canvas.width,
+                Game.canvas.height
             );
         }
-
-
-        ctx.font =
-            "16px Arial";
-
-        ctx.fillStyle =
-            "rgba(255,255,255,.55)";
-
-
-        ctx.fillText(
-            "ESPACE : continuer",
-            width / 2,
-            height - 25
-        );
-    },
-
-
-    /* =====================================================
-       NARRATEUR
-    ===================================================== */
-
-    drawNarration(scene) {
-
-        const ctx = Game.ctx;
-
-        const width =
-            Game.canvas.width;
-
-        const height =
-            Game.canvas.height;
-
-
-        const boxWidth =
-            Math.min(
-                900,
-                width * .82
-            );
-
-
-        const boxHeight = 175;
-
-
-        const x =
-            (width - boxWidth) / 2;
-
-
-        const y =
-            height - 235;
-
-
-        ctx.fillStyle =
-            "rgba(0,0,0,.55)";
-
-
-        ctx.fillRect(
-            x - 8,
-            y + 8,
-            boxWidth + 16,
-            boxHeight + 16
-        );
-
-
-        ctx.fillStyle =
-            "rgba(5,7,10,.92)";
-
-
-        ctx.fillRect(
-            x,
-            y,
-            boxWidth,
-            boxHeight
-        );
-
-
-        ctx.strokeStyle =
-            "#b9973e";
-
-
-        ctx.lineWidth = 2;
-
-
-        ctx.strokeRect(
-            x,
-            y,
-            boxWidth,
-            boxHeight
-        );
-
-
-        ctx.textAlign = "left";
-
-
-        ctx.font =
-            "bold 18px Georgia";
-
-
-        ctx.fillStyle =
-            "#d9b441";
-
-
-        ctx.fillText(
-            "NARRATEUR",
-            x + 25,
-            y + 32
-        );
-
-
-        const visibleText =
-            scene.text.substring(
-                0,
-                this.textIndex
-            );
-
-
-        ctx.font =
-            "21px Georgia";
-
-
-        ctx.fillStyle =
-            "#eee9dc";
-
-
-        this.drawWrappedText(
-            visibleText,
-            x + 25,
-            y + 73,
-            boxWidth - 50,
-            30
-        );
-    },
-
-
-    drawWrappedText(
-        text,
-        x,
-        y,
-        maxWidth,
-        lineHeight
-    ) {
-
-        const ctx = Game.ctx;
-
-        const words =
-            text.split(" ");
-
-        let line = "";
-
-
-        for (
-            let i = 0;
-            i < words.length;
-            i++
-        ) {
-
-            const test =
-                line +
-                words[i] +
-                " ";
-
-
-            if (
-                ctx.measureText(test).width >
-                maxWidth &&
-                i > 0
-            ) {
-
-                ctx.fillText(
-                    line,
-                    x,
-                    y
-                );
-
-                line =
-                    words[i] + " ";
-
-                y += lineHeight;
-
-            } else {
-
-                line = test;
-            }
-        }
-
-
-        ctx.fillText(
-            line,
-            x,
-            y
-        );
     },
 
 
     /* =====================================================
        SCÈNE 1
-       ROYAUME + VILLAGE
+       VUE AÉRIENNE DU VILLAGE
     ===================================================== */
 
     drawScene1() {
@@ -753,107 +433,51 @@ const Prologue = {
             Game.canvas.height;
 
 
-        const sky =
-            ctx.createLinearGradient(
-                0,
-                0,
-                0,
-                h
-            );
-
-
-        sky.addColorStop(
-            0,
-            "#080b14"
-        );
-
-
-        sky.addColorStop(
-            .55,
-            "#172033"
-        );
-
-
-        sky.addColorStop(
-            1,
-            "#05070b"
-        );
-
-
-        ctx.fillStyle = sky;
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
+        this.drawNightSky();
 
 
         /*
-         * Lune
+         * Montagnes très lointaines.
          */
 
         ctx.fillStyle =
-            "#d8c995";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            w * .78,
-            h * .18,
-            48,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-         * Montagnes
-         */
-
-        ctx.fillStyle =
-            "#0b111c";
-
+            "#0a111b";
 
         ctx.beginPath();
 
         ctx.moveTo(
             0,
-            h * .58
+            h * .42
         );
 
         ctx.lineTo(
-            w * .14,
-            h * .38
+            w * .12,
+            h * .22
         );
 
         ctx.lineTo(
-            w * .27,
-            h * .58
+            w * .25,
+            h * .42
         );
 
         ctx.lineTo(
-            w * .43,
-            h * .32
+            w * .40,
+            h * .19
         );
 
         ctx.lineTo(
-            w * .59,
-            h * .58
+            w * .56,
+            h * .42
         );
 
         ctx.lineTo(
-            w * .76,
-            h * .40
+            w * .72,
+            h * .24
         );
 
         ctx.lineTo(
             w,
-            h * .58
+            h * .42
         );
 
         ctx.lineTo(
@@ -872,52 +496,60 @@ const Prologue = {
 
 
         /*
-         * Village
+         * Village vu du dessus.
          */
 
-        this.drawVillage(
+        this.drawAerialVillage(
             w / 2,
-            h * .70
+            h * .57,
+            1
         );
 
 
         /*
-         * Palais
+         * Palais au centre.
          */
 
-        const zoom =
-            0.75 +
-            Math.min(
-                .10,
-                this.visualTime * .003
-            );
-
-
-        this.drawCastleSilhouette(
+        this.drawCastle(
             w / 2,
-            h * .76,
-            zoom
+            h * .53,
+            .78
         );
 
 
-        this.drawFog(
-            w * .50,
-            h * .80,
-            1.5
+        /*
+         * Lumières des maisons.
+         */
+
+        this.drawVillageLights();
+
+
+        /*
+         * Brume lente.
+         */
+
+        this.drawAerialFog();
+
+
+        /*
+         * Pluie en profondeur.
+         */
+
+        this.drawRain(
+            45,
+            .45
         );
 
 
-        this.drawMovingClouds();
-
-        this.drawWindParticles(50);
-
-        this.drawDust(30);
+        this.drawWind(
+            35
+        );
     },
 
 
     /* =====================================================
        SCÈNE 2
-       APPROCHE DU PALAIS
+       TRAVELLING AÉRIEN
     ===================================================== */
 
     drawScene2() {
@@ -931,8 +563,28 @@ const Prologue = {
             Game.canvas.height;
 
 
+        const duration = 13;
+
+        const progress =
+            Math.min(
+                1,
+                this.visualTime /
+                duration
+            );
+
+
+        /*
+         * Courbe douce.
+         */
+
+        const ease =
+            progress *
+            progress *
+            (3 - 2 * progress);
+
+
         ctx.fillStyle =
-            "#06080d";
+            "#080c14";
 
         ctx.fillRect(
             0,
@@ -943,105 +595,163 @@ const Prologue = {
 
 
         /*
-         * Travelling très lent
+         * Montagnes :
+         * presque immobiles.
          */
 
-        const progress =
-            Math.min(
-                1,
-                this.visualTime / 14
-            );
+        const mountainOffset =
+            -ease * 30;
 
 
-        const eased =
-            progress *
-            progress *
-            (3 - 2 * progress);
+        ctx.save();
 
-
-        const scale =
-            .62 +
-            eased * .35;
-
-
-        const drift =
-            Math.sin(
-                this.visualTime * .18
-            ) * 8;
-
-
-        this.drawCastleSilhouette(
-            w / 2 + drift,
-            h * .82,
-            scale
+        ctx.translate(
+            0,
+            mountainOffset
         );
 
 
+        this.drawDistantMountains();
+
+        ctx.restore();
+
+
         /*
-         * Route
+         * Village :
+         * mouvement moyen.
+         */
+
+        const villageScale =
+            .75 +
+            ease * .52;
+
+
+        const villageY =
+            h * .54 +
+            ease * h * .28;
+
+
+        ctx.save();
+
+        ctx.translate(
+            w / 2,
+            villageY
+        );
+
+        ctx.scale(
+            villageScale,
+            villageScale
+        );
+
+        ctx.translate(
+            -w / 2,
+            -h * .54
+        );
+
+
+        this.drawAerialVillage(
+            w / 2,
+            h * .54,
+            1
+        );
+
+
+        ctx.restore();
+
+
+        /*
+         * Palais :
+         * mouvement plus rapide.
+         */
+
+        const castleScale =
+            .48 +
+            ease * 1.05;
+
+
+        const castleY =
+            h * .48 +
+            ease * h * .40;
+
+
+        ctx.save();
+
+        ctx.translate(
+            w / 2,
+            castleY
+        );
+
+        ctx.scale(
+            castleScale,
+            castleScale
+        );
+
+        ctx.translate(
+            -w / 2,
+            -h * .53
+        );
+
+
+        this.drawCastle(
+            w / 2,
+            h * .53,
+            .78
+        );
+
+
+        ctx.restore();
+
+
+        /*
+         * Nuages :
+         * parallaxe inverse.
          */
 
         ctx.fillStyle =
-            "#111319";
+            "rgba(16,25,38,.55)";
 
 
-        ctx.beginPath();
+        const cloudX =
+            (
+                this.visualTime * 12
+            ) %
+            (w + 500) -
+            250;
 
-        ctx.moveTo(
-            w * .42,
-            h
+
+        this.drawCloud(
+            cloudX,
+            h * .20,
+            .8
         );
 
-        ctx.lineTo(
-            w * .58,
-            h
+
+        this.drawCloud(
+            cloudX - 500,
+            h * .31,
+            .55
         );
-
-        ctx.lineTo(
-            w * .52,
-            h * .63
-        );
-
-        ctx.lineTo(
-            w * .48,
-            h * .63
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
 
 
         /*
-         * Torches
+         * Brume qui reste basse.
          */
 
-        this.drawTorch(
-            w * .47,
-            h * .67
-        );
-
-        this.drawTorch(
-            w * .53,
-            h * .67
+        this.drawLowFog(
+            h * .70
         );
 
 
-        this.drawMovingClouds();
-
-        this.drawWindParticles(55);
-
-        this.drawFog(
-            w / 2,
-            h * .84,
-            1.1
+        this.drawRain(
+            30,
+            .25
         );
     },
 
 
     /* =====================================================
        SCÈNE 3
-       PONANINI III
+       TRÔNE
     ===================================================== */
 
     drawScene3() {
@@ -1055,124 +765,83 @@ const Prologue = {
             Game.canvas.height;
 
 
-        ctx.fillStyle =
-            "#101217";
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
+        this.drawThroneRoom();
 
 
-        this.drawStoneWall();
+        const throneX =
+            w / 2;
 
-        this.drawGothicColumns();
-
-
-        this.drawStainedGlass(
-            w * .17,
-            h * .30,
-            120
-        );
+        const throneY =
+            h * .62;
 
 
-        this.drawStainedGlass(
-            w * .83,
-            h * .30,
-            120
+        this.drawThrone(
+            throneX,
+            throneY
         );
 
 
         /*
-         * Tapis
+         * Ombre sous le roi.
          */
 
         ctx.fillStyle =
-            "#571d2c";
+            "rgba(0,0,0,.40)";
 
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            w * .42,
-            h * .54
+        ctx.ellipse(
+            throneX,
+            throneY - 18,
+            44,
+            9,
+            0,
+            0,
+            Math.PI * 2
         );
-
-        ctx.lineTo(
-            w * .58,
-            h * .54
-        );
-
-        ctx.lineTo(
-            w * .76,
-            h
-        );
-
-        ctx.lineTo(
-            w * .24,
-            h
-        );
-
-        ctx.closePath();
 
         ctx.fill();
 
 
         /*
-         * Trône
+         * Roi réellement assis.
          */
-
-        this.drawThrone(
-            w / 2,
-            h * .60
-        );
-
-
-        /*
-         * Le roi est assis SUR le trône,
-         * pas au-dessus.
-         */
-
-        const breathe =
-            Math.sin(
-                this.visualTime * 1.3
-            ) * 2;
-
 
         this.drawDuckKing(
-            w / 2,
-            h * .47 + breathe,
+            throneX,
+            throneY - 76,
             .82
         );
 
 
         this.drawGuard(
-            w * .18,
-            h * .59
+            w * .17,
+            h * .57
         );
 
 
         this.drawGuard(
-            w * .82,
-            h * .59
+            w * .83,
+            h * .57
         );
 
 
         this.drawTorch(
             w * .08,
-            h * .50
+            h * .48
         );
 
 
         this.drawTorch(
             w * .92,
-            h * .50
+            h * .48
         );
 
 
-        this.drawDust(70);
+        this.drawDust(
+            45
+        );
     },
 
 
@@ -1192,78 +861,75 @@ const Prologue = {
             Game.canvas.height;
 
 
-        ctx.fillStyle =
-            "#07090e";
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
-
-
-        this.drawStoneWall();
-
-        this.drawGothicColumns();
+        this.drawThroneRoom();
 
 
         this.drawThrone(
             w / 2,
-            h * .58
+            h * .62
         );
 
 
         /*
-         * Lumière faible
+         * Aucun élément blanc.
          */
 
         this.drawTorch(
             w * .10,
-            h * .52
+            h * .48
         );
 
 
         this.drawTorch(
             w * .90,
-            h * .52
+            h * .48
         );
 
 
         /*
-         * Ponanini IV :
-         * seulement les yeux.
+         * IV est uniquement suggéré
+         * par ses yeux.
          */
 
-        const eyeX =
-            w * .82 +
-            Math.sin(
-                this.visualTime * .25
-            ) * 5;
-
-
-        this.drawDuckVillain(
-            eyeX,
-            h * .28,
-            1
+        this.drawVillainEyes(
+            w * .79,
+            h * .28
         );
 
 
         /*
-         * Ombre progressive
+         * Ombre profonde.
          */
 
-        const darkness =
-            Math.min(
-                .78,
-                .30 +
-                this.visualTime * .045
+        const shadow =
+            ctx.createLinearGradient(
+                0,
+                0,
+                w,
+                0
             );
 
 
-        ctx.fillStyle =
-            `rgba(0,0,4,${darkness})`;
+        shadow.addColorStop(
+            0,
+            "rgba(0,0,0,.15)"
+        );
 
+
+        shadow.addColorStop(
+            .55,
+            "rgba(0,0,0,.25)"
+        );
+
+
+        shadow.addColorStop(
+            1,
+            "rgba(0,0,0,.80)"
+        );
+
+
+        ctx.fillStyle =
+            shadow;
 
         ctx.fillRect(
             0,
@@ -1273,24 +939,21 @@ const Prologue = {
         );
 
 
-        /*
-         * Les yeux doivent rester visibles
-         */
-
-        this.drawDuckVillain(
-            eyeX,
-            h * .28,
-            1
+        this.drawVillainEyes(
+            w * .79,
+            h * .28
         );
 
 
-        this.drawDust(55);
+        this.drawDust(
+            35
+        );
     },
 
 
     /* =====================================================
        SCÈNE 5
-       COMPLOT
+       COURONNE SUR LA TABLE
     ===================================================== */
 
     drawScene5() {
@@ -1304,97 +967,156 @@ const Prologue = {
             Game.canvas.height;
 
 
-        ctx.fillStyle =
-            "#080a0f";
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
-
-
-        this.drawStoneWall();
+        this.drawThroneRoom();
 
 
         /*
-         * Grande table
+         * Table royale.
          */
 
+        const tableY =
+            h * .65;
+
+
         ctx.fillStyle =
-            "#38251c";
+            "#3a261c";
 
 
         ctx.fillRect(
-            w * .27,
-            h * .65,
-            w * .46,
+            w * .25,
+            tableY,
+            w * .50,
             28
         );
 
 
         ctx.fillStyle =
-            "#211612";
+            "#211510";
 
 
         ctx.fillRect(
-            w * .30,
-            h * .68,
-            22,
-            100
+            w * .29,
+            tableY + 28,
+            20,
+            105
         );
 
 
         ctx.fillRect(
-            w * .68,
-            h * .68,
-            22,
-            100
+            w * .69,
+            tableY + 28,
+            20,
+            105
         );
 
 
         /*
-         * Documents
+         * Coussin royal.
          */
 
         ctx.fillStyle =
-            "#d6c7a4";
+            "#63242f";
+
+
+        ctx.fillRect(
+            w / 2 - 65,
+            tableY - 35,
+            130,
+            30
+        );
+
+
+        ctx.strokeStyle =
+            "#a78338";
+
+
+        ctx.lineWidth = 2;
+
+
+        ctx.strokeRect(
+            w / 2 - 65,
+            tableY - 35,
+            130,
+            30
+        );
+
+
+        /*
+         * COURONNE SUR LE SUPPORT.
+         *
+         * Aucun œil rouge.
+         */
+
+        this.drawCrown(
+            w / 2,
+            tableY - 48,
+            .68
+        );
+
+
+        /*
+         * Documents.
+         */
+
+        ctx.fillStyle =
+            "#cfc1a0";
 
 
         ctx.save();
 
         ctx.translate(
-            w * .50,
-            h * .59
+            w * .35,
+            tableY - 2
         );
 
         ctx.rotate(-.06);
 
         ctx.fillRect(
-            -105,
-            -25,
-            210,
-            80
+            -55,
+            -18,
+            110,
+            65
+        );
+
+        ctx.restore();
+
+
+        ctx.save();
+
+        ctx.translate(
+            w * .65,
+            tableY - 3
+        );
+
+        ctx.rotate(.05);
+
+        ctx.fillRect(
+            -55,
+            -18,
+            110,
+            65
         );
 
         ctx.restore();
 
 
         /*
-         * Sceau
+         * Ombre de IV très subtile,
+         * mais aucun visage.
          */
 
         ctx.fillStyle =
-            "#8d2632";
+            "rgba(0,0,0,.48)";
 
 
         ctx.beginPath();
 
-        ctx.arc(
-            w * .55,
-            h * .63,
-            16,
+        ctx.ellipse(
+            w * .78,
+            h * .42,
+            70,
+            150,
+            0,
             0,
             Math.PI * 2
         );
@@ -1402,43 +1124,27 @@ const Prologue = {
         ctx.fill();
 
 
-        /*
-         * IV dans l'ombre
-         */
-
-        this.drawDuckVillain(
-            w * .82,
-            h * .23,
-            .90
-        );
-
-
         this.drawTorch(
             w * .12,
-            h * .43
+            h * .47
         );
 
 
         this.drawTorch(
             w * .88,
-            h * .43
+            h * .47
         );
 
 
-        this.drawSmoke(
-            w * .18,
-            h * .75,
-            .7
+        this.drawDust(
+            50
         );
-
-
-        this.drawDust(70);
     },
 
 
     /* =====================================================
        SCÈNE 6
-       ACCUSATION
+       IV MANIPULE LE VILLAGE
     ===================================================== */
 
     drawScene6() {
@@ -1452,98 +1158,176 @@ const Prologue = {
             Game.canvas.height;
 
 
-        ctx.fillStyle =
-            "#06080c";
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
-
-
-        this.drawStoneWall();
-
-        this.drawGothicColumns();
+        this.drawVillageStreet();
 
 
         /*
-         * Roi au centre
+         * Ponanini IV apparaît enfin.
          */
 
-        this.drawDuckKing(
-            w * .32,
-            h * .57,
-            .78
+        this.drawDuckVillainFull(
+            w * .30,
+            h * .47,
+            .82
         );
 
 
         /*
-         * Gardes
+         * Villageois.
          */
 
-        this.drawGuard(
-            w * .16,
-            h * .57
-        );
-
-
-        this.drawGuard(
+        this.drawVillager(
             w * .48,
-            h * .57
+            h * .54,
+            .9
         );
 
+
+        this.drawVillager(
+            w * .57,
+            h * .57,
+            .85
+        );
+
+
+        this.drawVillager(
+            w * .66,
+            h * .53,
+            .9
+        );
+
+
+        /*
+         * Garde soudoyé.
+         */
 
         this.drawGuard(
-            w * .84,
-            h * .57
+            w * .82,
+            h * .52
         );
 
 
         /*
-         * Couronne :
-         * elle est posée sur la tête du roi,
-         * pas flottante.
+         * Bourse.
          */
 
-        this.drawCrown(
-            w * .32,
-            h * .57 - 78,
-            .62
+        const bagX =
+            w * .72;
+
+
+        const bagY =
+            h * .57;
+
+
+        ctx.fillStyle =
+            "#6f4627";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            bagX,
+            bagY,
+            11,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#b78c42";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            bagX - 8,
+            bagY - 7
+        );
+
+        ctx.lineTo(
+            bagX + 8,
+            bagY - 7
+        );
+
+        ctx.stroke();
+
+
+        /*
+         * Mouvement de la bourse
+         * vers le garde.
+         */
+
+        const exchange =
+            Math.min(
+                1,
+                this.visualTime / 6
+            );
+
+
+        const ex =
+            w * .68 +
+            exchange * w * .12;
+
+
+        ctx.fillStyle =
+            "#8a5b2c";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            ex,
+            h * .58,
+            8,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+         * IV parle aux villageois.
+         */
+
+        this.drawSpeechBubble(
+            w * .30,
+            h * .31,
+            "Votre roi vous a abandonnés."
         );
 
 
         /*
-         * IV dans l'obscurité
+         * Quelques silhouettes
+         * en arrière-plan.
          */
 
-        this.drawDuckVillain(
-            w * .77,
-            h * .26,
-            1
+        this.drawVillager(
+            w * .13,
+            h * .59,
+            .7
         );
 
 
-        this.drawTorch(
-            w * .08,
-            h * .45
+        this.drawVillager(
+            w * .90,
+            h * .59,
+            .7
         );
 
 
-        this.drawTorch(
-            w * .92,
-            h * .45
+        this.drawWind(
+            25
         );
-
-
-        this.drawDust(80);
     },
 
 
     /* =====================================================
        SCÈNE 7
-       BANNISSEMENT
+       ESCORTE + PORTAIL
     ===================================================== */
 
     drawScene7() {
@@ -1557,273 +1341,159 @@ const Prologue = {
             Game.canvas.height;
 
 
-        /*
-         * Cour du palais
-         */
-
-        const sky =
-            ctx.createLinearGradient(
-                0,
-                0,
-                0,
-                h
-            );
-
-
-        sky.addColorStop(
-            0,
-            "#080b13"
-        );
-
-
-        sky.addColorStop(
-            .70,
-            "#151922"
-        );
-
-
-        sky.addColorStop(
-            1,
-            "#07090d"
-        );
-
-
-        ctx.fillStyle = sky;
-
-        ctx.fillRect(
-            0,
-            0,
-            w,
-            h
-        );
+        this.drawCastleCourtyard();
 
 
         /*
-         * Palais au fond
-         */
-
-        this.drawCastleSilhouette(
-            w / 2,
-            h * .62,
-            .58
-        );
-
-
-        /*
-         * Cour
-         */
-
-        ctx.fillStyle =
-            "#15171c";
-
-
-        ctx.fillRect(
-            0,
-            h * .67,
-            w,
-            h * .33
-        );
-
-
-        /*
-         * Foule
+         * Foule.
          */
 
         this.drawCrowd(
-            w / 2,
-            h * .67
+            h * .69
         );
 
 
         /*
-         * Gardes qui entourent III
+         * Position du roi.
          */
 
-        this.drawGuard(
-            w * .28,
-            h * .57
-        );
-
-
-        this.drawGuard(
-            w * .72,
-            h * .57
-        );
-
-
-        this.drawGuard(
-            w * .40,
-            h * .61
-        );
-
-
-        this.drawGuard(
-            w * .60,
-            h * .61
-        );
-
-
-        /*
-         * PORTAIL
-         *
-         * ouverture rapide,
-         * fermeture très rapide.
-         */
-
-        const opening =
-            Math.min(
-                1,
-                this.visualTime / 2.0
-            );
-
-
-        const closeStart = 9.0;
-
-        const closeDuration = 1.8;
-
-
-        let portalAlpha = 1;
-
-
-        if (
-            this.visualTime >
-            closeStart
-        ) {
-
-            portalAlpha =
-                1 -
-                Math.min(
-                    1,
-                    (
-                        this.visualTime -
-                        closeStart
-                    ) /
-                    closeDuration
-                );
-        }
-
-
-        const portalScale =
-            .75 +
-            opening * .25;
-
-
-        ctx.save();
-
-        ctx.globalAlpha =
-            opening *
-            portalAlpha;
-
-
-        this.drawPortal(
-            w * .50,
-            h * .49,
-            portalScale
-        );
-
-
-        ctx.restore();
-
-
-        /*
-         * Ponanini III avance
-         */
-
-        const movement =
+        const walkProgress =
             Math.min(
                 1,
                 this.visualTime / 6
             );
 
 
-        const eased =
-            movement *
-            movement *
-            (3 - 2 * movement);
-
-
         const kingX =
-            w * .35 +
-            eased * w * .15;
+            w * .28 +
+            walkProgress *
+            w * .17;
 
 
         /*
-         * Disparition
+         * Quatre gardes.
          */
 
-        const vanishStart = 6.4;
+        this.drawGuard(
+            kingX - 95,
+            h * .57
+        );
 
-        const vanishDuration = 2.5;
+
+        this.drawGuard(
+            kingX - 45,
+            h * .61
+        );
 
 
-        let alpha = 1;
+        this.drawGuard(
+            kingX + 50,
+            h * .61
+        );
+
+
+        this.drawGuard(
+            kingX + 100,
+            h * .57
+        );
+
+
+        /*
+         * Portail.
+         */
+
+        const portalX =
+            w * .52;
+
+
+        const portalY =
+            h * .48;
+
+
+        const openProgress =
+            Math.min(
+                1,
+                this.visualTime / 2.2
+            );
+
+
+        /*
+         * Fermeture rapide.
+         */
+
+        let close =
+            1;
 
 
         if (
-            this.visualTime >
-            vanishStart
+            this.visualTime > 7.8
         ) {
 
-            alpha =
+            close =
                 1 -
                 Math.min(
                     1,
                     (
                         this.visualTime -
-                        vanishStart
+                        7.8
                     ) /
-                    vanishDuration
+                    1.25
                 );
         }
 
 
-        if (alpha > 0) {
+        const portalScale =
+            openProgress *
+            close;
 
-            ctx.save();
 
-            ctx.globalAlpha =
-                alpha;
+        if (portalScale > 0) {
 
-            this.drawDuckKing(
-                kingX,
-                h * .55,
-                .84
+            this.drawPortal(
+                portalX,
+                portalY,
+                portalScale
             );
-
-            ctx.restore();
         }
 
 
         /*
-         * La couronne tombe avec le roi.
+         * III avance.
          */
 
+        let kingAlpha =
+            1;
+
+
         if (
-            this.visualTime > 5.3 &&
-            this.visualTime < 9
+            this.visualTime > 6.2
         ) {
 
-            const p =
+            kingAlpha =
+                1 -
                 Math.min(
                     1,
                     (
                         this.visualTime -
-                        5.3
-                    ) / 3.7
+                        6.2
+                    ) /
+                    1.6
                 );
+        }
 
+
+        if (kingAlpha > 0) {
 
             ctx.save();
 
             ctx.globalAlpha =
-                1 - p;
+                kingAlpha;
 
 
-            this.drawCrown(
-                kingX + p * 65,
-                h * .47 +
-                p * p * 100,
-                .45
+            this.drawDuckKing(
+                kingX,
+                h * .53,
+                .82
             );
 
 
@@ -1832,32 +1502,59 @@ const Prologue = {
 
 
         /*
-         * IV :
-         * uniquement les yeux,
-         * loin derrière.
+         * Les gardes poussent III.
          */
 
-        this.drawDuckVillain(
-            w * .17,
-            h * .29,
-            .85
-        );
+        if (
+            this.visualTime > 4 &&
+            this.visualTime < 7
+        ) {
+
+            ctx.strokeStyle =
+                "rgba(210,210,210,.35)";
 
 
-        this.drawPortalParticles(
-            w * .50,
-            h * .49,
-            110
-        );
+            ctx.lineWidth = 4;
 
 
-        this.drawWindParticles(
-            80
-        );
+            ctx.beginPath();
+
+            ctx.moveTo(
+                kingX + 48,
+                h * .55
+            );
+
+            ctx.lineTo(
+                kingX + 78,
+                h * .55
+            );
+
+            ctx.stroke();
+        }
 
 
-        this.drawEmbers(
-            25
+        /*
+         * PARTICULES DU PORTAIL.
+         *
+         * Elles disparaissent
+         * immédiatement après III.
+         */
+
+        if (
+            this.portalParticles &&
+            kingAlpha > 0
+        ) {
+
+            this.drawPortalParticles(
+                portalX,
+                portalY,
+                80
+            );
+        }
+
+
+        this.drawWind(
+            45
         );
     },
 
@@ -1878,93 +1575,48 @@ const Prologue = {
             Game.canvas.height;
 
 
-        this.drawNetherBackground();
+        this.drawNetherSky();
 
 
         /*
-         * SOL NOIR
+         * Terrain rocheux.
+         */
+
+        this.drawBlackGround();
+
+
+        /*
+         * Sol irrégulier.
+         */
+
+        this.drawNetherRocks();
+
+
+        /*
+         * Ombre du canard.
          */
 
         ctx.fillStyle =
-            "#050506";
+            "rgba(0,0,0,.65)";
 
 
         ctx.beginPath();
 
-        ctx.moveTo(
+        ctx.ellipse(
+            w * .50,
+            h * .765,
+            72,
+            17,
             0,
-            h * .70
-        );
-
-        ctx.lineTo(
-            w,
-            h * .70
-        );
-
-        ctx.lineTo(
-            w,
-            h
-        );
-
-        ctx.lineTo(
             0,
-            h
+            Math.PI * 2
         );
-
-        ctx.closePath();
 
         ctx.fill();
 
 
         /*
-         * Craquelures
-         */
-
-        ctx.strokeStyle =
-            "#321114";
-
-
-        ctx.lineWidth = 2;
-
-
-        for (
-            let i = 0;
-            i < 18;
-            i++
-        ) {
-
-            const x =
-                (i * 97) % w;
-
-
-            const y =
-                h * .73 +
-                (i % 5) * 35;
-
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                x,
-                y
-            );
-
-            ctx.lineTo(
-                x + 35,
-                y - 12
-            );
-
-            ctx.lineTo(
-                x + 70,
-                y + 10
-            );
-
-            ctx.stroke();
-        }
-
-
-        /*
-         * UN SEUL PONANINI III
+         * UN SEUL PONANINI III.
          */
 
         const walk =
@@ -1976,49 +1628,35 @@ const Prologue = {
         this.drawDuckKing(
             w * .50,
             h * .58 + walk,
-            .82
+            .80
         );
 
 
         /*
-         * Ombre au sol
+         * Lave uniquement au loin.
          */
 
-        ctx.fillStyle =
-            "rgba(0,0,0,.55)";
-
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            w * .50,
-            h * .77,
-            75,
-            18,
-            0,
-            0,
-            Math.PI * 2
+        this.drawDistantLava(
+            h * .56
         );
-
-        ctx.fill();
 
 
         this.drawSmoke(
             w * .18,
-            h * .70,
-            1
+            h * .72,
+            .9
         );
 
 
         this.drawSmoke(
-            w * .80,
-            h * .66,
-            1.2
+            w * .82,
+            h * .68,
+            1.1
         );
 
 
         this.drawEmbers(
-            110
+            70
         );
     },
 
@@ -2039,86 +1677,80 @@ const Prologue = {
             Game.canvas.height;
 
 
-        this.drawNetherBackground();
+        this.drawNetherSky();
+
+        this.drawBlackGround();
+
+        this.drawNetherRocks();
 
 
         /*
-         * Sol noir
+         * Pas de cercle bleu.
+         * Pas d'autel.
+         * Pas de support.
          */
-
-        ctx.fillStyle =
-            "#050506";
-
-
-        ctx.fillRect(
-            0,
-            h * .70,
-            w,
-            h * .30
-        );
 
 
         /*
-         * Ponanini III
+         * III marche.
          */
+
+        const movement =
+            Math.sin(
+                this.visualTime * 1.8
+            ) * 2;
+
 
         this.drawDuckKing(
             w * .50,
-            h * .62,
-            .75
+            h * .60 + movement,
+            .76
         );
 
 
         /*
-         * Autel
+         * Fragment 1 :
+         * fissure à gauche.
          */
 
-        ctx.fillStyle =
-            "#1b1718";
-
-
-        ctx.fillRect(
-            w * .30,
-            h * .69,
-            w * .40,
-            35
-        );
-
-
-        ctx.strokeStyle =
-            "#806944";
-
-
-        ctx.lineWidth = 3;
-
-
-        ctx.strokeRect(
-            w * .30,
-            h * .69,
-            w * .40,
-            35
+        this.drawFragment(
+            w * .24,
+            h * .66,
+            "#c69c38"
         );
 
 
         /*
-         * Cercle magique
+         * Fragment 2 :
+         * rocher.
          */
 
-        ctx.save();
-
-        ctx.translate(
-            w / 2,
-            h * .48
+        this.drawFragment(
+            w * .72,
+            h * .54,
+            "#4f6fd0"
         );
 
 
-        ctx.rotate(
-            this.visualTime * .12
+        /*
+         * Fragment 3 :
+         * profondeur.
+         */
+
+        this.drawFragment(
+            w * .56,
+            h * .34,
+            "#7654bd"
         );
 
+
+        /*
+         * Ligne de fissure
+         * autour du premier fragment.
+         */
 
         ctx.strokeStyle =
-            "#536dff";
+            "#4e1812";
 
 
         ctx.lineWidth = 3;
@@ -2126,168 +1758,33 @@ const Prologue = {
 
         ctx.beginPath();
 
-        ctx.arc(
-            0,
-            0,
-            160,
-            0,
-            Math.PI * 2
+        ctx.moveTo(
+            w * .12,
+            h * .72
+        );
+
+        ctx.lineTo(
+            w * .24,
+            h * .66
+        );
+
+        ctx.lineTo(
+            w * .34,
+            h * .71
         );
 
         ctx.stroke();
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            105,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.stroke();
-
-
-        ctx.restore();
-
-
-        const fragments = [
-
-            {
-                x: w / 2,
-                y: h * .26,
-                color: "#dcb943"
-            },
-
-            {
-                x: w * .37,
-                y: h * .49,
-                color: "#416fd0"
-            },
-
-            {
-                x: w * .63,
-                y: h * .49,
-                color: "#7650c4"
-            }
-
-        ];
-
-
-        fragments.forEach(
-            (fragment, i) => {
-
-                const y =
-                    fragment.y +
-                    Math.sin(
-                        this.visualTime * 2 +
-                        i
-                    ) * 9;
-
-
-                ctx.save();
-
-                ctx.translate(
-                    fragment.x,
-                    y
-                );
-
-
-                ctx.rotate(
-                    this.visualTime *
-                    (.2 + i * .07)
-                );
-
-
-                const glow =
-                    ctx.createRadialGradient(
-                        0,
-                        0,
-                        4,
-                        0,
-                        0,
-                        75
-                    );
-
-
-                glow.addColorStop(
-                    0,
-                    fragment.color
-                );
-
-
-                glow.addColorStop(
-                    1,
-                    "rgba(0,0,0,0)"
-                );
-
-
-                ctx.fillStyle =
-                    glow;
-
-
-                ctx.fillRect(
-                    -80,
-                    -80,
-                    160,
-                    160
-                );
-
-
-                ctx.fillStyle =
-                    fragment.color;
-
-
-                ctx.beginPath();
-
-                ctx.moveTo(
-                    0,
-                    -30
-                );
-
-                ctx.lineTo(
-                    22,
-                    0
-                );
-
-                ctx.lineTo(
-                    0,
-                    30
-                );
-
-                ctx.lineTo(
-                    -22,
-                    0
-                );
-
-                ctx.closePath();
-
-                ctx.fill();
-
-
-                ctx.strokeStyle =
-                    "#eee8d5";
-
-
-                ctx.stroke();
-
-
-                ctx.restore();
-            }
-        );
 
 
         this.drawEmbers(
-            100
+            65
         );
     },
 
 
     /* =====================================================
        SCÈNE 10
-       L'AVENTURE COMMENCE
+       APPEL
     ===================================================== */
 
     drawScene10() {
@@ -2301,27 +1798,13 @@ const Prologue = {
             Game.canvas.height;
 
 
-        this.drawNetherBackground();
+        this.drawNetherSky();
+
+        this.drawBlackGround();
 
 
         /*
-         * Sol noir
-         */
-
-        ctx.fillStyle =
-            "#050506";
-
-
-        ctx.fillRect(
-            0,
-            h * .70,
-            w,
-            h * .30
-        );
-
-
-        /*
-         * Portail
+         * Portail propre.
          */
 
         const portalX =
@@ -2329,14 +1812,14 @@ const Prologue = {
 
 
         const portalY =
-            h * .48;
+            h * .47;
 
 
         const pulse =
             1 +
             Math.sin(
-                this.visualTime * 2.5
-            ) * .035;
+                this.visualTime * 2
+            ) * .025;
 
 
         this.drawPortal(
@@ -2347,7 +1830,37 @@ const Prologue = {
 
 
         /*
-         * Aventurier
+         * III au premier plan.
+         */
+
+        ctx.fillStyle =
+            "rgba(0,0,0,.65)";
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            w * .37,
+            h * .77,
+            65,
+            15,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        this.drawDuckKing(
+            w * .37,
+            h * .59,
+            .78
+        );
+
+
+        /*
+         * Silhouette du joueur.
          */
 
         const playerX =
@@ -2359,15 +1872,15 @@ const Prologue = {
 
 
         ctx.fillStyle =
-            "#020205";
+            "#030305";
 
 
         ctx.beginPath();
 
         ctx.arc(
             playerX,
-            playerY - 45,
-            25,
+            playerY - 55,
+            24,
             0,
             Math.PI * 2
         );
@@ -2376,196 +1889,622 @@ const Prologue = {
 
 
         ctx.fillRect(
-            playerX - 27,
-            playerY - 20,
-            54,
-            115
+            playerX - 26,
+            playerY - 28,
+            52,
+            105
         );
 
 
         /*
-         * UN SEUL Ponanini III
+         * Aucune texture parasite.
+         * Seulement une légère lumière
+         * venant du portail.
          */
 
-        this.drawDuckKing(
-            w * .39,
-            h * .57,
-            .78
+        const light =
+            ctx.createRadialGradient(
+                portalX,
+                portalY,
+                30,
+                portalX,
+                portalY,
+                330
+            );
+
+
+        light.addColorStop(
+            0,
+            "rgba(75,100,255,.18)"
         );
 
 
-        /*
-         * Regard vers le joueur
-         */
-
-        ctx.strokeStyle =
-            "rgba(214,181,68,.30)";
-
-
-        ctx.lineWidth = 2;
-
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            w * .46,
-            h * .50
+        light.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
         );
 
-        ctx.lineTo(
-            playerX - 30,
-            playerY - 35
-        );
 
-        ctx.stroke();
+        ctx.fillStyle =
+            light;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            w,
+            h
+        );
 
 
         this.drawPortalParticles(
             portalX,
             portalY,
-            110
-        );
-
-
-        this.drawSmoke(
-            w * .20,
-            h * .70,
-            .9
+            35
         );
 
 
         this.drawEmbers(
-            80
+            35
         );
     },
 
 
     /* =====================================================
-       VILLAGE
+       DÉCOR : CIEL
     ===================================================== */
 
-    drawVillage(
-        centerX,
-        baseY
-    ) {
+    drawNightSky() {
 
         const ctx = Game.ctx;
 
         const w =
             Game.canvas.width;
 
-
-        /*
-         * Maisons
-         */
-
-        for (
-            let i = -6;
-            i <= 6;
-            i++
-        ) {
-
-            if (i === 0)
-                continue;
+        const h =
+            Game.canvas.height;
 
 
-            const x =
-                centerX +
-                i * 95;
-
-
-            const height =
-                70 +
-                Math.abs(i % 3) * 18;
-
-
-            ctx.fillStyle =
-                "#16191f";
-
-
-            ctx.fillRect(
-                x - 38,
-                baseY - height,
-                76,
-                height
+        const gradient =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                h
             );
 
 
-            /*
-             * Toit
-             */
+        gradient.addColorStop(
+            0,
+            "#060a12"
+        );
 
-            ctx.fillStyle =
-                "#0b0d12";
+
+        gradient.addColorStop(
+            .55,
+            "#172236"
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "#090d15"
+        );
+
+
+        ctx.fillStyle =
+            gradient;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            w,
+            h
+        );
+
+
+        /*
+         * Lune.
+         */
+
+        ctx.fillStyle =
+            "#d5ca9c";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            w * .78,
+            h * .17,
+            42,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+         * Étoiles.
+         */
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.55)";
+
+
+        for (
+            let i = 0;
+            i < 60;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 137
+                ) % w;
+
+
+            const y =
+                (
+                    i * 71
+                ) % (h * .42);
+
+
+            ctx.fillRect(
+                x,
+                y,
+                1.5,
+                1.5
+            );
+        }
+    },
+
+
+    drawDistantMountains() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        ctx.fillStyle =
+            "#0b111b";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            h * .48
+        );
+
+        ctx.lineTo(
+            w * .12,
+            h * .25
+        );
+
+        ctx.lineTo(
+            w * .25,
+            h * .48
+        );
+
+        ctx.lineTo(
+            w * .40,
+            h * .20
+        );
+
+        ctx.lineTo(
+            w * .55,
+            h * .48
+        );
+
+        ctx.lineTo(
+            w * .72,
+            h * .28
+        );
+
+        ctx.lineTo(
+            w,
+            h * .48
+        );
+
+        ctx.lineTo(
+            w,
+            h
+        );
+
+        ctx.lineTo(
+            0,
+            h
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+    },
+
+
+    /* =====================================================
+       VILLAGE AÉRIEN
+    ===================================================== */
+
+    drawAerialVillage(
+        centerX,
+        centerY,
+        scale
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        ctx.save();
+
+        ctx.translate(
+            centerX,
+            centerY
+        );
+
+        ctx.scale(
+            scale,
+            scale
+        );
+
+
+        /*
+         * Place centrale.
+         */
+
+        ctx.fillStyle =
+            "#20232a";
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            260,
+            145,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+         * Maisons disposées autour
+         * du palais.
+         */
+
+        const houses = [
+
+            [-300, -100],
+            [-200, -160],
+            [-90, -185],
+            [90, -185],
+            [200, -150],
+            [300, -90],
+
+            [-330, 35],
+            [-235, 100],
+            [235, 100],
+            [330, 35],
+
+            [-170, 185],
+            [170, 185]
+
+        ];
+
+
+        houses.forEach(
+            ([x, y], i) => {
+
+                this.drawAerialHouse(
+                    x,
+                    y,
+                    .85 +
+                    (i % 3) * .08
+                );
+            }
+        );
+
+
+        /*
+         * Routes.
+         */
+
+        ctx.strokeStyle =
+            "#101217";
+
+
+        ctx.lineWidth = 28;
+
+
+        [
+            [0, -300, 0, 300],
+            [-390, 0, 390, 0],
+            [-280, -210, 280, 210],
+            [280, -210, -280, 210]
+
+        ].forEach(
+            line => {
+
+                ctx.beginPath();
+
+                ctx.moveTo(
+                    line[0],
+                    line[1]
+                );
+
+                ctx.lineTo(
+                    line[2],
+                    line[3]
+                );
+
+                ctx.stroke();
+            }
+        );
+
+
+        ctx.restore();
+    },
+
+
+    drawAerialHouse(
+        x,
+        y,
+        scale
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            y
+        );
+
+        ctx.scale(
+            scale,
+            scale
+        );
+
+
+        ctx.fillStyle =
+            "#171a20";
+
+
+        ctx.fillRect(
+            -45,
+            -30,
+            90,
+            60
+        );
+
+
+        ctx.fillStyle =
+            "#0c0f14";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -58,
+            -30
+        );
+
+        ctx.lineTo(
+            0,
+            -70
+        );
+
+        ctx.lineTo(
+            58,
+            -30
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#c39b39";
+
+
+        ctx.fillRect(
+            -7,
+            -5,
+            14,
+            16
+        );
+
+
+        ctx.restore();
+    },
+
+
+    drawVillageLights() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        ctx.fillStyle =
+            "rgba(231,178,60,.65)";
+
+
+        for (
+            let i = 0;
+            i < 24;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 137
+                ) % w;
+
+
+            const y =
+                h * .45 +
+                (
+                    i * 59
+                ) % (h * .35);
 
 
             ctx.beginPath();
 
-            ctx.moveTo(
-                x - 52,
-                baseY - height
-            );
-
-            ctx.lineTo(
+            ctx.arc(
                 x,
-                baseY - height - 45
+                y,
+                3,
+                0,
+                Math.PI * 2
             );
-
-            ctx.lineTo(
-                x + 52,
-                baseY - height
-            );
-
-            ctx.closePath();
 
             ctx.fill();
+        }
+    },
 
 
-            /*
-             * Fenêtre
-             */
+    /* =====================================================
+       SALLE DU TRÔNE
+    ===================================================== */
 
-            ctx.fillStyle =
-                "#c69d3b";
+    drawThroneRoom() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
 
 
-            ctx.fillRect(
-                x - 7,
-                baseY - height + 28,
-                14,
-                22
-            );
+        ctx.fillStyle =
+            "#0c0e13";
+
+        ctx.fillRect(
+            0,
+            0,
+            w,
+            h
+        );
+
+
+        ctx.fillStyle =
+            "#171b24";
+
+
+        ctx.fillRect(
+            0,
+            0,
+            w,
+            h * .72
+        );
+
+
+        /*
+         * Pierres.
+         */
+
+        ctx.strokeStyle =
+            "rgba(72,75,84,.45)";
+
+
+        ctx.lineWidth = 2;
+
+
+        for (
+            let y = 0;
+            y < h * .72;
+            y += 58
+        ) {
+
+            const offset =
+                (
+                    y / 58
+                ) % 2 === 0 ?
+                0 :
+                35;
+
+
+            for (
+                let x = -70 + offset;
+                x < w + 70;
+                x += 70
+            ) {
+
+                ctx.strokeRect(
+                    x,
+                    y,
+                    70,
+                    58
+                );
+            }
         }
 
 
         /*
-         * Route
+         * Sol.
          */
 
         ctx.fillStyle =
             "#111319";
 
 
+        ctx.fillRect(
+            0,
+            h * .72,
+            w,
+            h * .28
+        );
+
+
+        /*
+         * Tapis.
+         */
+
+        ctx.fillStyle =
+            "#5b1d2b";
+
+
         ctx.beginPath();
 
         ctx.moveTo(
-            centerX - 85,
-            baseY
+            w * .42,
+            h * .52
         );
 
         ctx.lineTo(
-            centerX + 85,
-            baseY
+            w * .58,
+            h * .52
         );
 
         ctx.lineTo(
-            centerX + 190,
-            Game.canvas.height
+            w * .76,
+            h
         );
 
         ctx.lineTo(
-            centerX - 190,
-            Game.canvas.height
+            w * .24,
+            h
         );
 
         ctx.closePath();
@@ -2578,7 +2517,7 @@ const Prologue = {
        CHÂTEAU
     ===================================================== */
 
-    drawCastleSilhouette(
+    drawCastle(
         x,
         y,
         scale
@@ -2586,106 +2525,109 @@ const Prologue = {
 
         const ctx = Game.ctx;
 
-        const w =
-            420 * scale;
 
-        const h =
-            260 * scale;
+        ctx.save();
 
+        ctx.translate(
+            x,
+            y
+        );
 
-        ctx.fillStyle =
-            "#171d29";
-
-
-        ctx.fillRect(
-            x - w / 2,
-            y - h,
-            w,
-            h
+        ctx.scale(
+            scale,
+            scale
         );
 
 
         /*
-         * Tours
+         * Corps.
          */
 
-        const towerW =
-            90 * scale;
+        ctx.fillStyle =
+            "#202631";
 
 
         ctx.fillRect(
-            x - w / 2 - 45 * scale,
-            y - h - 30 * scale,
-            towerW,
-            h + 30 * scale
-        );
-
-
-        ctx.fillRect(
-            x + w / 2 - 45 * scale,
-            y - h - 30 * scale,
-            towerW,
-            h + 30 * scale
+            -220,
+            -230,
+            440,
+            230
         );
 
 
         /*
-         * Toits
+         * Tours.
+         */
+
+        ctx.fillRect(
+            -270,
+            -270,
+            90,
+            270
+        );
+
+
+        ctx.fillRect(
+            180,
+            -270,
+            90,
+            270
+        );
+
+
+        /*
+         * Tour centrale.
          */
 
         ctx.fillStyle =
-            "#080b11";
+            "#2a303c";
+
+
+        ctx.fillRect(
+            -75,
+            -315,
+            150,
+            315
+        );
+
+
+        /*
+         * Toits.
+         */
+
+        ctx.fillStyle =
+            "#0b0e14";
 
 
         this.drawRoof(
-            x - w / 2 - 45 * scale,
-            y - h - 30 * scale,
-            towerW
+            -270,
+            -270,
+            90
         );
 
 
         this.drawRoof(
-            x + w / 2 - 45 * scale,
-            y - h - 30 * scale,
-            towerW
+            180,
+            -270,
+            90
         );
-
-
-        /*
-         * Tour centrale
-         */
-
-        ctx.fillStyle =
-            "#202530";
-
-
-        ctx.fillRect(
-            x - 75 * scale,
-            y - h - 60 * scale,
-            150 * scale,
-            h + 60 * scale
-        );
-
-
-        ctx.fillStyle =
-            "#08090d";
 
 
         ctx.beginPath();
 
         ctx.moveTo(
-            x - 100 * scale,
-            y - h - 60 * scale
+            -100,
+            -315
         );
 
         ctx.lineTo(
-            x,
-            y - h - 185 * scale
+            0,
+            -455
         );
 
         ctx.lineTo(
-            x + 100 * scale,
-            y - h - 60 * scale
+            100,
+            -315
         );
 
         ctx.closePath();
@@ -2694,11 +2636,11 @@ const Prologue = {
 
 
         /*
-         * Fenêtres
+         * Fenêtres.
          */
 
         ctx.fillStyle =
-            "#d5a82e";
+            "#d5aa3c";
 
 
         for (
@@ -2708,49 +2650,49 @@ const Prologue = {
         ) {
 
             ctx.fillRect(
-                x +
-                i * 55 * scale -
-                6,
-                y -
-                h * .55,
+                i * 55 - 6,
+                -180,
                 12,
-                24
+                27
             );
         }
 
 
         /*
-         * Porte
+         * Porte.
          */
 
         ctx.fillStyle =
-            "#06080c";
+            "#07090c";
 
 
         ctx.fillRect(
-            x - 30 * scale,
-            y - 90 * scale,
-            60 * scale,
-            90 * scale
+            -34,
+            -85,
+            68,
+            85
         );
 
 
         /*
-         * Drapeaux
+         * Drapeaux.
          */
 
         this.drawFlag(
-            x - 115 * scale,
-            y - h - 220 * scale,
-            "#7d2632"
+            -225,
+            -460,
+            "#752532"
         );
 
 
         this.drawFlag(
-            x + 115 * scale,
-            y - h - 220 * scale,
-            "#7d2632"
+            225,
+            -460,
+            "#752532"
         );
+
+
+        ctx.restore();
     },
 
 
@@ -2772,7 +2714,7 @@ const Prologue = {
 
         ctx.lineTo(
             x + width / 2,
-            y - 65
+            y - 75
         );
 
         ctx.lineTo(
@@ -2811,7 +2753,7 @@ const Prologue = {
 
         ctx.lineTo(
             x,
-            y + 75
+            y + 90
         );
 
         ctx.stroke();
@@ -2819,8 +2761,7 @@ const Prologue = {
 
         const wave =
             Math.sin(
-                this.visualTime * 2 +
-                x * .01
+                this.visualTime * 2
             ) * 5;
 
 
@@ -2836,209 +2777,27 @@ const Prologue = {
         );
 
         ctx.quadraticCurveTo(
-            x + 25,
-            y + 12 + wave,
-            x + 48,
+            x + 30,
+            y + 15 + wave,
+            x + 65,
             y + 5
         );
 
         ctx.lineTo(
-            x + 40,
-            y + 35
+            x + 50,
+            y + 45
         );
 
         ctx.quadraticCurveTo(
-            x + 20,
-            y + 25 + wave,
+            x + 25,
+            y + 30 + wave,
             x + 3,
-            y + 32
+            y + 38
         );
 
         ctx.closePath();
 
         ctx.fill();
-    },
-
-
-    /* =====================================================
-       MURS
-    ===================================================== */
-
-    drawStoneWall() {
-
-        const ctx = Game.ctx;
-
-        const w =
-            Game.canvas.width;
-
-        const h =
-            Game.canvas.height;
-
-
-        ctx.strokeStyle =
-            "rgba(65,69,78,.55)";
-
-
-        ctx.lineWidth = 2;
-
-
-        for (
-            let row = 0;
-            row < 9;
-            row++
-        ) {
-
-            const y =
-                row * 65;
-
-
-            const offset =
-                row % 2 === 0 ?
-                0 :
-                35;
-
-
-            for (
-                let x = -70 + offset;
-                x < w + 70;
-                x += 70
-            ) {
-
-                ctx.strokeRect(
-                    x,
-                    y,
-                    70,
-                    65
-                );
-            }
-        }
-    },
-
-
-    /* =====================================================
-       COLONNES
-    ===================================================== */
-
-    drawGothicColumns() {
-
-        const ctx = Game.ctx;
-
-        const w =
-            Game.canvas.width;
-
-        const h =
-            Game.canvas.height;
-
-
-        ctx.fillStyle =
-            "#101218";
-
-
-        [
-            w * .08,
-            w * .28,
-            w * .72,
-            w * .92
-        ].forEach(x => {
-
-            ctx.fillRect(
-                x - 22,
-                h * .10,
-                44,
-                h * .67
-            );
-
-
-            ctx.fillRect(
-                x - 35,
-                h * .10,
-                70,
-                22
-            );
-
-
-            ctx.fillRect(
-                x - 35,
-                h * .73,
-                70,
-                22
-            );
-        });
-    },
-
-
-    /* =====================================================
-       VITRAUX
-    ===================================================== */
-
-    drawStainedGlass(
-        x,
-        y,
-        size
-    ) {
-
-        const ctx = Game.ctx;
-
-
-        ctx.save();
-
-        ctx.translate(
-            x,
-            y
-        );
-
-
-        ctx.fillStyle =
-            "#14151b";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            size / 2,
-            Math.PI,
-            0
-        );
-
-        ctx.fill();
-
-
-        ctx.strokeStyle =
-            "#5d5036";
-
-
-        ctx.lineWidth = 5;
-
-        ctx.stroke();
-
-
-        ctx.fillStyle =
-            "rgba(83,47,55,.65)";
-
-
-        ctx.fillRect(
-            -size * .22,
-            -size * .22,
-            size * .22,
-            size * .44
-        );
-
-
-        ctx.fillStyle =
-            "rgba(57,74,105,.65)";
-
-
-        ctx.fillRect(
-            0,
-            -size * .22,
-            size * .22,
-            size * .44
-        );
-
-
-        ctx.restore();
     },
 
 
@@ -3054,83 +2813,83 @@ const Prologue = {
         const ctx = Game.ctx;
 
 
-        /*
-         * Structure haute
-         */
-
         ctx.fillStyle =
-            "#806129";
+            "#7a5b28";
 
 
         ctx.fillRect(
             x - 82,
             y - 120,
             164,
-            155
+            150
         );
 
-
-        /*
-         * Dossier
-         */
 
         ctx.fillStyle =
             "#5a1e29";
 
 
         ctx.fillRect(
-            x - 62,
-            y - 102,
-            124,
-            110
+            x - 61,
+            y - 100,
+            122,
+            105
         );
 
 
-        /*
-         * Accoudoirs
-         */
-
         ctx.fillStyle =
-            "#b9973e";
+            "#b9963e";
 
 
         ctx.fillRect(
             x - 104,
-            y + 10,
-            34,
-            25
+            y,
+            35,
+            30
         );
 
 
         ctx.fillRect(
-            x + 70,
-            y + 10,
-            34,
-            25
+            x + 69,
+            y,
+            35,
+            30
+        );
+
+
+        ctx.fillStyle =
+            "#3f2c19";
+
+
+        ctx.fillRect(
+            x - 63,
+            y + 30,
+            18,
+            50
+        );
+
+
+        ctx.fillRect(
+            x + 45,
+            y + 30,
+            18,
+            50
         );
 
 
         /*
-         * Pieds
+         * Coussin visible.
          */
 
         ctx.fillStyle =
-            "#5b4423";
+            "#762735";
 
 
         ctx.fillRect(
-            x - 65,
-            y + 35,
-            18,
-            55
-        );
-
-
-        ctx.fillRect(
-            x + 47,
-            y + 35,
-            18,
-            55
+            x - 48,
+            y - 2,
+            96,
+            24
         );
     },
 
@@ -3162,37 +2921,37 @@ const Prologue = {
 
 
         /*
-         * Cape
+         * Cape.
          */
 
         ctx.fillStyle =
-            "#17131b";
+            "#15131a";
 
 
         ctx.beginPath();
 
         ctx.moveTo(
-            -55,
-            30
+            -48,
+            35
         );
 
         ctx.quadraticCurveTo(
-            -78,
+            -75,
             90,
-            -86,
-            145
+            -82,
+            140
         );
 
         ctx.lineTo(
-            86,
-            145
+            82,
+            140
         );
 
         ctx.quadraticCurveTo(
-            78,
+            75,
             90,
-            55,
-            30
+            48,
+            35
         );
 
         ctx.closePath();
@@ -3201,7 +2960,7 @@ const Prologue = {
 
 
         ctx.strokeStyle =
-            "#7d6331";
+            "#7f6635";
 
 
         ctx.lineWidth = 3;
@@ -3210,70 +2969,39 @@ const Prologue = {
 
 
         /*
-         * Armure
+         * Corps.
          */
 
         ctx.fillStyle =
-            "#29313b";
+            "#303944";
 
 
         ctx.fillRect(
-            -42,
+            -40,
             35,
-            84,
+            80,
             92
         );
 
 
         ctx.strokeStyle =
-            "#756744";
+            "#81734e";
 
 
         ctx.strokeRect(
-            -42,
+            -40,
             35,
-            84,
+            80,
             92
         );
 
 
         /*
-         * Épaules
+         * Tête.
          */
 
         ctx.fillStyle =
-            "#454c55";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            -47,
-            52,
-            17,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.arc(
-            47,
-            52,
-            17,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.fill();
-
-
-        /*
-         * Tête
-         */
-
-        ctx.fillStyle =
-            "#d8ba4b";
+            "#d6b747";
 
 
         ctx.beginPath();
@@ -3282,7 +3010,7 @@ const Prologue = {
             0,
             0,
             44,
-            42,
+            41,
             0,
             0,
             Math.PI * 2
@@ -3292,18 +3020,18 @@ const Prologue = {
 
 
         /*
-         * Plumage supérieur
+         * Plumage.
          */
 
         ctx.fillStyle =
-            "#27282d";
+            "#292a2f";
 
 
         ctx.beginPath();
 
         ctx.arc(
             0,
-            -11,
+            -9,
             40,
             Math.PI,
             Math.PI * 2
@@ -3313,11 +3041,11 @@ const Prologue = {
 
 
         /*
-         * Yeux
+         * Yeux.
          */
 
         ctx.fillStyle =
-            "#f4e9b4";
+            "#f1e9bd";
 
 
         ctx.fillRect(
@@ -3337,7 +3065,7 @@ const Prologue = {
 
 
         ctx.fillStyle =
-            "#16171b";
+            "#111217";
 
 
         ctx.fillRect(
@@ -3357,11 +3085,11 @@ const Prologue = {
 
 
         /*
-         * Bec
+         * Bec.
          */
 
         ctx.fillStyle =
-            "#d58927";
+            "#d98226";
 
 
         ctx.beginPath();
@@ -3373,7 +3101,7 @@ const Prologue = {
 
         ctx.lineTo(
             0,
-            28
+            27
         );
 
         ctx.lineTo(
@@ -3387,236 +3115,17 @@ const Prologue = {
 
 
         /*
-         * Couronne directement
-         * au sommet de la tête.
+         * Couronne fixée à la tête.
          */
 
         this.drawCrown(
             0,
-            -42,
-            1
+            -43,
+            .95
         );
 
 
         ctx.restore();
-    },
-
-
-    /* =====================================================
-       PONANINI IV
-       YEUX UNIQUEMENT
-    ===================================================== */
-
-    drawDuckVillain(
-        x,
-        y,
-        scale = 1
-    ) {
-
-        const ctx = Game.ctx;
-
-
-        const pulse =
-            .65 +
-            Math.abs(
-                Math.sin(
-                    this.visualTime * 2.2
-                )
-            ) * .35;
-
-
-        const eyeWidth =
-            17 * scale;
-
-
-        const eyeHeight =
-            6 * scale;
-
-
-        ctx.save();
-
-
-        ctx.shadowBlur =
-            18 * scale;
-
-
-        ctx.shadowColor =
-            `rgba(190,20,30,${pulse})`;
-
-
-        ctx.fillStyle =
-            `rgba(225,35,42,${pulse})`;
-
-
-        ctx.fillRect(
-            x - 27 * scale,
-            y,
-            eyeWidth,
-            eyeHeight
-        );
-
-
-        ctx.fillRect(
-            x + 10 * scale,
-            y,
-            eyeWidth,
-            eyeHeight
-        );
-
-
-        ctx.restore();
-    },
-
-
-    /* =====================================================
-       GARDES
-    ===================================================== */
-
-    drawGuard(
-        x,
-        y
-    ) {
-
-        const ctx = Game.ctx;
-
-
-        /*
-         * Corps
-         */
-
-        ctx.fillStyle =
-            "#080b10";
-
-
-        ctx.fillRect(
-            x - 20,
-            y,
-            40,
-            90
-        );
-
-
-        /*
-         * Casque
-         */
-
-        ctx.fillStyle =
-            "#303847";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 10,
-            25,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-         * Visage caché
-         */
-
-        ctx.fillStyle =
-            "#08090c";
-
-
-        ctx.fillRect(
-            x - 20,
-            y - 5,
-            40,
-            10
-        );
-
-
-        /*
-         * Lance
-         */
-
-        ctx.strokeStyle =
-            "#554d43";
-
-
-        ctx.lineWidth = 3;
-
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x + 30,
-            y - 45
-        );
-
-        ctx.lineTo(
-            x + 30,
-            y + 105
-        );
-
-        ctx.stroke();
-    },
-
-
-    /* =====================================================
-       FOULE
-    ===================================================== */
-
-    drawCrowd(
-        centerX,
-        baseY
-    ) {
-
-        const ctx = Game.ctx;
-
-        const w =
-            Game.canvas.width;
-
-
-        for (
-            let i = -8;
-            i <= 8;
-            i++
-        ) {
-
-            const x =
-                centerX +
-                i * 55;
-
-
-            const bob =
-                Math.sin(
-                    this.visualTime * 1.5 +
-                    i
-                ) * 2;
-
-
-            ctx.fillStyle =
-                "#111319";
-
-
-            ctx.beginPath();
-
-            ctx.arc(
-                x,
-                baseY - 35 + bob,
-                13,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fill();
-
-
-            ctx.fillRect(
-                x - 16,
-                baseY - 20 + bob,
-                32,
-                50
-            );
-        }
     },
 
 
@@ -3647,43 +3156,43 @@ const Prologue = {
 
 
         ctx.fillStyle =
-            "#d9ac30";
+            "#d7a92f";
 
 
         ctx.beginPath();
 
         ctx.moveTo(
-            -40,
+            -38,
             8
         );
 
         ctx.lineTo(
             -29,
-            -30
+            -27
         );
 
         ctx.lineTo(
             -10,
-            -3
+            -4
         );
 
         ctx.lineTo(
             0,
-            -42
+            -39
         );
 
         ctx.lineTo(
-            13,
-            -3
+            12,
+            -4
         );
 
         ctx.lineTo(
-            34,
-            -30
+            32,
+            -27
         );
 
         ctx.lineTo(
-            40,
+            39,
             8
         );
 
@@ -3693,62 +3202,1347 @@ const Prologue = {
 
 
         ctx.fillRect(
-            -40,
+            -39,
             5,
-            80,
-            12
+            78,
+            11
         );
 
 
-        /*
-         * Gemmes
-         */
-
         ctx.fillStyle =
-            "#a82f3b";
+            "#a62d3b";
 
 
         ctx.beginPath();
 
         ctx.arc(
             0,
-            -25,
-            6,
+            -23,
+            5,
             0,
             Math.PI * 2
         );
-
-        ctx.fill();
-
-
-        ctx.fillStyle =
-            "#4675b7";
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            -24,
-            -14,
-            4,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.arc(
-            24,
-            -14,
-            4,
-            0,
-            Math.PI * 2
-        );
-
 
         ctx.fill();
 
 
         ctx.restore();
+    },
+
+
+    /* =====================================================
+       IV — OMBRE UNIQUEMENT
+    ===================================================== */
+
+    drawVillainEyes(
+        x,
+        y
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        const pulse =
+            .65 +
+            Math.abs(
+                Math.sin(
+                    this.visualTime * 2
+                )
+            ) * .35;
+
+
+        ctx.save();
+
+
+        ctx.shadowBlur = 18;
+
+        ctx.shadowColor =
+            `rgba(210,25,30,${pulse})`;
+
+
+        ctx.fillStyle =
+            `rgba(220,35,40,${pulse})`;
+
+
+        ctx.fillRect(
+            x - 25,
+            y,
+            16,
+            6
+        );
+
+
+        ctx.fillRect(
+            x + 9,
+            y,
+            16,
+            6
+        );
+
+
+        ctx.restore();
+    },
+
+
+    /* =====================================================
+       IV — APPARAÎT SCÈNE 6
+    ===================================================== */
+
+    drawDuckVillainFull(
+        x,
+        y,
+        scale = 1
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            y
+        );
+
+        ctx.scale(
+            scale,
+            scale
+        );
+
+
+        /*
+         * Cape noire.
+         */
+
+        ctx.fillStyle =
+            "#0b0a0d";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -48,
+            30
+        );
+
+        ctx.lineTo(
+            -80,
+            145
+        );
+
+        ctx.lineTo(
+            80,
+            145
+        );
+
+        ctx.lineTo(
+            48,
+            30
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+         * Armure sombre.
+         */
+
+        ctx.fillStyle =
+            "#20232a";
+
+
+        ctx.fillRect(
+            -40,
+            32,
+            80,
+            100
+        );
+
+
+        /*
+         * Tête.
+         */
+
+        ctx.fillStyle =
+            "#b69b3d";
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            43,
+            40,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+         * Bec.
+         */
+
+        ctx.fillStyle =
+            "#9f5d22";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -25,
+            10
+        );
+
+        ctx.lineTo(
+            0,
+            26
+        );
+
+        ctx.lineTo(
+            25,
+            10
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+         * Yeux normaux.
+         */
+
+        ctx.fillStyle =
+            "#e8ddb0";
+
+
+        ctx.fillRect(
+            -21,
+            -6,
+            12,
+            8
+        );
+
+
+        ctx.fillRect(
+            9,
+            -6,
+            12,
+            8
+        );
+
+
+        ctx.fillStyle =
+            "#17171b";
+
+
+        ctx.fillRect(
+            -17,
+            -4,
+            5,
+            5
+        );
+
+
+        ctx.fillRect(
+            13,
+            -4,
+            5,
+            5
+        );
+
+
+        /*
+         * Couronne sombre.
+         */
+
+        this.drawCrown(
+            0,
+            -42,
+            .90
+        );
+
+
+        ctx.restore();
+    },
+
+
+    /* =====================================================
+       VILLAGEOIS
+    ===================================================== */
+
+    drawVillager(
+        x,
+        y,
+        scale = 1
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            y
+        );
+
+        ctx.scale(
+            scale,
+            scale
+        );
+
+
+        ctx.fillStyle =
+            "#514335";
+
+
+        ctx.fillRect(
+            -18,
+            15,
+            36,
+            75
+        );
+
+
+        ctx.fillStyle =
+            "#d0a948";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            22,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#1b1b20";
+
+
+        ctx.fillRect(
+            -10,
+            -4,
+            5,
+            5
+        );
+
+
+        ctx.fillRect(
+            5,
+            -4,
+            5,
+            5
+        );
+
+
+        ctx.fillStyle =
+            "#d77c24";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -12,
+            8
+        );
+
+        ctx.lineTo(
+            0,
+            17
+        );
+
+        ctx.lineTo(
+            12,
+            8
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        ctx.restore();
+    },
+
+
+    /* =====================================================
+       GARDE
+    ===================================================== */
+
+    drawGuard(
+        x,
+        y
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        /*
+         * Ombre au sol.
+         */
+
+        ctx.fillStyle =
+            "rgba(0,0,0,.5)";
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            x,
+            y + 88,
+            27,
+            8,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#0c1017";
+
+
+        ctx.fillRect(
+            x - 21,
+            y,
+            42,
+            90
+        );
+
+
+        /*
+         * Casque.
+         */
+
+        ctx.fillStyle =
+            "#39404b";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y - 10,
+            25,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        ctx.fillStyle =
+            "#090b0f";
+
+
+        ctx.fillRect(
+            x - 20,
+            y - 4,
+            40,
+            10
+        );
+
+
+        /*
+         * Lance.
+         */
+
+        ctx.strokeStyle =
+            "#756447";
+
+
+        ctx.lineWidth = 3;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x + 30,
+            y - 55
+        );
+
+        ctx.lineTo(
+            x + 30,
+            y + 105
+        );
+
+        ctx.stroke();
+    },
+
+
+    /* =====================================================
+       FOULE
+    ===================================================== */
+
+    drawCrowd(
+        baseY
+    ) {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+
+        for (
+            let i = -9;
+            i <= 9;
+            i++
+        ) {
+
+            const x =
+                w / 2 +
+                i * 55;
+
+
+            const bob =
+                Math.sin(
+                    this.visualTime * 1.2 +
+                    i
+                ) * 2;
+
+
+            ctx.fillStyle =
+                "#11141a";
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                baseY - 35 + bob,
+                14,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+
+            ctx.fillRect(
+                x - 17,
+                baseY - 20 + bob,
+                34,
+                50
+            );
+        }
+    },
+
+
+    /* =====================================================
+       COUR
+    ===================================================== */
+
+    drawCastleCourtyard() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        this.drawNightSky();
+
+
+        this.drawCastle(
+            w / 2,
+            h * .64,
+            .55
+        );
+
+
+        ctx.fillStyle =
+            "#17191e";
+
+
+        ctx.fillRect(
+            0,
+            h * .66,
+            w,
+            h * .34
+        );
+
+
+        /*
+         * Pavés.
+         */
+
+        ctx.strokeStyle =
+            "rgba(90,92,100,.25)";
+
+
+        ctx.lineWidth = 2;
+
+
+        for (
+            let y = h * .68;
+            y < h;
+            y += 42
+        ) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                0,
+                y
+            );
+
+            ctx.lineTo(
+                w,
+                y
+            );
+
+            ctx.stroke();
+        }
+
+
+        for (
+            let x = 0;
+            x < w;
+            x += 75
+        ) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                h * .66
+            );
+
+            ctx.lineTo(
+                x,
+                h
+            );
+
+            ctx.stroke();
+        }
+    },
+
+
+    /* =====================================================
+       RUE DU VILLAGE
+    ===================================================== */
+
+    drawVillageStreet() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        this.drawNightSky();
+
+
+        ctx.fillStyle =
+            "#16191e";
+
+
+        ctx.fillRect(
+            0,
+            h * .62,
+            w,
+            h * .38
+        );
+
+
+        /*
+         * Maisons.
+         */
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const x =
+                i * 170;
+
+
+            const height =
+                130 +
+                (i % 3) * 25;
+
+
+            ctx.fillStyle =
+                "#1c2028";
+
+
+            ctx.fillRect(
+                x,
+                h * .62 - height,
+                120,
+                height
+            );
+
+
+            ctx.fillStyle =
+                "#0d1015";
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x - 20,
+                h * .62 - height
+            );
+
+            ctx.lineTo(
+                x + 60,
+                h * .62 - height - 65
+            );
+
+            ctx.lineTo(
+                x + 140,
+                h * .62 - height
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+        }
+
+
+        /*
+         * Rue.
+         */
+
+        ctx.fillStyle =
+            "#101217";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            w * .32,
+            h * .62
+        );
+
+        ctx.lineTo(
+            w * .68,
+            h * .62
+        );
+
+        ctx.lineTo(
+            w,
+            h
+        );
+
+        ctx.lineTo(
+            0,
+            h
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+    },
+
+
+    /* =====================================================
+       NETHER
+    ===================================================== */
+
+    drawNetherSky() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        const gradient =
+            ctx.createLinearGradient(
+                0,
+                0,
+                0,
+                h
+            );
+
+
+        gradient.addColorStop(
+            0,
+            "#100208"
+        );
+
+
+        gradient.addColorStop(
+            .55,
+            "#32080d"
+        );
+
+
+        gradient.addColorStop(
+            1,
+            "#080207"
+        );
+
+
+        ctx.fillStyle =
+            gradient;
+
+
+        ctx.fillRect(
+            0,
+            0,
+            w,
+            h
+        );
+
+
+        /*
+         * Rochers lointains.
+         */
+
+        ctx.fillStyle =
+            "#18060a";
+
+
+        for (
+            let i = 0;
+            i < 9;
+            i++
+        ) {
+
+            const x =
+                i * 160;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                h * .67
+            );
+
+            ctx.lineTo(
+                x + 80,
+                h * (
+                    .30 +
+                    (i % 3) * .06
+                )
+            );
+
+            ctx.lineTo(
+                x + 160,
+                h * .67
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+        }
+    },
+
+
+    drawBlackGround() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        ctx.fillStyle =
+            "#050506";
+
+
+        ctx.fillRect(
+            0,
+            h * .68,
+            w,
+            h * .32
+        );
+
+
+        /*
+         * Texture très discrète.
+         */
+
+        ctx.strokeStyle =
+            "#191116";
+
+
+        ctx.lineWidth = 2;
+
+
+        for (
+            let i = 0;
+            i < 22;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 97
+                ) % w;
+
+
+            const y =
+                h * .72 +
+                (
+                    i * 31
+                ) % (h * .25);
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                y
+            );
+
+            ctx.lineTo(
+                x + 35,
+                y - 10
+            );
+
+            ctx.lineTo(
+                x + 60,
+                y + 7
+            );
+
+            ctx.stroke();
+        }
+    },
+
+
+    drawNetherRocks() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        ctx.fillStyle =
+            "#111014";
+
+
+        for (
+            let i = 0;
+            i < 14;
+            i++
+        ) {
+
+            const x =
+                i * 110;
+
+
+            const y =
+                h * .68 +
+                (i % 4) * 20;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                y
+            );
+
+            ctx.lineTo(
+                x + 30,
+                y - 28
+            );
+
+            ctx.lineTo(
+                x + 65,
+                y
+            );
+
+            ctx.closePath();
+
+            ctx.fill();
+        }
+    },
+
+
+    drawDistantLava(
+        y
+    ) {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+
+        ctx.fillStyle =
+            "#3b100d";
+
+
+        ctx.fillRect(
+            0,
+            y,
+            w,
+            30
+        );
+
+
+        ctx.fillStyle =
+            "#8f2817";
+
+
+        for (
+            let i = 0;
+            i < 10;
+            i++
+        ) {
+
+            const x =
+                i * 130;
+
+
+            ctx.fillRect(
+                x,
+                y + 5,
+                70,
+                5
+            );
+        }
+    },
+
+
+    /* =====================================================
+       FRAGMENT
+    ===================================================== */
+
+    drawFragment(
+        x,
+        y,
+        color
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        const pulse =
+            .75 +
+            Math.sin(
+                this.visualTime * 2
+            ) * .15;
+
+
+        ctx.save();
+
+        ctx.shadowBlur =
+            18;
+
+
+        ctx.shadowColor =
+            color;
+
+
+        ctx.globalAlpha =
+            pulse;
+
+
+        ctx.fillStyle =
+            color;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            y - 27
+        );
+
+        ctx.lineTo(
+            x + 18,
+            y
+        );
+
+        ctx.lineTo(
+            x,
+            y + 27
+        );
+
+        ctx.lineTo(
+            x - 18,
+            y
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        ctx.strokeStyle =
+            "#eee5c4";
+
+
+        ctx.lineWidth = 2;
+
+        ctx.stroke();
+
+
+        ctx.restore();
+    },
+
+
+    /* =====================================================
+       PORTAIL
+    ===================================================== */
+
+    drawPortal(
+        x,
+        y,
+        scale = 1
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        if (scale <= 0)
+            return;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            y
+        );
+
+        ctx.scale(
+            scale,
+            scale
+        );
+
+
+        /*
+         * Aura.
+         */
+
+        const glow =
+            ctx.createRadialGradient(
+                0,
+                0,
+                15,
+                0,
+                0,
+                220
+            );
+
+
+        glow.addColorStop(
+            0,
+            "rgba(60,100,255,.32)"
+        );
+
+
+        glow.addColorStop(
+            .60,
+            "rgba(40,50,180,.10)"
+        );
+
+
+        glow.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+
+        ctx.fillStyle =
+            glow;
+
+
+        ctx.fillRect(
+            -240,
+            -240,
+            480,
+            480
+        );
+
+
+        /*
+         * Anneau.
+         */
+
+        ctx.shadowBlur =
+            24;
+
+
+        ctx.shadowColor =
+            "#486dff";
+
+
+        ctx.strokeStyle =
+            "#536fff";
+
+
+        ctx.lineWidth =
+            14;
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            112,
+            175,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.stroke();
+
+
+        /*
+         * Intérieur.
+         */
+
+        const inside =
+            ctx.createRadialGradient(
+                0,
+                0,
+                5,
+                0,
+                0,
+                180
+            );
+
+
+        inside.addColorStop(
+            0,
+            "rgba(20,30,95,.85)"
+        );
+
+
+        inside.addColorStop(
+            .65,
+            "rgba(9,5,35,.95)"
+        );
+
+
+        inside.addColorStop(
+            1,
+            "rgba(0,0,0,.98)"
+        );
+
+
+        ctx.fillStyle =
+            inside;
+
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            0,
+            0,
+            101,
+            160,
+            0,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        ctx.restore();
+    },
+
+
+    drawPortalParticles(
+        x,
+        y,
+        count
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        for (
+            let i = 0;
+            i < count;
+            i++
+        ) {
+
+            const angle =
+                i * .81 +
+                this.visualTime * .7;
+
+
+            const radius =
+                120 +
+                (i % 4) * 14;
+
+
+            const px =
+                x +
+                Math.cos(angle) *
+                radius;
+
+
+            const py =
+                y +
+                Math.sin(angle) *
+                radius *
+                1.45;
+
+
+            ctx.fillStyle =
+                i % 2 === 0 ?
+                "#718aff" :
+                "#9caeff";
+
+
+            ctx.globalAlpha =
+                .25 +
+                Math.abs(
+                    Math.sin(
+                        this.visualTime * 2 +
+                        i
+                    )
+                ) * .45;
+
+
+            ctx.fillRect(
+                px,
+                py,
+                2,
+                2
+            );
+        }
+
+
+        ctx.globalAlpha = 1;
     },
 
 
@@ -3766,8 +4560,8 @@ const Prologue = {
 
         const flicker =
             Math.sin(
-                this.visualTime * 8
-            ) * 4;
+                this.visualTime * 9
+            ) * 3;
 
 
         const glow =
@@ -3777,19 +4571,19 @@ const Prologue = {
                 5,
                 x,
                 y - 15,
-                110
+                100
             );
 
 
         glow.addColorStop(
             0,
-            "rgba(255,180,40,.30)"
+            "rgba(255,180,50,.30)"
         );
 
 
         glow.addColorStop(
             1,
-            "rgba(255,120,20,0)"
+            "rgba(255,100,10,0)"
         );
 
 
@@ -3798,35 +4592,35 @@ const Prologue = {
 
 
         ctx.fillRect(
-            x - 110,
-            y - 125,
-            220,
-            220
+            x - 100,
+            y - 115,
+            200,
+            200
         );
 
 
         ctx.fillStyle =
-            "#5a3823";
+            "#513522";
 
 
         ctx.fillRect(
             x - 4,
-            y - 5,
+            y - 2,
             8,
-            55
+            50
         );
 
 
         ctx.fillStyle =
-            "#f0a42a";
+            "#e89526";
 
 
         ctx.beginPath();
 
         ctx.arc(
             x,
-            y - 15 + flicker,
-            14,
+            y - 17 + flicker,
+            13,
             0,
             Math.PI * 2
         );
@@ -3835,15 +4629,15 @@ const Prologue = {
 
 
         ctx.fillStyle =
-            "#ffe5a0";
+            "#ffe0a0";
 
 
         ctx.beginPath();
 
         ctx.arc(
             x,
-            y - 17 + flicker,
-            6,
+            y - 19 + flicker,
+            5,
             0,
             Math.PI * 2
         );
@@ -3867,34 +4661,104 @@ const Prologue = {
 
         ctx.beginPath();
 
-
         ctx.ellipse(
             x,
             y,
             100 * scale,
-            30 * scale,
+            28 * scale,
             0,
             0,
             Math.PI * 2
         );
-
 
         ctx.ellipse(
-            x + 80 * scale,
-            y - 12,
-            80 * scale,
-            35 * scale,
+            x + 75 * scale,
+            y - 12 * scale,
+            75 * scale,
+            32 * scale,
             0,
             0,
             Math.PI * 2
         );
-
 
         ctx.fill();
     },
 
 
-    drawMovingClouds() {
+    /* =====================================================
+       BRUME
+    ===================================================== */
+
+    drawAerialFog() {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        /*
+         * Pas de grosse couche opaque.
+         * Seulement de petits voiles.
+         */
+
+        ctx.save();
+
+        for (
+            let i = 0;
+            i < 6;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 250 +
+                    this.visualTime * 9
+                ) %
+                (w + 400) -
+                200;
+
+
+            const y =
+                h * .48 +
+                i * 34;
+
+
+            ctx.globalAlpha =
+                .035 +
+                i * .008;
+
+
+            ctx.fillStyle =
+                "#aeb4bd";
+
+
+            ctx.beginPath();
+
+            ctx.ellipse(
+                x,
+                y,
+                170,
+                22,
+                0,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+
+
+        ctx.restore();
+    },
+
+
+    drawLowFog(
+        y
+    ) {
 
         const ctx = Game.ctx;
 
@@ -3902,100 +4766,158 @@ const Prologue = {
             Game.canvas.width;
 
 
+        ctx.save();
+
+        ctx.globalAlpha = .08;
+
         ctx.fillStyle =
-            "rgba(10,18,32,.82)";
+            "#a7adb5";
 
 
         const x =
             (
-                this.visualTime * 12
+                this.visualTime * 8
             ) %
-            (w + 600) -
-            300;
+            (w + 400) -
+            200;
 
 
-        this.drawCloud(
+        ctx.beginPath();
+
+        ctx.ellipse(
             x,
-            130,
-            1
+            y,
+            220,
+            30,
+            0,
+            0,
+            Math.PI * 2
         );
 
-
-        this.drawCloud(
-            x - 500,
-            210,
-            .7
-        );
+        ctx.fill();
 
 
-        this.drawCloud(
-            x + 650,
-            95,
-            .55
-        );
+        ctx.restore();
     },
 
 
     /* =====================================================
-       BROUILLARD
+       PLUIE
     ===================================================== */
 
-    drawFog(
-        x,
-        y,
-        scale = 1
+    drawRain(
+        count,
+        alpha
     ) {
 
         const ctx = Game.ctx;
 
+        const w =
+            Game.canvas.width;
 
-        ctx.save();
+        const h =
+            Game.canvas.height;
 
-        ctx.globalAlpha = .15;
+
+        ctx.strokeStyle =
+            `rgba(150,175,205,${alpha})`;
+
+
+        ctx.lineWidth = 1;
 
 
         for (
             let i = 0;
-            i < 7;
+            i < count;
             i++
         ) {
 
-            const offset =
-                Math.sin(
-                    this.visualTime * .35 +
-                    i
-                ) * 40;
+            const x =
+                (
+                    i * 91 +
+                    this.visualTime * 28
+                ) % w;
 
 
-            ctx.fillStyle =
-                "#8c9094";
+            const y =
+                (
+                    i * 47 +
+                    this.visualTime * 90
+                ) % h;
 
 
             ctx.beginPath();
 
-
-            ctx.ellipse(
-                x +
-                offset +
-                i * 45 * scale,
-
-                y -
-                i * 7,
-
-                150 * scale,
-                35 * scale,
-
-                0,
-                0,
-                Math.PI * 2
+            ctx.moveTo(
+                x,
+                y
             );
 
+            ctx.lineTo(
+                x - 5,
+                y + 16
+            );
 
-            ctx.fill();
+            ctx.stroke();
         }
+    },
 
 
-        ctx.restore();
+    /* =====================================================
+       VENT
+    ===================================================== */
+
+    drawWind(
+        count
+    ) {
+
+        const ctx = Game.ctx;
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        ctx.strokeStyle =
+            "rgba(180,190,205,.16)";
+
+
+        for (
+            let i = 0;
+            i < count;
+            i++
+        ) {
+
+            const x =
+                (
+                    i * 83 +
+                    this.visualTime * 30
+                ) % w;
+
+
+            const y =
+                (
+                    i * 51 +
+                    this.visualTime * 8
+                ) % h;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                x,
+                y
+            );
+
+            ctx.lineTo(
+                x + 18,
+                y - 3
+            );
+
+            ctx.stroke();
+        }
     },
 
 
@@ -4024,111 +4946,42 @@ const Prologue = {
 
             const x =
                 (
-                    i * 83 +
-                    this.visualTime * 7
+                    i * 79 +
+                    this.visualTime * 5
                 ) % w;
 
 
             const y =
                 (
-                    i * 47 +
-                    this.visualTime * 5
+                    i * 43 +
+                    this.visualTime * 4
                 ) % h;
 
 
-            const size =
-                1 +
-                (i % 3);
-
-
             ctx.globalAlpha =
-                .15 +
+                .10 +
                 Math.abs(
                     Math.sin(
                         this.visualTime +
                         i
                     )
-                ) * .30;
+                ) * .20;
 
 
             ctx.fillStyle =
-                "#c4bda7";
+                "#bcb5a1";
 
 
             ctx.fillRect(
                 x,
                 y,
-                size,
-                size
+                2,
+                2
             );
         }
 
 
         ctx.globalAlpha = 1;
-    },
-
-
-    /* =====================================================
-       VENT
-    ===================================================== */
-
-    drawWindParticles(
-        count
-    ) {
-
-        const ctx = Game.ctx;
-
-        const w =
-            Game.canvas.width;
-
-        const h =
-            Game.canvas.height;
-
-
-        ctx.strokeStyle =
-            "rgba(170,180,190,.20)";
-
-
-        ctx.lineWidth = 1;
-
-
-        for (
-            let i = 0;
-            i < count;
-            i++
-        ) {
-
-            const x =
-                (
-                    i * 91 +
-                    this.visualTime * 30
-                ) % w;
-
-
-            const y =
-                (
-                    i * 53 +
-                    this.visualTime * 11
-                ) % h;
-
-
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                x,
-                y
-            );
-
-
-            ctx.lineTo(
-                x + 18,
-                y - 3
-            );
-
-
-            ctx.stroke();
-        }
     },
 
 
@@ -4151,35 +5004,33 @@ const Prologue = {
             i++
         ) {
 
-            const offset =
-                Math.sin(
-                    this.visualTime * .6 +
-                    i
-                ) * 18;
-
-
             const rise =
                 (
                     this.visualTime * 18 +
-                    i * 35
+                    i * 32
                 ) % 150;
 
 
+            const drift =
+                Math.sin(
+                    this.visualTime * .6 +
+                    i
+                ) * 20;
+
+
             ctx.fillStyle =
-                `rgba(70,65,65,${.06 + i * .01})`;
+                "rgba(80,75,75,.07)";
 
 
             ctx.beginPath();
 
-
             ctx.arc(
-                x + offset,
+                x + drift,
                 y - rise,
-                (25 + i * 4) * scale,
+                (20 + i * 4) * scale,
                 0,
                 Math.PI * 2
             );
-
 
             ctx.fill();
         }
@@ -4211,8 +5062,8 @@ const Prologue = {
 
             const x =
                 (
-                    i * 79 +
-                    this.visualTime * 18
+                    i * 83 +
+                    this.visualTime * 15
                 ) % w;
 
 
@@ -4220,368 +5071,32 @@ const Prologue = {
                 h -
                 (
                     (
-                        i * 43 +
-                        this.visualTime * 22
+                        i * 47 +
+                        this.visualTime * 20
                     ) %
                     (h * .65)
                 );
 
 
             ctx.fillStyle =
-                i % 3 === 0 ?
-                "#ffb33b" :
-                "#c94325";
-
-
-            ctx.globalAlpha =
-                .25 +
-                Math.abs(
-                    Math.sin(
-                        this.visualTime * 3 +
-                        i
-                    )
-                ) * .65;
-
-
-            ctx.fillRect(
-                x,
-                y,
-                2 + i % 3,
-                2 + i % 3
-            );
-        }
-
-
-        ctx.globalAlpha = 1;
-    },
-
-
-    /* =====================================================
-       PORTAIL
-    ===================================================== */
-
-    drawPortal(
-        x,
-        y,
-        scale = 1
-    ) {
-
-        const ctx = Game.ctx;
-
-
-        if (scale <= 0)
-            return;
-
-
-        ctx.save();
-
-
-        ctx.translate(
-            x,
-            y
-        );
-
-
-        ctx.scale(
-            scale,
-            scale
-        );
-
-
-        /*
-         * Aura
-         */
-
-        const glow =
-            ctx.createRadialGradient(
-                0,
-                0,
-                20,
-                0,
-                0,
-                240
-            );
-
-
-        glow.addColorStop(
-            0,
-            "rgba(55,90,255,.35)"
-        );
-
-
-        glow.addColorStop(
-            .55,
-            "rgba(55,40,180,.12)"
-        );
-
-
-        glow.addColorStop(
-            1,
-            "rgba(0,0,0,0)"
-        );
-
-
-        ctx.fillStyle =
-            glow;
-
-
-        ctx.fillRect(
-            -250,
-            -250,
-            500,
-            500
-        );
-
-
-        /*
-         * Anneau
-         */
-
-        ctx.shadowBlur = 28;
-
-        ctx.shadowColor =
-            "#345cff";
-
-
-        ctx.strokeStyle =
-            "#536dff";
-
-
-        ctx.lineWidth = 15;
-
-
-        ctx.beginPath();
-
-
-        ctx.ellipse(
-            0,
-            0,
-            120,
-            185,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.stroke();
-
-
-        /*
-         * Anneau interne
-         */
-
-        ctx.shadowBlur = 10;
-
-        ctx.strokeStyle =
-            "#9eb5ff";
-
-
-        ctx.lineWidth = 4;
-
-
-        ctx.beginPath();
-
-
-        ctx.ellipse(
-            0,
-            0,
-            100,
-            162,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.stroke();
-
-
-        /*
-         * Intérieur
-         */
-
-        const inside =
-            ctx.createRadialGradient(
-                0,
-                0,
-                10,
-                0,
-                0,
-                180
-            );
-
-
-        inside.addColorStop(
-            0,
-            "rgba(15,25,80,.85)"
-        );
-
-
-        inside.addColorStop(
-            .55,
-            "rgba(10,5,35,.92)"
-        );
-
-
-        inside.addColorStop(
-            1,
-            "rgba(0,0,0,.98)"
-        );
-
-
-        ctx.fillStyle =
-            inside;
-
-
-        ctx.beginPath();
-
-
-        ctx.ellipse(
-            0,
-            0,
-            99,
-            160,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.fill();
-
-
-        /*
-         * Rayons
-         */
-
-        ctx.shadowBlur = 12;
-
-        ctx.strokeStyle =
-            "#6d8cff";
-
-
-        ctx.lineWidth = 2;
-
-
-        for (
-            let i = 0;
-            i < 8;
-            i++
-        ) {
-
-            const angle =
-                i *
-                Math.PI /
-                4 +
-                this.visualTime *
-                .5;
-
-
-            const x1 =
-                Math.cos(angle) *
-                125;
-
-
-            const y1 =
-                Math.sin(angle) *
-                185;
-
-
-            const x2 =
-                Math.cos(angle) *
-                150;
-
-
-            const y2 =
-                Math.sin(angle) *
-                210;
-
-
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                x1,
-                y1
-            );
-
-
-            ctx.lineTo(
-                x2,
-                y2
-            );
-
-
-            ctx.stroke();
-        }
-
-
-        ctx.restore();
-    },
-
-
-    /* =====================================================
-       PARTICULES DU PORTAIL
-    ===================================================== */
-
-    drawPortalParticles(
-        x,
-        y,
-        count
-    ) {
-
-        const ctx = Game.ctx;
-
-
-        for (
-            let i = 0;
-            i < count;
-            i++
-        ) {
-
-            const angle =
-                i * .77 +
-                this.visualTime * .7;
-
-
-            const radius =
-                115 +
-                (i % 5) * 15;
-
-
-            const px =
-                x +
-                Math.cos(angle) *
-                radius;
-
-
-            const py =
-                y +
-                Math.sin(angle) *
-                radius *
-                1.45;
-
-
-            ctx.fillStyle =
-                i % 3 === 0 ?
-                "#a8b8ff" :
-                "#536dff";
+                i % 2 === 0 ?
+                "#e77b2b" :
+                "#b93620";
 
 
             ctx.globalAlpha =
                 .20 +
                 Math.abs(
                     Math.sin(
-                        this.visualTime * 2 +
+                        this.visualTime * 3 +
                         i
                     )
-                ) * .60;
+                ) * .55;
 
 
             ctx.fillRect(
-                px,
-                py,
+                x,
+                y,
                 2,
                 2
             );
@@ -4593,10 +5108,70 @@ const Prologue = {
 
 
     /* =====================================================
-       NETHER
+       BULLE
     ===================================================== */
 
-    drawNetherBackground() {
+    drawSpeechBubble(
+        x,
+        y,
+        text
+    ) {
+
+        const ctx = Game.ctx;
+
+
+        ctx.fillStyle =
+            "rgba(10,10,12,.90)";
+
+
+        ctx.strokeStyle =
+            "#9e8140";
+
+
+        ctx.lineWidth = 2;
+
+
+        ctx.fillRect(
+            x - 150,
+            y - 35,
+            300,
+            70
+        );
+
+
+        ctx.strokeRect(
+            x - 150,
+            y - 35,
+            300,
+            70
+        );
+
+
+        ctx.fillStyle =
+            "#eee7d5";
+
+
+        ctx.font =
+            "16px Georgia";
+
+
+        ctx.textAlign =
+            "center";
+
+
+        ctx.fillText(
+            text,
+            x,
+            y + 5
+        );
+    },
+
+
+    /* =====================================================
+       VIGNETTE
+    ===================================================== */
+
+    drawVignette() {
 
         const ctx = Game.ctx;
 
@@ -4608,29 +5183,25 @@ const Prologue = {
 
 
         const gradient =
-            ctx.createLinearGradient(
-                0,
-                0,
-                0,
-                h
+            ctx.createRadialGradient(
+                w / 2,
+                h / 2,
+                h * .18,
+                w / 2,
+                h / 2,
+                h * .78
             );
 
 
         gradient.addColorStop(
             0,
-            "#0d0207"
-        );
-
-
-        gradient.addColorStop(
-            .45,
-            "#30070c"
+            "rgba(0,0,0,0)"
         );
 
 
         gradient.addColorStop(
             1,
-            "#080207"
+            "rgba(0,0,0,.78)"
         );
 
 
@@ -4644,109 +5215,204 @@ const Prologue = {
             w,
             h
         );
+    },
 
 
-        /*
-         * Montagnes
-         */
+    /* =====================================================
+       NARRATEUR
+    ===================================================== */
+
+    drawNarration() {
+
+        const ctx = Game.ctx;
+
+        const scene =
+            this.scenes[this.scene];
+
+
+        if (!scene)
+            return;
+
+
+        const w =
+            Game.canvas.width;
+
+        const h =
+            Game.canvas.height;
+
+
+        const boxWidth =
+            Math.min(
+                900,
+                w * .82
+            );
+
+
+        const boxHeight =
+            165;
+
+
+        const x =
+            (w - boxWidth) / 2;
+
+
+        const y =
+            h - 220;
+
 
         ctx.fillStyle =
-            "#16050a";
+            "rgba(4,5,8,.90)";
 
 
-        for (
-            let i = 0;
-            i < 9;
-            i++
-        ) {
+        ctx.fillRect(
+            x,
+            y,
+            boxWidth,
+            boxHeight
+        );
 
-            ctx.beginPath();
-
-
-            ctx.moveTo(
-                i * 170,
-                h * .78
-            );
-
-
-            ctx.lineTo(
-                i * 170 + 85,
-                h *
-                (
-                    .25 +
-                    (i % 3) * .06
-                )
-            );
-
-
-            ctx.lineTo(
-                i * 170 + 170,
-                h * .78
-            );
-
-
-            ctx.closePath();
-
-
-            ctx.fill();
-        }
-
-
-        /*
-         * Fissures rouges
-         */
 
         ctx.strokeStyle =
-            "#7c1810";
+            "#a8883d";
 
 
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2;
+
+
+        ctx.strokeRect(
+            x,
+            y,
+            boxWidth,
+            boxHeight
+        );
+
+
+        ctx.textAlign =
+            "left";
+
+
+        ctx.font =
+            "bold 17px Georgia";
+
+
+        ctx.fillStyle =
+            "#d5b34e";
+
+
+        ctx.fillText(
+            "NARRATEUR",
+            x + 22,
+            y + 28
+        );
+
+
+        const visible =
+            scene.text.substring(
+                0,
+                this.textIndex
+            );
+
+
+        ctx.font =
+            "20px Georgia";
+
+
+        ctx.fillStyle =
+            "#e8e3d5";
+
+
+        this.drawWrappedText(
+            visible,
+            x + 22,
+            y + 63,
+            boxWidth - 44,
+            28
+        );
+
+
+        ctx.textAlign =
+            "center";
+
+
+        ctx.font =
+            "14px Arial";
+
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.48)";
+
+
+        ctx.fillText(
+            "ESPACE / ENTRÉE",
+            w / 2,
+            h - 28
+        );
+    },
+
+
+    drawWrappedText(
+        text,
+        x,
+        y,
+        maxWidth,
+        lineHeight
+    ) {
+
+        const ctx = Game.ctx;
+
+        const words =
+            text.split(" ");
+
+        let line = "";
 
 
         for (
             let i = 0;
-            i < 12;
+            i < words.length;
             i++
         ) {
 
-            const x =
-                i * 130 +
-                Math.sin(
-                    this.visualTime +
-                    i
-                ) * 10;
+            const test =
+                line +
+                words[i] +
+                " ";
 
 
-            ctx.beginPath();
+            if (
+                ctx.measureText(test).width >
+                maxWidth &&
+                line !== ""
+            ) {
 
+                ctx.fillText(
+                    line,
+                    x,
+                    y
+                );
 
-            ctx.moveTo(
-                x,
-                h * .82
-            );
+                line =
+                    words[i] + " ";
 
+                y += lineHeight;
 
-            ctx.lineTo(
-                x + 40,
-                h * .79
-            );
+            } else {
 
-
-            ctx.lineTo(
-                x + 75,
-                h * .83
-            );
-
-
-            ctx.stroke();
+                line = test;
+            }
         }
-    }
 
+
+        ctx.fillText(
+            line,
+            x,
+            y
+        );
+    }
 };
 
 
 /* ==========================================================
-   CONTRÔLES
+   CONTRÔLES DE LA PROLOGUE
 ========================================================== */
 
 window.addEventListener(
@@ -4759,7 +5425,7 @@ window.addEventListener(
 
         if (
             event.code === "Space" ||
-            event.key === "Enter"
+            event.code === "Enter"
         ) {
 
             event.preventDefault();
