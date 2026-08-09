@@ -1,5 +1,4 @@
 const Prologue = {
-
     narratorEnabled: true,
     narratorSpeaking: false,
     narratorVoice: null,
@@ -17,18 +16,13 @@ const Prologue = {
 
     loadingStartTime: 0,
     minLoadingTime: 3200,
+
     images: [],
     imagesLoaded: 0,
     loading: false,
     ready: false,
 
-
-    /* =====================================================
-       SCÈNES
-    ===================================================== */
-
     scenes: [
-
         {
             title: "IL ÉTAIT UNE FOIS...",
             text:
@@ -40,7 +34,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.00
         },
-
         {
             title: "LE ROYAUME DE PONAN",
             text:
@@ -51,7 +44,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.08
         },
-
         {
             title: "PONANINI III, ROI JUSTE",
             text:
@@ -62,7 +54,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.04
         },
-
         {
             title: "LE FRÈRE DANS L'OMBRE",
             text:
@@ -74,7 +65,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.08
         },
-
         {
             title: "LE MENSONGE",
             text:
@@ -86,7 +76,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.06
         },
-
         {
             title: "LA PRISE DU POUVOIR",
             text:
@@ -98,7 +87,6 @@ const Prologue = {
             speed: 42,
             zoom: 1.08
         },
-
         {
             title: "LE BANNISSEMENT",
             text:
@@ -110,7 +98,6 @@ const Prologue = {
             speed: 40,
             zoom: 1.10
         },
-
         {
             title: "LE SCEAU",
             text:
@@ -122,7 +109,6 @@ const Prologue = {
             speed: 40,
             zoom: 1.08
         },
-
         {
             title: "LES TROIS FRAGMENTS",
             text:
@@ -133,7 +119,6 @@ const Prologue = {
             speed: 40,
             zoom: 1.06
         },
-
         {
             title: "L'HÉRITAGE",
             text:
@@ -145,115 +130,66 @@ const Prologue = {
             speed: 38,
             zoom: 1.08
         }
-
     ],
 
-
-    /* =====================================================
-       LANCEMENT
-    ===================================================== */
-
     start() {
+        this.active = true;
+        this.scene = 0;
+        this.timer = 0;
+        this.textIndex = 0;
+        this.finishedText = false;
+        this.fade = 1;
+        this.fadeDirection = -1;
+        this.visualTime = 0;
+        this.narratorSpeaking = false;
 
-    this.active = true;
+        this.loadingStartTime = performance.now();
 
-    this.scene = 0;
+        this.ready = false;
+        this.loading = false;
+        this.images = [];
+        this.imagesLoaded = 0;
 
-    this.timer = 0;
+        this.hideHUD();
 
-    this.textIndex = 0;
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
 
-    this.finishedText = false;
+        this.loadImages();
+    },
 
-    this.fade = 1;
+    speakNarrator(text) {
+        if (!this.narratorEnabled)
+            return;
 
-    this.fadeDirection = -1;
-
-    this.visualTime = 0;
-
-    this.narratorSpeaking = false;
-
-    this.loadingStartTime =
-        performance.now();
-
-    this.ready = false;
-
-    this.loading = false;
-
-    this.images = [];
-
-    this.imagesLoaded = 0;
-
-
-    this.hideHUD();
-
-
-    if (
-        "speechSynthesis" in window
-    ) {
+        if (!("speechSynthesis" in window))
+            return;
 
         window.speechSynthesis.cancel();
 
-    }
+        const voices = window.speechSynthesis.getVoices();
 
-
-    this.loadImages();
-},
-
-    /* =====================================================
-       NARRATEUR
-    ===================================================== */
-
-speakNarrator(text) {
-
-    if (!this.narratorEnabled)
-        return;
-
-    if (!("speechSynthesis" in window))
-        return;
-
-    window.speechSynthesis.cancel();
-
-    const voices =
-        window.speechSynthesis.getVoices();
-
-    /*
-     * On cherche une voix française naturelle.
-     * On évite explicitement les voix trop synthétiques
-     * lorsqu'elles sont identifiables par leur nom.
-     */
-
-    const frenchVoices =
-        voices.filter(voice =>
+        const frenchVoices = voices.filter(voice =>
             voice.lang &&
             voice.lang.toLowerCase().startsWith("fr")
         );
 
+        const preferredNames = [
+            "Google français",
+            "Google French",
+            "Microsoft Paul",
+            "Microsoft Henri",
+            "Microsoft Claude",
+            "Thomas",
+            "Daniel",
+            "French"
+        ];
 
-    const preferredNames = [
-        "Google français",
-        "Google French",
-        "Microsoft Paul",
-        "Microsoft Henri",
-        "Microsoft Claude",
-        "Thomas",
-        "Daniel",
-        "Thomas",
-        "French"
-    ];
+        let voice = null;
 
-
-    let voice = null;
-
-
-    for (
-        let i = 0;
-        i < preferredNames.length;
-        i++
-    ) {
-
-        voice =
-            frenchVoices.find(v =>
+        for (let i = 0; i < preferredNames.length; i++) {
+            voice = frenchVoices.find(v =>
                 v.name
                     .toLowerCase()
                     .includes(
@@ -261,103 +197,50 @@ speakNarrator(text) {
                     )
             );
 
-        if (voice)
-            break;
-    }
+            if (voice)
+                break;
+        }
 
-
-    /*
-     * Sinon on prend une voix française.
-     */
-
-    if (!voice && frenchVoices.length > 0) {
-
-        voice =
-            frenchVoices.find(v =>
+        if (!voice && frenchVoices.length > 0) {
+            voice = frenchVoices.find(v =>
                 !/espeak|festival|robot/i.test(v.name)
             );
+        }
 
-    }
+        if (!voice && frenchVoices.length > 0)
+            voice = frenchVoices[0];
 
+        this.narratorVoice = voice || null;
 
-    /*
-     * Dernier recours.
-     */
+        const utterance =
+            new SpeechSynthesisUtterance(text);
 
-    if (!voice && frenchVoices.length > 0)
-        voice = frenchVoices[0];
+        utterance.lang = "fr-FR";
+        utterance.rate = 0.72;
+        utterance.pitch = 0.78;
+        utterance.volume = 1;
 
+        if (this.narratorVoice)
+            utterance.voice = this.narratorVoice;
 
-    this.narratorVoice =
-        voice || null;
+        this.narratorSpeaking = true;
 
+        utterance.onstart = () => {
+            this.narratorSpeaking = true;
+        };
 
-    const utterance =
-        new SpeechSynthesisUtterance(text);
+        utterance.onend = () => {
+            this.narratorSpeaking = false;
+        };
 
+        utterance.onerror = () => {
+            this.narratorSpeaking = false;
+        };
 
-    utterance.lang =
-        "fr-FR";
-
-
-    /*
-     * Narration plus lente et moins aiguë.
-     */
-
-    utterance.rate =
-        0.72;
-
-    utterance.pitch =
-        0.78;
-
-    utterance.volume =
-        1;
-
-
-    if (this.narratorVoice)
-        utterance.voice =
-            this.narratorVoice;
-
-
-    this.narratorSpeaking =
-        true;
-
-
-    utterance.onstart = () => {
-
-        this.narratorSpeaking =
-            true;
-
-    };
-
-
-    utterance.onend = () => {
-
-        this.narratorSpeaking =
-            false;
-
-    };
-
-
-    utterance.onerror = () => {
-
-        this.narratorSpeaking =
-            false;
-
-    };
-
-
-    window.speechSynthesis.speak(
-        utterance
-    );
-},
-
-    /* =====================================================
-       CHARGEMENT DES IMAGES
-    ===================================================== */
+        window.speechSynthesis.speak(utterance);
+    },
 
     loadImages() {
-
         if (this.ready || this.loading)
             return;
 
@@ -368,98 +251,65 @@ speakNarrator(text) {
 
         this.imagesLoaded = 0;
 
-
         this.scenes.forEach((scene, i) => {
-
-            const img =
-                new Image();
-
+            const img = new Image();
 
             img.onload = () => {
-
                 this.images[i] = img;
-
                 this.imagesLoaded++;
 
+                if (
+                    this.imagesLoaded ===
+                    this.scenes.length
+                ) {
+                    const elapsed =
+                        performance.now() -
+                        this.loadingStartTime;
 
-  if (
-    this.imagesLoaded ===
-    this.scenes.length
-) {
+                    const remaining =
+                        Math.max(
+                            0,
+                            this.minLoadingTime -
+                            elapsed
+                        );
 
-    const elapsed =
-        performance.now() -
-        this.loadingStartTime;
+                    setTimeout(() => {
+                        if (!this.active)
+                            return;
 
+                        this.ready = true;
+                        this.loading = false;
 
-    const remaining =
-        Math.max(
-            0,
-            this.minLoadingTime -
-            elapsed
-        );
-
-
-    setTimeout(() => {
-
-        if (!this.active)
-            return;
-
-
-        this.ready = true;
-
-        this.loading = false;
-
-
-        /*
-         * Laisse le royaume apparaître
-         * avant de lancer la narration.
-         */
-
-        setTimeout(() => {
-
-            if (
-                this.active &&
-                this.scene === 0
-            ) {
-
-                this.speakNarrator(
-                    this.scenes[0].text
-                );
-
-            }
-
-        }, 900);
-
-    }, remaining);
-  };
+                        setTimeout(() => {
+                            if (
+                                this.active &&
+                                this.scene === 0
+                            ) {
+                                this.speakNarrator(
+                                    this.scenes[0].text
+                                );
+                            }
+                        }, 900);
+                    }, remaining);
+                }
+            };
 
             img.onerror = () => {
-
                 console.error(
                     "Erreur scene" +
                     (i + 1) +
                     ".png"
                 );
-
             };
-
 
             img.src =
                 "assets/prologue/scene" +
                 (i + 1) +
                 ".png";
-
         });
     },
 
-
-    /* =====================================================
-       HUD
-    ===================================================== */
-
     hideHUD() {
-
         [
             "hud",
             "life",
@@ -468,96 +318,59 @@ speakNarrator(text) {
             "inventory",
             "dialogue"
         ].forEach(id => {
-
             const element =
                 document.getElementById(id);
 
             if (element)
                 element.style.display = "none";
-
         });
     },
 
-
-    /* =====================================================
-       UPDATE
-    ===================================================== */
-
     update(dt) {
-
         if (
             !this.active ||
             !this.ready
         )
             return;
 
-
         const current =
             this.scenes[this.scene];
-
 
         if (!current)
             return;
 
-
         this.timer += dt;
-
         this.visualTime += dt;
 
-
-        /*
-         * Texte progressif.
-         */
-
         if (!this.finishedText) {
-
             this.textIndex =
                 Math.floor(
                     this.timer * 1000 /
                     current.speed
                 );
 
-
             if (
                 this.textIndex >=
                 current.text.length
             ) {
-
                 this.textIndex =
                     current.text.length;
 
                 this.finishedText = true;
-
             }
         }
-
-
-        /*
-         * Fade d'entrée.
-         */
 
         if (
             this.fadeDirection === -1
         ) {
-
             this.fade -=
                 dt * 1.8;
 
-
             if (this.fade <= 0) {
-
                 this.fade = 0;
-
                 this.fadeDirection = 0;
-
             }
         }
-
-
-        /*
-         * On ne change pas de scène
-         * tant que le narrateur parle.
-         */
 
         if (
             this.finishedText &&
@@ -565,157 +378,106 @@ speakNarrator(text) {
             this.timer >=
             current.duration / 1000
         ) {
-
             this.nextScene();
-
         }
     },
 
-
-    /* =====================================================
-       SCÈNE SUIVANTE
-    ===================================================== */
-
     nextScene() {
-
         if (
             this.scene >=
             this.scenes.length - 1
         ) {
-
             this.finish();
-
             return;
         }
 
-
-        window.speechSynthesis.cancel();
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
 
         this.narratorSpeaking = false;
-
 
         this.scene++;
 
         this.timer = 0;
-
         this.textIndex = 0;
-
         this.finishedText = false;
 
         this.fade = 1;
-
         this.fadeDirection = -1;
 
         this.visualTime = 0;
 
-
-        /*
-         * Petit silence avant la nouvelle narration.
-         */
-
         setTimeout(() => {
-
             if (
                 this.active &&
                 this.scenes[this.scene]
             ) {
-
                 this.speakNarrator(
                     this.scenes[this.scene].text
                 );
-
             }
-
         }, 700);
     },
 
-
-    /* =====================================================
-       ESPACE / ENTRÉE
-    ===================================================== */
-
     skipText() {
-
         if (
             !this.active ||
             !this.ready
         )
             return;
 
-
         const current =
             this.scenes[this.scene];
 
-
-        /*
-         * Premier appui :
-         * termine le texte.
-         */
-
         if (!this.finishedText) {
-
             this.textIndex =
                 current.text.length;
 
             this.finishedText = true;
 
+            if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
+                this.narratorSpeaking = false;
+            }
+
             return;
         }
-
-
-        /*
-         * Deuxième appui :
-         * scène suivante.
-         */
 
         this.nextScene();
     },
 
-
-    /* =====================================================
-       FIN DE LA PROLOGUE
-    ===================================================== */
-
     finish() {
-
-        window.speechSynthesis.cancel();
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
 
         this.narratorSpeaking = false;
-
         this.active = false;
 
         this.scene = 0;
-
         this.timer = 0;
-
         this.textIndex = 0;
-
         this.finishedText = false;
-
         this.fade = 0;
 
+        const hud =
+            document.getElementById("hud");
+
+        if (hud)
+            hud.style.display = "";
 
         if (
             typeof finishPrologue ===
             "function"
         ) {
-
             finishPrologue();
-
         } else {
-
             Game.running = true;
-
         }
     },
 
-
-    /* =====================================================
-       DRAW
-    ===================================================== */
-
     draw() {
-
         const ctx =
             Game.ctx;
 
@@ -725,7 +487,6 @@ speakNarrator(text) {
         const height =
             Game.canvas.height;
 
-
         ctx.clearRect(
             0,
             0,
@@ -733,14 +494,11 @@ speakNarrator(text) {
             height
         );
 
-
         if (!this.ready) {
-
+            this.visualTime += 1 / 60;
             this.drawLoading();
-
             return;
         }
-
 
         const current =
             this.scenes[this.scene];
@@ -748,19 +506,16 @@ speakNarrator(text) {
         const image =
             this.images[this.scene];
 
-
         if (
             !current ||
             !image
         )
             return;
 
-
         this.drawImageScene(
             image,
             current
         );
-
 
         this.drawVignette();
 
@@ -768,9 +523,7 @@ speakNarrator(text) {
             current
         );
 
-
         if (this.fade > 0) {
-
             ctx.fillStyle =
                 "rgba(0,0,0," +
                 this.fade +
@@ -785,425 +538,7 @@ speakNarrator(text) {
         }
     },
 
-
-    /* =====================================================
-       ÉCRAN DE CHARGEMENT
-    ===================================================== */
-
- drawLoading() {
-
-    const ctx =
-        Game.ctx;
-
-    const width =
-        Game.canvas.width;
-
-    const height =
-        Game.canvas.height;
-
-
-    /*
-     * FOND
-     */
-
-    ctx.fillStyle =
-        "#050608";
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /*
-     * HALO CENTRAL
-     */
-
-    const gradient =
-        ctx.createRadialGradient(
-            width / 2,
-            height / 2,
-            10,
-            width / 2,
-            height / 2,
-            Math.min(width, height) * 0.55
-        );
-
-
-    gradient.addColorStop(
-        0,
-        "rgba(155,120,45,0.10)"
-    );
-
-    gradient.addColorStop(
-        0.5,
-        "rgba(80,60,25,0.04)"
-    );
-
-    gradient.addColorStop(
-        1,
-        "rgba(0,0,0,0)"
-    );
-
-
-    ctx.fillStyle =
-        gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /*
-     * PARTICULES
-     */
-
-    for (
-        let i = 0;
-        i < 45;
-        i++
-    ) {
-
-        const x =
-            (
-                i * 137 +
-                this.visualTime * 12
-            ) % width;
-
-
-        const y =
-            (
-                i * 73 +
-                this.visualTime * 7
-            ) % height;
-
-
-        const alpha =
-            0.12 +
-            Math.abs(
-                Math.sin(
-                    this.visualTime * 1.5 +
-                    i
-                )
-            ) * 0.20;
-
-
-        ctx.fillStyle =
-            "rgba(190,155,70," +
-            alpha +
-            ")";
-
-
-        ctx.fillRect(
-            x,
-            y,
-            2,
-            2
-        );
-    }
-
-
-    /*
-     * PETIT SYMBOLE DE COURONNE
-     */
-
-    const cx =
-        width / 2;
-
-    const crownY =
-        height / 2 - 115;
-
-
-    ctx.save();
-
-    ctx.translate(
-        cx,
-        crownY
-    );
-
-
-    const pulse =
-        1 +
-        Math.sin(
-            this.visualTime * 2
-        ) * 0.025;
-
-
-    ctx.scale(
-        pulse,
-        pulse
-    );
-
-
-    ctx.strokeStyle =
-        "#b9973e";
-
-    ctx.fillStyle =
-        "rgba(185,151,62,0.08)";
-
-    ctx.lineWidth =
-        3;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(-55, 18);
-
-    ctx.lineTo(-45, -30);
-
-    ctx.lineTo(-15, -5);
-
-    ctx.lineTo(0, -42);
-
-    ctx.lineTo(18, -5);
-
-    ctx.lineTo(48, -30);
-
-    ctx.lineTo(58, 18);
-
-    ctx.closePath();
-
-    ctx.fill();
-
-    ctx.stroke();
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        -58,
-        18
-    );
-
-    ctx.lineTo(
-        58,
-        18
-    );
-
-    ctx.stroke();
-
-
-    ctx.restore();
-
-
-    /*
-     * TITRE
-     */
-
-    ctx.textAlign =
-        "center";
-
-
-    ctx.font =
-        "bold 46px Georgia";
-
-
-    ctx.fillStyle =
-        "#eee6d2";
-
-
-    ctx.shadowColor =
-        "rgba(185,151,62,0.35)";
-
-    ctx.shadowBlur =
-        18;
-
-
-    ctx.fillText(
-        "PONAN'S LEGACY",
-        cx,
-        height / 2 - 35
-    );
-
-
-    ctx.shadowBlur =
-        0;
-
-
-    /*
-     * SOUS-TITRE
-     */
-
-    ctx.font =
-        "italic 18px Georgia";
-
-    ctx.fillStyle =
-        "#b9973e";
-
-
-    ctx.fillText(
-        "L'HÉRITAGE DES PLUMES",
-        cx,
-        height / 2 + 5
-    );
-
-
-    /*
-     * LIGNE DÉCORATIVE
-     */
-
-    const lineWidth =
-        Math.min(
-            420,
-            width * 0.55
-        );
-
-
-    ctx.strokeStyle =
-        "rgba(185,151,62,0.55)";
-
-    ctx.lineWidth =
-        1;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        cx - lineWidth / 2,
-        height / 2 + 30
-    );
-
-    ctx.lineTo(
-        cx + lineWidth / 2,
-        height / 2 + 30
-    );
-
-    ctx.stroke();
-
-
-    /*
-     * TEXTE
-     */
-
-    ctx.font =
-        "16px Georgia";
-
-    ctx.fillStyle =
-        "rgba(238,230,210,0.75)";
-
-
-    ctx.fillText(
-        "Les chroniques de Ponan commencent...",
-        cx,
-        height / 2 + 70
-    );
-
-
-    /*
-     * BARRE DE CHARGEMENT
-     */
-
-    const barWidth =
-        Math.min(
-            520,
-            width * 0.62
-        );
-
-
-    const barHeight =
-        5;
-
-
-    const barX =
-        cx -
-        barWidth / 2;
-
-
-    const barY =
-        height / 2 + 105;
-
-
-    /*
-     * Fond de la barre
-     */
-
-    ctx.fillStyle =
-        "rgba(255,255,255,0.08)";
-
-
-    ctx.fillRect(
-        barX,
-        barY,
-        barWidth,
-        barHeight
-    );
-
-
-    /*
-     * Progression
-     */
-
-    const progress =
-        this.imagesLoaded /
-        this.scenes.length;
-
-
-    ctx.fillStyle =
-        "#b9973e";
-
-
-    ctx.fillRect(
-        barX,
-        barY,
-        barWidth * progress,
-        barHeight
-    );
-
-
-    /*
-     * Pourcentage
-     */
-
-    ctx.font =
-        "13px Arial";
-
-    ctx.fillStyle =
-        "rgba(238,230,210,0.55)";
-
-
-    ctx.fillText(
-        Math.floor(progress * 100) +
-        "%",
-        cx,
-        barY + 30
-    );
-
-
-    /*
-     * TEXTE BAS
-     */
-
-    ctx.font =
-        "12px Arial";
-
-    ctx.fillStyle =
-        "rgba(255,255,255,0.28)";
-
-
-    ctx.fillText(
-        "CHARGEMENT DU ROYAUME",
-        cx,
-        height - 35
-    );
-
-
-    ctx.textAlign =
-        "left";
-},
-    /* =====================================================
-       IMAGE + CAMÉRA
-    ===================================================== */
-
-    drawImageScene(
-        image,
-        scene
-    ) {
-
+    drawLoading() {
         const ctx =
             Game.ctx;
 
@@ -1213,6 +548,303 @@ speakNarrator(text) {
         const height =
             Game.canvas.height;
 
+        ctx.fillStyle =
+            "#050608";
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+        const gradient =
+            ctx.createRadialGradient(
+                width / 2,
+                height / 2,
+                10,
+                width / 2,
+                height / 2,
+                Math.min(width, height) * 0.55
+            );
+
+        gradient.addColorStop(
+            0,
+            "rgba(155,120,45,0.10)"
+        );
+
+        gradient.addColorStop(
+            0.5,
+            "rgba(80,60,25,0.04)"
+        );
+
+        gradient.addColorStop(
+            1,
+            "rgba(0,0,0,0)"
+        );
+
+        ctx.fillStyle = gradient;
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+        for (
+            let i = 0;
+            i < 45;
+            i++
+        ) {
+            const x =
+                (
+                    i * 137 +
+                    this.visualTime * 12
+                ) % width;
+
+            const y =
+                (
+                    i * 73 +
+                    this.visualTime * 7
+                ) % height;
+
+            const alpha =
+                0.12 +
+                Math.abs(
+                    Math.sin(
+                        this.visualTime * 1.5 +
+                        i
+                    )
+                ) * 0.20;
+
+            ctx.fillStyle =
+                "rgba(190,155,70," +
+                alpha +
+                ")";
+
+            ctx.fillRect(
+                x,
+                y,
+                2,
+                2
+            );
+        }
+
+        const cx =
+            width / 2;
+
+        const crownY =
+            height / 2 - 115;
+
+        ctx.save();
+
+        ctx.translate(
+            cx,
+            crownY
+        );
+
+        const pulse =
+            1 +
+            Math.sin(
+                this.visualTime * 2
+            ) * 0.025;
+
+        ctx.scale(
+            pulse,
+            pulse
+        );
+
+        ctx.strokeStyle =
+            "#b9973e";
+
+        ctx.fillStyle =
+            "rgba(185,151,62,0.08)";
+
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+
+        ctx.moveTo(-55, 18);
+        ctx.lineTo(-45, -30);
+        ctx.lineTo(-15, -5);
+        ctx.lineTo(0, -42);
+        ctx.lineTo(18, -5);
+        ctx.lineTo(48, -30);
+        ctx.lineTo(58, 18);
+
+        ctx.closePath();
+
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -58,
+            18
+        );
+
+        ctx.lineTo(
+            58,
+            18
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+
+        ctx.textAlign =
+            "center";
+
+        ctx.font =
+            "bold 46px Georgia";
+
+        ctx.fillStyle =
+            "#eee6d2";
+
+        ctx.shadowColor =
+            "rgba(185,151,62,0.35)";
+
+        ctx.shadowBlur = 18;
+
+        ctx.fillText(
+            "PONAN'S LEGACY",
+            cx,
+            height / 2 - 35
+        );
+
+        ctx.shadowBlur = 0;
+
+        ctx.font =
+            "italic 18px Georgia";
+
+        ctx.fillStyle =
+            "#b9973e";
+
+        ctx.fillText(
+            "L'HÉRITAGE DES PLUMES",
+            cx,
+            height / 2 + 5
+        );
+
+        const lineWidth =
+            Math.min(
+                420,
+                width * 0.55
+            );
+
+        ctx.strokeStyle =
+            "rgba(185,151,62,0.55)";
+
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx - lineWidth / 2,
+            height / 2 + 30
+        );
+
+        ctx.lineTo(
+            cx + lineWidth / 2,
+            height / 2 + 30
+        );
+
+        ctx.stroke();
+
+        ctx.font =
+            "16px Georgia";
+
+        ctx.fillStyle =
+            "rgba(238,230,210,0.75)";
+
+        ctx.fillText(
+            "Les chroniques de Ponan commencent...",
+            cx,
+            height / 2 + 70
+        );
+
+        const barWidth =
+            Math.min(
+                520,
+                width * 0.62
+            );
+
+        const barHeight = 5;
+
+        const barX =
+            cx -
+            barWidth / 2;
+
+        const barY =
+            height / 2 + 105;
+
+        ctx.fillStyle =
+            "rgba(255,255,255,0.08)";
+
+        ctx.fillRect(
+            barX,
+            barY,
+            barWidth,
+            barHeight
+        );
+
+        const progress =
+            this.imagesLoaded /
+            this.scenes.length;
+
+        ctx.fillStyle =
+            "#b9973e";
+
+        ctx.fillRect(
+            barX,
+            barY,
+            barWidth * progress,
+            barHeight
+        );
+
+        ctx.font =
+            "13px Arial";
+
+        ctx.fillStyle =
+            "rgba(238,230,210,0.55)";
+
+        ctx.fillText(
+            Math.floor(progress * 100) +
+            "%",
+            cx,
+            barY + 30
+        );
+
+        ctx.font =
+            "12px Arial";
+
+        ctx.fillStyle =
+            "rgba(255,255,255,0.28)";
+
+        ctx.fillText(
+            "CHARGEMENT DU ROYAUME",
+            cx,
+            height - 35
+        );
+
+        ctx.textAlign =
+            "left";
+    },
+
+    drawImageScene(
+        image,
+        scene
+    ) {
+        const ctx =
+            Game.ctx;
+
+        const width =
+            Game.canvas.width;
+
+        const height =
+            Game.canvas.height;
 
         const ratio =
             image.width /
@@ -1222,16 +854,13 @@ speakNarrator(text) {
             width /
             height;
 
-
         let drawWidth;
         let drawHeight;
-
 
         if (
             ratio >
             screenRatio
         ) {
-
             drawHeight =
                 height *
                 scene.zoom;
@@ -1239,9 +868,7 @@ speakNarrator(text) {
             drawWidth =
                 drawHeight *
                 ratio;
-
         } else {
-
             drawWidth =
                 width *
                 scene.zoom;
@@ -1250,7 +877,6 @@ speakNarrator(text) {
                 drawWidth /
                 ratio;
         }
-
 
         const progress =
             Math.min(
@@ -1262,81 +888,56 @@ speakNarrator(text) {
                 )
             );
 
-
         const ease =
             progress *
             progress *
             (3 - 2 * progress);
 
-
         let moveX = 0;
         let moveY = 0;
 
-
         if (this.scene === 0) {
-
             moveY =
                 ease * 35;
-
         } else if (this.scene === 1) {
-
             moveY =
                 ease * -35;
-
         } else if (this.scene === 2) {
-
             moveY =
                 Math.sin(
                     ease * Math.PI
                 ) * -18;
-
         } else if (this.scene === 3) {
-
             moveX =
                 Math.sin(
                     ease * Math.PI
                 ) * 28;
-
         } else if (this.scene === 4) {
-
             moveX =
                 ease * -28;
-
         } else if (this.scene === 5) {
-
             moveY =
                 ease * 22;
-
         } else if (this.scene === 6) {
-
             moveX =
                 ease * 22;
-
         } else if (this.scene === 7) {
-
             moveY =
                 ease * -20;
-
         } else if (this.scene === 8) {
-
             moveX =
                 Math.sin(
                     ease * Math.PI
                 ) * 16;
-
         } else {
-
             moveX =
                 ease * -25;
-
         }
-
 
         ctx.save();
 
         ctx.imageSmoothingEnabled =
             false;
-
 
         ctx.drawImage(
             image,
@@ -1348,20 +949,12 @@ speakNarrator(text) {
             drawHeight
         );
 
-
         ctx.restore();
-
 
         this.drawParticles();
     },
 
-
-    /* =====================================================
-       PARTICULES
-    ===================================================== */
-
     drawParticles() {
-
         const ctx =
             Game.ctx;
 
@@ -1371,13 +964,7 @@ speakNarrator(text) {
         const height =
             Game.canvas.height;
 
-
         ctx.save();
-
-
-        /*
-         * Pluie / poussière médiévale.
-         */
 
         if (
             [
@@ -1387,32 +974,27 @@ speakNarrator(text) {
                 4
             ].includes(this.scene)
         ) {
-
             ctx.strokeStyle =
                 "rgba(190,205,220,.16)";
 
             ctx.lineWidth = 1;
-
 
             for (
                 let i = 0;
                 i < 35;
                 i++
             ) {
-
                 const x =
                     (
                         i * 113 +
                         this.visualTime * 28
                     ) % width;
 
-
                 const y =
                     (
                         i * 67 +
                         this.visualTime * 95
                     ) % height;
-
 
                 ctx.beginPath();
 
@@ -1430,11 +1012,6 @@ speakNarrator(text) {
             }
         }
 
-
-        /*
-         * Braises du Nether.
-         */
-
         if (
             [
                 6,
@@ -1443,19 +1020,16 @@ speakNarrator(text) {
                 9
             ].includes(this.scene)
         ) {
-
             for (
                 let i = 0;
                 i < 55;
                 i++
             ) {
-
                 const x =
                     (
                         i * 79 +
                         this.visualTime * 22
                     ) % width;
-
 
                 const y =
                     height -
@@ -1467,12 +1041,10 @@ speakNarrator(text) {
                         (height * 0.75)
                     );
 
-
                 ctx.fillStyle =
                     i % 3 === 0
                         ? "#ffb33b"
                         : "#c94325";
-
 
                 ctx.globalAlpha =
                     0.20 +
@@ -1483,7 +1055,6 @@ speakNarrator(text) {
                         )
                     ) * 0.55;
 
-
                 ctx.fillRect(
                     x,
                     y,
@@ -1493,19 +1064,12 @@ speakNarrator(text) {
             }
         }
 
-
         ctx.globalAlpha = 1;
 
         ctx.restore();
     },
 
-
-    /* =====================================================
-       VIGNETTE
-    ===================================================== */
-
     drawVignette() {
-
         const ctx =
             Game.ctx;
 
@@ -1514,7 +1078,6 @@ speakNarrator(text) {
 
         const height =
             Game.canvas.height;
-
 
         const vignette =
             ctx.createRadialGradient(
@@ -1526,18 +1089,15 @@ speakNarrator(text) {
                 height * 0.78
             );
 
-
         vignette.addColorStop(
             0,
             "rgba(0,0,0,0)"
         );
 
-
         vignette.addColorStop(
             1,
             "rgba(0,0,0,.78)"
         );
-
 
         ctx.fillStyle =
             vignette;
@@ -1550,13 +1110,7 @@ speakNarrator(text) {
         );
     },
 
-
-    /* =====================================================
-       NARRATION À L'ÉCRAN
-    ===================================================== */
-
     drawNarration(scene) {
-
         const ctx =
             Game.ctx;
 
@@ -1566,23 +1120,19 @@ speakNarrator(text) {
         const height =
             Game.canvas.height;
 
-
         const boxWidth =
             Math.min(
                 900,
                 width * 0.82
             );
 
-        const boxHeight =
-            165;
-
+        const boxHeight = 165;
 
         const x =
             (width - boxWidth) / 2;
 
         const y =
             height - 215;
-
 
         ctx.fillStyle =
             "rgba(0,0,0,.78)";
@@ -1594,12 +1144,10 @@ speakNarrator(text) {
             boxHeight
         );
 
-
         ctx.strokeStyle =
             "#b9973e";
 
         ctx.lineWidth = 2;
-
 
         ctx.strokeRect(
             x,
@@ -1608,10 +1156,8 @@ speakNarrator(text) {
             boxHeight
         );
 
-
         ctx.textAlign =
             "left";
-
 
         ctx.font =
             "bold 18px Georgia";
@@ -1619,20 +1165,17 @@ speakNarrator(text) {
         ctx.fillStyle =
             "#d9b441";
 
-
         ctx.fillText(
             scene.title,
             x + 24,
             y + 30
         );
 
-
         ctx.font =
             "22px Georgia";
 
         ctx.fillStyle =
             "#f1eee5";
-
 
         this.drawWrappedText(
             scene.text.substring(
@@ -1645,7 +1188,6 @@ speakNarrator(text) {
             31
         );
 
-
         ctx.textAlign =
             "center";
 
@@ -1655,20 +1197,17 @@ speakNarrator(text) {
         ctx.fillStyle =
             "rgba(255,255,255,.65)";
 
-
         ctx.fillText(
             "ESPACE / ENTRÉE : continuer",
             width / 2,
             height - 25
         );
 
-
         ctx.textAlign =
             "left";
 
         ctx.fillStyle =
             "rgba(255,255,255,.45)";
-
 
         ctx.fillText(
             "PROLOGUE " +
@@ -1680,11 +1219,6 @@ speakNarrator(text) {
         );
     },
 
-
-    /* =====================================================
-       TEXTE MULTI-LIGNES
-    ===================================================== */
-
     drawWrappedText(
         text,
         x,
@@ -1692,7 +1226,6 @@ speakNarrator(text) {
         maxWidth,
         lineHeight
     ) {
-
         const ctx =
             Game.ctx;
 
@@ -1701,46 +1234,36 @@ speakNarrator(text) {
 
         let line = "";
 
-
         for (
             let i = 0;
             i < words.length;
             i++
         ) {
-
             const test =
                 line +
                 words[i] +
                 " ";
-
 
             if (
                 ctx.measureText(test).width >
                 maxWidth &&
                 line !== ""
             ) {
-
                 ctx.fillText(
                     line,
                     x,
                     y
                 );
 
-
                 line =
                     words[i] +
                     " ";
 
-
                 y += lineHeight;
-
             } else {
-
                 line = test;
-
             }
         }
-
 
         ctx.fillText(
             line,
@@ -1750,24 +1273,16 @@ speakNarrator(text) {
     }
 };
 
-
-/* ==========================================================
-   CONTRÔLES DE LA PROLOGUE
-========================================================== */
-
 window.addEventListener(
     "keydown",
     event => {
-
         if (!Prologue.active)
             return;
-
 
         if (
             event.code === "Space" ||
             event.key === "Enter"
         ) {
-
             event.preventDefault();
 
             Prologue.skipText();
