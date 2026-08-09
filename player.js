@@ -294,45 +294,31 @@ DESSIN DU CANARD
 
 function drawPlayer() {
 
-    const ctx =
-        Game.ctx;
-
+    const ctx = Game.ctx;
 
     const x =
         player.x -
         Game.camera.x;
 
-
     const y =
         player.y -
         Game.camera.y;
 
-
-    /*
-    Petite oscillation pendant la marche.
-    */
-
     let bob = 0;
 
-
     if (player.moving) {
-
         bob =
-            Math.sin(
-                player.walkTime
-            ) * 2;
+            Math.sin(player.walkTime) * 2;
     }
 
-
-    const py =
-        y + bob;
-
+    const py = y + bob;
 
     ctx.save();
 
-
     /*
-    Ombre.
+    ==============================
+    OMBRE
+    ==============================
     */
 
     ctx.fillStyle =
@@ -341,8 +327,8 @@ function drawPlayer() {
     ctx.beginPath();
 
     ctx.ellipse(
-        x + player.w / 2,
-        y + player.h - 2,
+        x + 20,
+        y + 39,
         17,
         6,
         0,
@@ -366,7 +352,7 @@ function drawPlayer() {
 
     ctx.ellipse(
         x + 20,
-        py + 25,
+        py + 27,
         15,
         13,
         0,
@@ -401,42 +387,158 @@ function drawPlayer() {
 
     /*
     ==============================
-    AILE
+    DIRECTION
     ==============================
     */
 
-    ctx.fillStyle =
-        "#b89b3e";
+    /*
+    HAUT
+    */
 
-    ctx.beginPath();
+    if (player.direction === "up") {
 
-    ctx.ellipse(
-        x + 12,
-        py + 26,
-        8,
-        11,
-        -0.35,
-        0,
-        Math.PI * 2
-    );
+        /*
+        Bec à l'arrière :
+        on voit surtout la tête.
+        */
 
-    ctx.fill();
+        ctx.fillStyle =
+            "#c89a3c";
+
+        ctx.fillRect(
+            x + 15,
+            py + 1,
+            10,
+            5
+        );
+
+
+        /*
+        Yeux vus de dos.
+        */
+
+        ctx.fillStyle =
+            "#17130b";
+
+        ctx.fillRect(
+            x + 11,
+            py + 9,
+            4,
+            4
+        );
+
+        ctx.fillRect(
+            x + 25,
+            py + 9,
+            4,
+            4
+        );
+
+
+        /*
+        Petite queue visible.
+        */
+
+        ctx.fillStyle =
+            "#b89b3e";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x + 11,
+            py + 30
+        );
+
+        ctx.lineTo(
+            x + 20,
+            py + 21
+        );
+
+        ctx.lineTo(
+            x + 29,
+            py + 30
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+    }
 
 
     /*
-    ==============================
-    BEC
-    ==============================
+    BAS
     */
 
-    ctx.fillStyle =
-        "#d88732";
-
-
-    if (
-        player.direction ===
-        "left"
+    else if (
+        player.direction === "down"
     ) {
+
+        /*
+        Bec vers le bas.
+        */
+
+        ctx.fillStyle =
+            "#d88732";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x + 13,
+            py + 19
+        );
+
+        ctx.lineTo(
+            x + 20,
+            py + 27
+        );
+
+        ctx.lineTo(
+            x + 27,
+            py + 19
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+        Deux yeux.
+        */
+
+        ctx.fillStyle =
+            "#17130b";
+
+        ctx.fillRect(
+            x + 11,
+            py + 10,
+            4,
+            4
+        );
+
+        ctx.fillRect(
+            x + 25,
+            py + 10,
+            4,
+            4
+        );
+    }
+
+
+    /*
+    GAUCHE
+    */
+
+    else if (
+        player.direction === "left"
+    ) {
+
+        /*
+        Bec gauche.
+        */
+
+        ctx.fillStyle =
+            "#d88732";
 
         ctx.beginPath();
 
@@ -459,45 +561,13 @@ function drawPlayer() {
 
         ctx.fill();
 
-    } else {
 
-        ctx.beginPath();
+        /*
+        Un seul œil visible.
+        */
 
-        ctx.moveTo(
-            x + 31,
-            py + 14
-        );
-
-        ctx.lineTo(
-            x + 42,
-            py + 18
-        );
-
-        ctx.lineTo(
-            x + 31,
-            py + 21
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
-    }
-
-
-    /*
-    ==============================
-    YEUX
-    ==============================
-    */
-
-    ctx.fillStyle =
-        "#17130b";
-
-
-    if (
-        player.direction ===
-        "left"
-    ) {
+        ctx.fillStyle =
+            "#17130b";
 
         ctx.fillRect(
             x + 7,
@@ -505,16 +575,82 @@ function drawPlayer() {
             4,
             4
         );
+    }
 
-    } else {
+
+    /*
+    DROITE
+    */
+
+    else {
+
+        /*
+        Bec droite.
+        */
+
+        ctx.fillStyle =
+            "#d88732";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x + 32,
+            py + 14
+        );
+
+        ctx.lineTo(
+            x + 44,
+            py + 18
+        );
+
+        ctx.lineTo(
+            x + 32,
+            py + 21
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+        Un seul œil visible.
+        */
+
+        ctx.fillStyle =
+            "#17130b";
 
         ctx.fillRect(
-            x + 26,
+            x + 29,
             py + 9,
             4,
             4
         );
     }
+
+
+    /*
+    ==============================
+    AILE
+    ==============================
+    */
+
+    ctx.fillStyle =
+        "#b89b3e";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x + 12,
+        py + 27,
+        8,
+        11,
+        -0.35,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
 
 
     /*
@@ -526,9 +662,7 @@ function drawPlayer() {
     ctx.fillStyle =
         "#d88732";
 
-
     let footOffset = 0;
-
 
     if (player.moving) {
 
@@ -538,21 +672,19 @@ function drawPlayer() {
             ) * 2;
     }
 
-
     ctx.fillRect(
         x + 9,
-        py + 36 + footOffset,
+        py + 37 + footOffset,
         7,
         3
     );
 
     ctx.fillRect(
         x + 25,
-        py + 36 - footOffset,
+        py + 37 - footOffset,
         7,
         3
     );
-
 
     ctx.restore();
 }
