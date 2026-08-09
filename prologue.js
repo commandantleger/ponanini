@@ -15,6 +15,8 @@ const Prologue = {
 
     visualTime: 0,
 
+    loadingStartTime: 0,
+    minLoadingTime: 3200,
     images: [],
     imagesLoaded: 0,
     loading: false,
@@ -153,100 +155,202 @@ const Prologue = {
 
     start() {
 
-        this.active = true;
+    this.active = true;
 
-        this.scene = 0;
-        this.timer = 0;
+    this.scene = 0;
 
-        this.textIndex = 0;
-        this.finishedText = false;
+    this.timer = 0;
 
-        this.fade = 1;
-        this.fadeDirection = -1;
+    this.textIndex = 0;
 
-        this.visualTime = 0;
+    this.finishedText = false;
 
-        this.narratorSpeaking = false;
+    this.fade = 1;
 
-        this.hideHUD();
+    this.fadeDirection = -1;
+
+    this.visualTime = 0;
+
+    this.narratorSpeaking = false;
+
+    this.loadingStartTime =
+        performance.now();
+
+    this.ready = false;
+
+    this.loading = false;
+
+    this.images = [];
+
+    this.imagesLoaded = 0;
+
+
+    this.hideHUD();
+
+
+    if (
+        "speechSynthesis" in window
+    ) {
 
         window.speechSynthesis.cancel();
 
-        this.loadImages();
-    },
+    }
 
+
+    this.loadImages();
+},
 
     /* =====================================================
        NARRATEUR
     ===================================================== */
 
-    speakNarrator(text) {
+speakNarrator(text) {
 
-        if (!this.narratorEnabled)
-            return;
+    if (!this.narratorEnabled)
+        return;
 
-        if (!("speechSynthesis" in window))
-            return;
+    if (!("speechSynthesis" in window))
+        return;
 
-        window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
-        const voices =
-            window.speechSynthesis.getVoices();
+    const voices =
+        window.speechSynthesis.getVoices();
 
-        let voice =
-            voices.find(v =>
-                v.lang &&
-                v.lang.toLowerCase().startsWith("fr") &&
-                /male|homme|thomas|henri|paul/i.test(v.name)
+    /*
+     * On cherche une voix française naturelle.
+     * On évite explicitement les voix trop synthétiques
+     * lorsqu'elles sont identifiables par leur nom.
+     */
+
+    const frenchVoices =
+        voices.filter(voice =>
+            voice.lang &&
+            voice.lang.toLowerCase().startsWith("fr")
+        );
+
+
+    const preferredNames = [
+        "Google français",
+        "Google French",
+        "Microsoft Paul",
+        "Microsoft Henri",
+        "Microsoft Claude",
+        "Thomas",
+        "Daniel",
+        "Thomas",
+        "French"
+    ];
+
+
+    let voice = null;
+
+
+    for (
+        let i = 0;
+        i < preferredNames.length;
+        i++
+    ) {
+
+        voice =
+            frenchVoices.find(v =>
+                v.name
+                    .toLowerCase()
+                    .includes(
+                        preferredNames[i].toLowerCase()
+                    )
             );
 
-        if (!voice) {
+        if (voice)
+            break;
+    }
 
-            voice =
-                voices.find(v =>
-                    v.lang &&
-                    v.lang.toLowerCase().startsWith("fr")
-                );
-        }
 
-        this.narratorVoice =
-            voice || null;
+    /*
+     * Sinon on prend une voix française.
+     */
 
-        const utterance =
-            new SpeechSynthesisUtterance(text);
+    if (!voice && frenchVoices.length > 0) {
 
-        utterance.lang = "fr-FR";
+        voice =
+            frenchVoices.find(v =>
+                !/espeak|festival|robot/i.test(v.name)
+            );
 
-        /*
-         * Voix volontairement lente et grave.
-         */
+    }
 
-        utterance.rate = 0.78;
-        utterance.pitch = 0.62;
-        utterance.volume = 1;
 
-        if (this.narratorVoice)
-            utterance.voice = this.narratorVoice;
+    /*
+     * Dernier recours.
+     */
 
-        this.narratorSpeaking = true;
+    if (!voice && frenchVoices.length > 0)
+        voice = frenchVoices[0];
 
-        utterance.onend = () => {
 
-            this.narratorSpeaking = false;
+    this.narratorVoice =
+        voice || null;
 
-        };
 
-        utterance.onerror = () => {
+    const utterance =
+        new SpeechSynthesisUtterance(text);
 
-            this.narratorSpeaking = false;
 
-        };
+    utterance.lang =
+        "fr-FR";
 
-        window.speechSynthesis.speak(
-            utterance
-        );
-    },
 
+    /*
+     * Narration plus lente et moins aiguë.
+     */
+
+    utterance.rate =
+        0.72;
+
+    utterance.pitch =
+        0.78;
+
+    utterance.volume =
+        1;
+
+
+    if (this.narratorVoice)
+        utterance.voice =
+            this.narratorVoice;
+
+
+    this.narratorSpeaking =
+        true;
+
+
+    utterance.onstart = () => {
+
+        this.narratorSpeaking =
+            true;
+
+    };
+
+
+    utterance.onend = () => {
+
+        this.narratorSpeaking =
+            false;
+
+    };
+
+
+    utterance.onerror = () => {
+
+        this.narratorSpeaking =
+            false;
+
+    };
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+},
 
     /* =====================================================
        CHARGEMENT DES IMAGES
@@ -278,36 +382,57 @@ const Prologue = {
                 this.imagesLoaded++;
 
 
-                if (
-                    this.imagesLoaded ===
-                    this.scenes.length
-                ) {
+  if (
+    this.imagesLoaded ===
+    this.scenes.length
+) {
 
-                    this.ready = true;
+    const elapsed =
+        performance.now() -
+        this.loadingStartTime;
 
-                    this.loading = false;
+
+    const remaining =
+        Math.max(
+            0,
+            this.minLoadingTime -
+            elapsed
+        );
 
 
-                    /*
-                     * Toutes les images sont chargées.
-                     * On peut lancer le narrateur.
-                     */
+    setTimeout(() => {
 
-                    setTimeout(() => {
+        if (!this.active)
+            return;
 
-                        if (
-                            this.active &&
-                            this.scene === 0
-                        ) {
 
-                            this.speakNarrator(
-                                this.scenes[0].text
-                            );
+        this.ready = true;
 
-                        }
+        this.loading = false;
 
-                    }, 800);
-                }
+
+        /*
+         * Laisse le royaume apparaître
+         * avant de lancer la narration.
+         */
+
+        setTimeout(() => {
+
+            if (
+                this.active &&
+                this.scene === 0
+            ) {
+
+                this.speakNarrator(
+                    this.scenes[0].text
+                );
+
+            }
+
+        }, 900);
+
+    }, remaining);
+}              }
             };
 
 
@@ -667,114 +792,411 @@ const Prologue = {
        ÉCRAN DE CHARGEMENT
     ===================================================== */
 
-    drawLoading() {
+ drawLoading() {
 
-        const ctx =
-            Game.ctx;
+    const ctx =
+        Game.ctx;
 
-        const width =
-            Game.canvas.width;
+    const width =
+        Game.canvas.width;
 
-        const height =
-            Game.canvas.height;
-
-
-        ctx.fillStyle =
-            "#050609";
-
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
+    const height =
+        Game.canvas.height;
 
 
-        ctx.textAlign =
-            "center";
+    /*
+     * FOND
+     */
+
+    ctx.fillStyle =
+        "#050608";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
 
-        ctx.fillStyle =
-            "#d9b441";
+    /*
+     * HALO CENTRAL
+     */
 
-        ctx.font =
-            "bold 30px Georgia";
-
-        ctx.fillText(
-            "PONAN'S LEGACY",
+    const gradient =
+        ctx.createRadialGradient(
             width / 2,
-            height / 2 - 55
-        );
-
-
-        ctx.fillStyle =
-            "#eee8d5";
-
-        ctx.font =
-            "20px Georgia";
-
-        ctx.fillText(
-            "Préparation du royaume...",
+            height / 2,
+            10,
             width / 2,
-            height / 2
+            height / 2,
+            Math.min(width, height) * 0.55
         );
 
 
-        const barWidth =
-            Math.min(
-                520,
-                width * 0.65
-            );
+    gradient.addColorStop(
+        0,
+        "rgba(155,120,45,0.10)"
+    );
+
+    gradient.addColorStop(
+        0.5,
+        "rgba(80,60,25,0.04)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * PARTICULES
+     */
+
+    for (
+        let i = 0;
+        i < 45;
+        i++
+    ) {
 
         const x =
-            (width - barWidth) / 2;
+            (
+                i * 137 +
+                this.visualTime * 12
+            ) % width;
+
 
         const y =
-            height / 2 + 35;
-
-
-        ctx.fillStyle =
-            "#17191f";
-
-        ctx.fillRect(
-            x,
-            y,
-            barWidth,
-            12
-        );
-
-
-        ctx.fillStyle =
-            "#b9973e";
-
-        ctx.fillRect(
-            x,
-            y,
-            barWidth *
             (
-                this.imagesLoaded /
-                this.scenes.length
-            ),
-            12
-        );
+                i * 73 +
+                this.visualTime * 7
+            ) % height;
 
 
-        ctx.font =
-            "15px Arial";
+        const alpha =
+            0.12 +
+            Math.abs(
+                Math.sin(
+                    this.visualTime * 1.5 +
+                    i
+                )
+            ) * 0.20;
+
 
         ctx.fillStyle =
-            "rgba(255,255,255,.65)";
+            "rgba(190,155,70," +
+            alpha +
+            ")";
 
-        ctx.fillText(
-            this.imagesLoaded +
-            " / " +
-            this.scenes.length,
-            width / 2,
-            y + 42
+
+        ctx.fillRect(
+            x,
+            y,
+            2,
+            2
         );
-    },
+    }
 
 
+    /*
+     * PETIT SYMBOLE DE COURONNE
+     */
+
+    const cx =
+        width / 2;
+
+    const crownY =
+        height / 2 - 115;
+
+
+    ctx.save();
+
+    ctx.translate(
+        cx,
+        crownY
+    );
+
+
+    const pulse =
+        1 +
+        Math.sin(
+            this.visualTime * 2
+        ) * 0.025;
+
+
+    ctx.scale(
+        pulse,
+        pulse
+    );
+
+
+    ctx.strokeStyle =
+        "#b9973e";
+
+    ctx.fillStyle =
+        "rgba(185,151,62,0.08)";
+
+    ctx.lineWidth =
+        3;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(-55, 18);
+
+    ctx.lineTo(-45, -30);
+
+    ctx.lineTo(-15, -5);
+
+    ctx.lineTo(0, -42);
+
+    ctx.lineTo(18, -5);
+
+    ctx.lineTo(48, -30);
+
+    ctx.lineTo(58, 18);
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -58,
+        18
+    );
+
+    ctx.lineTo(
+        58,
+        18
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+
+    /*
+     * TITRE
+     */
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.font =
+        "bold 46px Georgia";
+
+
+    ctx.fillStyle =
+        "#eee6d2";
+
+
+    ctx.shadowColor =
+        "rgba(185,151,62,0.35)";
+
+    ctx.shadowBlur =
+        18;
+
+
+    ctx.fillText(
+        "PONAN'S LEGACY",
+        cx,
+        height / 2 - 35
+    );
+
+
+    ctx.shadowBlur =
+        0;
+
+
+    /*
+     * SOUS-TITRE
+     */
+
+    ctx.font =
+        "italic 18px Georgia";
+
+    ctx.fillStyle =
+        "#b9973e";
+
+
+    ctx.fillText(
+        "L'HÉRITAGE DES PLUMES",
+        cx,
+        height / 2 + 5
+    );
+
+
+    /*
+     * LIGNE DÉCORATIVE
+     */
+
+    const lineWidth =
+        Math.min(
+            420,
+            width * 0.55
+        );
+
+
+    ctx.strokeStyle =
+        "rgba(185,151,62,0.55)";
+
+    ctx.lineWidth =
+        1;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        cx - lineWidth / 2,
+        height / 2 + 30
+    );
+
+    ctx.lineTo(
+        cx + lineWidth / 2,
+        height / 2 + 30
+    );
+
+    ctx.stroke();
+
+
+    /*
+     * TEXTE
+     */
+
+    ctx.font =
+        "16px Georgia";
+
+    ctx.fillStyle =
+        "rgba(238,230,210,0.75)";
+
+
+    ctx.fillText(
+        "Les chroniques de Ponan commencent...",
+        cx,
+        height / 2 + 70
+    );
+
+
+    /*
+     * BARRE DE CHARGEMENT
+     */
+
+    const barWidth =
+        Math.min(
+            520,
+            width * 0.62
+        );
+
+
+    const barHeight =
+        5;
+
+
+    const barX =
+        cx -
+        barWidth / 2;
+
+
+    const barY =
+        height / 2 + 105;
+
+
+    /*
+     * Fond de la barre
+     */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,0.08)";
+
+
+    ctx.fillRect(
+        barX,
+        barY,
+        barWidth,
+        barHeight
+    );
+
+
+    /*
+     * Progression
+     */
+
+    const progress =
+        this.imagesLoaded /
+        this.scenes.length;
+
+
+    ctx.fillStyle =
+        "#b9973e";
+
+
+    ctx.fillRect(
+        barX,
+        barY,
+        barWidth * progress,
+        barHeight
+    );
+
+
+    /*
+     * Pourcentage
+     */
+
+    ctx.font =
+        "13px Arial";
+
+    ctx.fillStyle =
+        "rgba(238,230,210,0.55)";
+
+
+    ctx.fillText(
+        Math.floor(progress * 100) +
+        "%",
+        cx,
+        barY + 30
+    );
+
+
+    /*
+     * TEXTE BAS
+     */
+
+    ctx.font =
+        "12px Arial";
+
+    ctx.fillStyle =
+        "rgba(255,255,255,0.28)";
+
+
+    ctx.fillText(
+        "CHARGEMENT DU ROYAUME",
+        cx,
+        height - 35
+    );
+
+
+    ctx.textAlign =
+        "left";
+},
     /* =====================================================
        IMAGE + CAMÉRA
     ===================================================== */
