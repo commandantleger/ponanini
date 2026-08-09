@@ -1,4 +1,7 @@
 const Prologue = {
+    narratorEnabled: true,
+    narratorSpeaking: false,
+    narratorVoice: null,
     active: false,
     scene: 0,
     timer: 0,
@@ -37,6 +40,96 @@ const Prologue = {
         this.visualTime = 0;
         this.hideHUD();
         this.loadImages();
+            window.speechSynthesis.cancel();
+
+    setTimeout(() => {
+
+        if (
+            this.active &&
+            this.ready
+        ) {
+
+            this.speakNarrator(
+                this.scenes[0].text
+            );
+
+        }
+
+    }, 1000);
+    },
+
+        speakNarrator(text) {
+
+        if (!this.narratorEnabled)
+            return;
+
+        if (!("speechSynthesis" in window))
+            return;
+
+        window.speechSynthesis.cancel();
+
+        const voices =
+            window.speechSynthesis.getVoices();
+
+        /*
+        Recherche d'abord une voix française.
+        On privilégie une voix masculine si le navigateur
+        fournit cette information.
+        */
+
+        let voice =
+            voices.find(v =>
+                v.lang &&
+                v.lang.toLowerCase().startsWith("fr") &&
+                /male|homme|thomas|henri|paul/i.test(v.name)
+            );
+
+        if (!voice) {
+
+            voice =
+                voices.find(v =>
+                    v.lang &&
+                    v.lang.toLowerCase().startsWith("fr")
+                );
+
+        }
+
+        this.narratorVoice = voice || null;
+
+        const utterance =
+            new SpeechSynthesisUtterance(text);
+
+        utterance.lang = "fr-FR";
+
+        /*
+        Voix grave et lente.
+        */
+
+        utterance.rate = 0.78;
+        utterance.pitch = 0.62;
+        utterance.volume = 1;
+
+        if (this.narratorVoice)
+            utterance.voice = this.narratorVoice;
+
+        this.narratorSpeaking = true;
+
+        utterance.onend = () => {
+
+            this.narratorSpeaking = false;
+
+        };
+
+        utterance.onerror = () => {
+
+            this.narratorSpeaking = false;
+
+        };
+
+        window.speechSynthesis.speak(
+            utterance
+        );
+
     },
 
     loadImages() {
@@ -50,10 +143,34 @@ const Prologue = {
             img.onload = () => {
                 this.images[i] = img;
                 this.imagesLoaded++;
-                if (this.imagesLoaded === this.scenes.length) {
-                    this.ready = true;
-                    this.loading = false;
-                }
+            }
+            if (this.imagesLoaded === this.scenes.length) {
+
+    this.ready = true;
+
+    this.loading = false;
+
+
+    // =========================================
+    // PREMIÈRE NARRATION
+    // =========================================
+
+    setTimeout(() => {
+
+        if (
+            this.active &&
+            this.scene === 0
+        ) {
+
+            this.speakNarrator(
+                this.scenes[0].text
+            );
+
+        }
+
+    }, 800);
+
+}
             };
             img.onerror = () => console.error("Erreur scene" + (i + 1) + ".png");
             img.src = "assets/prologue/scene" + (i + 1) + ".png";
@@ -101,6 +218,24 @@ const Prologue = {
             return;
         }
         this.scene++;
+        window.speechSynthesis.cancel();
+
+this.narratorSpeaking = false;
+
+setTimeout(() => {
+
+    if (
+        this.active &&
+        this.scenes[this.scene]
+    ) {
+
+        this.speakNarrator(
+            this.scenes[this.scene].text
+        );
+
+    }
+
+}, 700);
         this.timer = 0;
         this.textIndex = 0;
         this.finishedText = false;
@@ -121,6 +256,8 @@ const Prologue = {
     },
 
     finish() {
+        window.speechSynthesis.cancel();
+        this.narratorSpeaking = false;
         this.active = false;
         this.scene = 0;
         this.timer = 0;
