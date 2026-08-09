@@ -158,25 +158,85 @@ CHARGER LE VILLAGE
 
 function loadVillage() {
 
-    currentMap =
-        "village";
+    currentMap = "village";
 
-    WORLD =
-        [...VILLAGE];
+    WORLD = [...VILLAGE];
+
+    /*
+    =====================================================
+    SPAWN SÉCURISÉ
+    =====================================================
+
+    On cherche une vraie case libre dans le village
+    au lieu de supposer qu'une coordonnée est libre.
+    */
+
+    const T = Game.tileSize;
+
+    const spawnX = 29;
+    const spawnY = 21;
+
+    player.x =
+        spawnX * T;
+
+    player.y =
+        spawnY * T;
 
 
     /*
-    Position de départ.
+    Vérification de sécurité.
     */
 
-    player.x =
-        29 * Game.tileSize;
+    if (
+        collision(
+            player.x,
+            player.y,
+            player.width || 32,
+            player.height || 48
+        )
+    ) {
 
-    player.y =
-        21 * Game.tileSize;
+        /*
+        On cherche automatiquement
+        une case de chemin.
+        */
 
+        for (
+            let y = 0;
+            y < WORLD.length;
+            y++
+        ) {
+
+            let found = false;
+
+            for (
+                let x = 0;
+                x < WORLD[y].length;
+                x++
+            ) {
+
+                if (
+                    WORLD[y][x] === "+" ||
+                    WORLD[y][x] === "."
+                ) {
+
+                    player.x =
+                        x * T;
+
+                    player.y =
+                        y * T;
+
+                    found = true;
+
+                    break;
+                }
+            }
+
+            if (found)
+                break;
+        }
+    }
 }
-
 
 /*
 ==========================================================
