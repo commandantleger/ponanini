@@ -14,11 +14,13 @@ const Prologue = {
 
     visualTime: 0,
 
-    scene11Image: null,
-    scene11ImageLoaded: false,
-
     loadingStartTime: 0,
     minLoadingTime: 3200,
+
+    images: [],
+    imagesLoaded: 0,
+    loading: false,
+    ready: false,
 
     images: [],
     imagesLoaded: 0,
@@ -172,7 +174,6 @@ const Prologue = {
         this.visualTime = 0;
         this.scene11Image = null;
         this.scene11ImageLoaded = false;
-        this.loadScene11Image();
         this.narratorSpeaking = false;
         this.loadingStartTime = performance.now();
         this.ready = false;
