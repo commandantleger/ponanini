@@ -355,6 +355,13 @@ function drawPlayer() {
     ctx.fill();
 
 
+    let foot = 0;
+
+if (player.moving) {
+    foot =
+        Math.sin(player.walkTime) * 2;
+}
+
     /*
     ==============================
     DIRECTION : BAS
@@ -787,12 +794,6 @@ function drawPlayer() {
     ==============================
     */
 
-    let foot = 0;
-
-    if (player.moving) {
-        foot =
-            Math.sin(player.walkTime) * 2;
-    }
 
     ctx.fillStyle = "#d88732";
 
