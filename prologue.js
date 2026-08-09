@@ -271,75 +271,145 @@ const Prologue = {
         window.speechSynthesis.speak(utterance);
     },
 
+
     loadImages() {
-        if (this.ready || this.loading)
-            return;
 
-        this.loading = true;
+    if (this.ready || this.loading)
+        return;
 
-        this.images =
-            new Array(this.scenes.length);
+    this.loading = true;
 
-        this.imagesLoaded = 0;
+    this.images =
+        new Array(this.scenes.length);
 
-        this.scenes.forEach((scene, i) => {
-            const img = new Image();
+    this.imagesLoaded = 0;
 
-            img.onload = () => {
-                this.images[i] = img;
-                this.imagesLoaded++;
+    this.scenes.forEach((scene, i) => {
 
-                if (
-                    this.imagesLoaded ===
-                    this.scenes.length
-                ) {
-                    const elapsed =
-                        performance.now() -
-                        this.loadingStartTime;
+        const img = new Image();
 
-                    const remaining =
-                        Math.max(
-                            0,
-                            this.minLoadingTime -
-                            elapsed
-                        );
+        img.onload = () => {
+
+            this.images[i] = img;
+
+            this.imagesLoaded++;
+
+            console.log(
+                "Scene " +
+                (i + 1) +
+                " chargée."
+            );
+
+            if (
+                this.imagesLoaded ===
+                this.scenes.length
+            ) {
+
+                const elapsed =
+                    performance.now() -
+                    this.loadingStartTime;
+
+                const remaining =
+                    Math.max(
+                        0,
+                        this.minLoadingTime -
+                        elapsed
+                    );
+
+                setTimeout(() => {
+
+                    if (!this.active)
+                        return;
+
+                    this.ready = true;
+                    this.loading = false;
 
                     setTimeout(() => {
-                        if (!this.active)
-                            return;
 
-                        this.ready = true;
-                        this.loading = false;
+                        if (
+                            this.active &&
+                            this.scene === 0
+                        ) {
 
-                        setTimeout(() => {
-                            if (
-                                this.active &&
-                                this.scene === 0
-                            ) {
-                                this.speakNarrator(
-                                    this.scenes[0].text
-                                );
-                            }
-                        }, 900);
-                    }, remaining);
-                }
-            };
+                            this.speakNarrator(
+                                this.scenes[0].text
+                            );
+                        }
 
-            img.onerror = () => {
-                console.error(
-                    "Erreur scene" +
-                    (i + 1) +
-                    ".png"
-                );
-            };
+                    }, 900);
 
-            img.src =
-                "assets/prologue/scene" +
+                }, remaining);
+            }
+        };
+
+
+        img.onerror = () => {
+
+            console.error(
+                "ERREUR : assets/prologue/scene" +
                 (i + 1) +
-                ".png";
-        });
-    },
+                ".png"
+            );
 
+            /*
+             * On ne bloque pas tout le prologue
+             * si une image est absente.
+             */
+
+            this.images[i] = null;
+
+            this.imagesLoaded++;
+
+            if (
+                this.imagesLoaded ===
+                this.scenes.length
+            ) {
+
+                const elapsed =
+                    performance.now() -
+                    this.loadingStartTime;
+
+                const remaining =
+                    Math.max(
+                        0,
+                        this.minLoadingTime -
+                        elapsed
+                    );
+
+                setTimeout(() => {
+
+                    if (!this.active)
+                        return;
+
+                    this.ready = true;
+                    this.loading = false;
+
+                    setTimeout(() => {
+
+                        if (
+                            this.active &&
+                            this.scene === 0
+                        ) {
+
+                            this.speakNarrator(
+                                this.scenes[0].text
+                            );
+                        }
+
+                    }, 900);
+
+                }, remaining);
+            }
+        };
+
+
+        img.src =
+            "assets/prologue/scene" +
+            (i + 1) +
+            ".png";
+    });
+},
+    
     hideHUD() {
         [
             "hud",
@@ -508,67 +578,114 @@ const Prologue = {
         }
     },
 
+
     draw() {
-        const ctx =
-            Game.ctx;
 
-        const width =
-            Game.canvas.width;
+    const ctx =
+        Game.ctx;
 
-        const height =
-            Game.canvas.height;
+    const width =
+        Game.canvas.width;
 
-        ctx.clearRect(
-            0,
-            0,
-            width,
-            height
-        );
+    const height =
+        Game.canvas.height;
 
-        if (!this.ready) {
-            this.visualTime += 1 / 60;
-            this.drawLoading();
-            return;
-        }
 
-        const current =
-            this.scenes[this.scene];
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
 
-        const image =
-            this.images[this.scene];
 
-        if (
-            !current ||
-            !image
-        )
-            return;
+    if (!this.ready) {
+
+        this.visualTime +=
+            1 / 60;
+
+        this.drawLoading();
+
+        return;
+    }
+
+
+    const current =
+        this.scenes[this.scene];
+
+
+    if (!current)
+        return;
+
+
+    const image =
+        this.images[this.scene];
+
+
+    /*
+     * SCÈNE 11
+     */
+
+    if (
+        this.scene === 10 &&
+        image
+    ) {
 
         this.drawImageScene(
             image,
             current
         );
 
-        this.drawVignette();
+    } else if (image) {
 
-        this.drawNarration(
+        this.drawImageScene(
+            image,
             current
         );
 
-        if (this.fade > 0) {
-            ctx.fillStyle =
-                "rgba(0,0,0," +
-                this.fade +
-                ")";
+    } else {
 
-            ctx.fillRect(
-                0,
-                0,
-                width,
-                height
-            );
-        }
-    },
+        /*
+         * Image manquante :
+         * on garde un fond noir au lieu
+         * de faire disparaître la scène.
+         */
 
+        ctx.fillStyle =
+            "#050608";
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+    }
+
+
+    this.drawVignette();
+
+    this.drawNarration(
+        current
+    );
+
+
+    if (this.fade > 0) {
+
+        ctx.fillStyle =
+            "rgba(0,0,0," +
+            this.fade +
+            ")";
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+    }
+},
+    
     drawLoading() {
         const ctx =
             Game.ctx;
