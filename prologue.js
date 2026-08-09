@@ -432,9 +432,7 @@ speakNarrator(text) {
         }, 900);
 
     }, remaining);
-}              }
-            };
-
+  };
 
             img.onerror = () => {
 
