@@ -981,6 +981,256 @@ const Prologue = {
             "left";
     },
 
+    
+    drawScene11Fallback() {
+
+    const ctx =
+        Game.ctx;
+
+    const width =
+        Game.canvas.width;
+
+    const height =
+        Game.canvas.height;
+
+
+    ctx.fillStyle =
+        "#050608";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * Fond dimensionnel
+     */
+
+    const gradient =
+        ctx.createRadialGradient(
+            width / 2,
+            height / 2,
+            20,
+            width / 2,
+            height / 2,
+            height * 0.7
+        );
+
+    gradient.addColorStop(
+        0,
+        "rgba(80,70,35,.25)"
+    );
+
+    gradient.addColorStop(
+        0.5,
+        "rgba(25,35,30,.15)"
+    );
+
+    gradient.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+     * Portail dimensionnel
+     */
+
+    ctx.save();
+
+    ctx.translate(
+        width / 2,
+        height / 2 - 60
+    );
+
+
+    const pulse =
+        Math.sin(
+            this.visualTime * 2
+        ) * 8;
+
+
+    ctx.strokeStyle =
+        "rgba(190,155,70,.7)";
+
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        150 + pulse,
+        210 + pulse,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    ctx.strokeStyle =
+        "rgba(110,80,160,.35)";
+
+    ctx.lineWidth = 12;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        130 + pulse,
+        190 + pulse,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    /*
+     * Canard au centre
+     */
+
+    ctx.fillStyle =
+        "#8b8155";
+
+    ctx.fillRect(
+        -35,
+        -10,
+        70,
+        80
+    );
+
+    ctx.fillStyle =
+        "#b5a66d";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -35,
+        42,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+     * Bec
+     */
+
+    ctx.fillStyle =
+        "#c58b38";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        35,
+        -32
+    );
+
+    ctx.lineTo(
+        75,
+        -20
+    );
+
+    ctx.lineTo(
+        35,
+        -8
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+     * Yeux
+     */
+
+    ctx.fillStyle =
+        "#111";
+
+    ctx.fillRect(
+        -20,
+        -45,
+        7,
+        7
+    );
+
+    ctx.fillRect(
+        15,
+        -45,
+        7,
+        7
+    );
+
+
+    ctx.restore();
+
+
+    /*
+     * Particules
+     */
+
+    for (
+        let i = 0;
+        i < 40;
+        i++
+    ) {
+
+        const angle =
+            i * 2.4 +
+            this.visualTime * 0.4;
+
+        const radius =
+            120 +
+            ((i * 37) % 250);
+
+        const x =
+            width / 2 +
+            Math.cos(angle) *
+            radius;
+
+        const y =
+            height / 2 +
+            Math.sin(angle) *
+            radius *
+            0.6;
+
+        ctx.fillStyle =
+            i % 2 === 0
+                ? "rgba(190,155,70,.45)"
+                : "rgba(120,90,160,.35)";
+
+        ctx.fillRect(
+            x,
+            y,
+            2,
+            2
+        );
+    }
+},
+    
+    
     drawImageScene(
         image,
         scene
