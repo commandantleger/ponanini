@@ -438,76 +438,183 @@ function drawPlayer() {
     ==============================
     */
 
+
     else if (player.direction === "up") {
 
-        /*
-        Arrière de la tête.
-        */
+    /*
+    ==============================
+    VUE ARRIÈRE DU CANARD
+    ==============================
+    */
 
-        ctx.fillStyle = "#c8aa48";
+    /*
+    Corps
+    */
 
-        ctx.beginPath();
+    ctx.fillStyle = "#d8b94f";
 
-        ctx.arc(
-            cx,
-            cy - 6,
-            13,
-            0,
-            Math.PI * 2
-        );
+    ctx.beginPath();
 
-        ctx.fill();
+    ctx.ellipse(
+        cx,
+        cy + 8,
+        14,
+        13,
+        0,
+        0,
+        Math.PI * 2
+    );
 
-
-        /*
-        Petite zone plus sombre
-        pour montrer l'arrière
-        de la tête.
-        */
-
-        ctx.fillStyle = "#b59a40";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            cx,
-            cy - 4,
-            9,
-            Math.PI,
-            Math.PI * 2
-        );
-
-        ctx.fill();
+    ctx.fill();
 
 
-        /*
-        Queue du canard.
-        */
+    /*
+    Tête vue de dos
+    */
 
-        ctx.fillStyle = "#b89b3e";
+    ctx.fillStyle = "#e4c65b";
 
-        ctx.beginPath();
+    ctx.beginPath();
 
-        ctx.moveTo(
-            cx - 7,
-            cy + 17
-        );
+    ctx.arc(
+        cx,
+        cy - 7,
+        12,
+        0,
+        Math.PI * 2
+    );
 
-        ctx.lineTo(
-            cx,
-            cy + 10
-        );
+    ctx.fill();
 
-        ctx.lineTo(
-            cx + 7,
-            cy + 17
-        );
 
-        ctx.closePath();
+    /*
+    Petite partie sombre à l'arrière
+    de la tête pour donner du volume.
+    */
 
-        ctx.fill();
-    }
+    ctx.fillStyle = "#c5a845";
 
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy - 6,
+        9,
+        0,
+        Math.PI
+    );
+
+    ctx.fill();
+
+
+    /*
+    Aile gauche
+    */
+
+    ctx.fillStyle = "#b89b3e";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        cx - 11,
+        cy + 8,
+        6,
+        10,
+        -0.15,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    Aile droite
+    */
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        cx + 11,
+        cy + 8,
+        6,
+        10,
+        0.15,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ==============================
+    QUEUE
+    ==============================
+    */
+
+    ctx.fillStyle = "#c09f3f";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        cx - 8,
+        cy + 18
+    );
+
+    ctx.lineTo(
+        cx,
+        cy + 11
+    );
+
+    ctx.lineTo(
+        cx + 8,
+        cy + 18
+    );
+
+    ctx.lineTo(
+        cx + 4,
+        cy + 22
+    );
+
+    ctx.lineTo(
+        cx,
+        cy + 18
+    );
+
+    ctx.lineTo(
+        cx - 4,
+        cy + 22
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+    ==============================
+    PATTES
+    ==============================
+    */
+
+    ctx.fillStyle = "#d88732";
+
+    ctx.fillRect(
+        cx - 10,
+        cy + 19 + foot,
+        7,
+        3
+    );
+
+    ctx.fillRect(
+        cx + 3,
+        cy + 19 - foot,
+        7,
+        3
+    );
+}
+    
 
     /*
     ==============================
