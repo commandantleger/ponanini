@@ -1,135 +1,226 @@
 let bridgeOpen = false;
 
+
 /*
 ==========================================================
 PONAN'S LEGACY
-MAP PRINCIPALE — ROYAUME
+MAP — VILLAGE DE PONAN
 ==========================================================
 
-Légende :
+LÉGENDE
 
-# = bord / mur
+# = mur / bordure
 . = herbe
-T = arbres
+T = arbre
 H = maison
 P = palais
 S = place royale
++ = chemin
 ~ = eau
 D = pont
-R = sortie vers la forêt
-
-Le palais est volontairement placé AU CENTRE
-du village.
+R = sortie
+* = fleurs
 
 ==========================================================
 */
 
-let WORLD = [
 
-"############################################################",
-"#TTT...................................................TTT#",
-"#T.......................................................T#",
-"#........H HHH................S................HHH H.......#",
-"#........HHHHH...............SSS...............HHHHH.......#",
-"#....................SSSSSSSSSSSSSSSSSS...................#",
-"#....................SSSSSSSSSSSSSSSSSS...................#",
-"#....................SSSSSSSSSSSSSSSSSS...................#",
-"#.......................PPPPPPPPPP........................#",
-"#.......................P........P........................#",
-"#........HHHH...........P........P...........HHHH.........#",
-"#........H..H...........P........P...........H..H.........#",
-"#........HHHH...........PPPPPPPPPP...........HHHH.........#",
-"#..........................................................#",
-"#.......................SSSSSSSSSS.........................#",
-"#.......................SSSSSSSSSS.........................#",
-"#.......................SSSSSSSSSS.........................#",
-"#.......................SSSSSSSSSS.........................#",
-"#........HHHH.............................................#",
-"#........H..H.............................................#",
-"#........HHHH.........................HHHH................#",
-"#.....................................H..H................#",
-"#.....................................HHHH................#",
-"#..........................................................#",
-"#......................~~~~D~~~~..........................#",
-"#......................~~~~~~~~...........................#",
-"#......................~~~~~~~~...........................#",
-"#.....................................................R....#",
-"#..........................................................#",
-"############################################################"
+const VILLAGE = [
+
+    "############################################################",
+
+    "#TTTTT................................................TTTTT#",
+
+    "#TTTTT................................................TTTTT#",
+
+    "#TTTTT................................................TTTTT#",
+
+    "#TTTTT.........T...T....................T..T..........TTTTT#",
+
+    "#......HHHHH.................++..............HHHHH.........#",
+
+    "#......HHHHH.............PPPPPPPPPP..........HHHHH.........#",
+
+    "#......HHHHH..*..........PPPPPPPPPP..........HHHHH.........#",
+
+    "#......HHHHH......SSSSSSSPPPPPPPPPPSSSSSSS...HHHHH........#",
+
+    "#.................SSSSSSSPPPPPPPPPPSSSSSSS.................#",
+
+    "#.................SSSSSSSPPPPPPPPPPSSSSSSS.................#",
+
+    "#...T.............SSSSSSSSSSSSSSSSSSSSSSSS.....*......T....#",
+
+    "#.................SSSSSSSSSSSSSSSSSSSSSSSS.................#",
+
+    "#......HHHHH......SSSSSSSSSSSSSSSSSSSSSSSS...HHHHH.........#",
+
+    "#......HHHHH......SSSSSSSSSSSSSSSSSSSSSSSS...HHHHH.........#",
+
+    "#......HHHHH......SSSSSSSSSSSSSSSSSSSSSSSS...HHHHH.........#",
+
+    "#......HHHHH.....*SSSSSSSSSSSSSSSSSSSSSSSS...HHHHH.........#",
+
+    "#...........*.....SSSSSSSSSSSSSSSSSSSSSSSS.*...............#",
+
+    "#...++++++++++++++++++++++++++++++++++++++++++++++++++++...#",
+
+    "#...++++++++++++++++++++++++++++++++++++++++++++++++++++...#",
+
+    "#...T.........HHHHH..*.......++.....*..HHHHH..........T....#",
+
+    "#.............HHHHH.T........++......T.HHHHH..............R.",
+
+    "#.............HHHHH..........++........HHHHH...............#",
+
+    "#.........*...HHHHH..........++........HHHHH....*..........#",
+
+    "#.~~~~~~~~~~~~~~~~~~~~~~~~~DDDDDD~~~~~~~~~~~~~~~~~~~~~~~~~.#",
+
+    "#T~~~~~~~~~~~~~~~~~~~~~~~~~DDDDDD~~~~~~~~~~~~~~~~~~~~~~~~~T#",
+
+    "#T~~~~~~~~~~~~~~~~~~~~~~~~~DDDDDD~~~~~~~~~~~~~~~~~~~~~~~~~T#",
+
+    "#TTTTT................................................TTTTT#",
+
+    "#TTTTT................................................TTTTT#",
+
+    "############################################################"
 
 ];
 
 
 /*
 ==========================================================
-FORET
+FORÊT
 ==========================================================
 */
 
 const FOREST = [
 
-"############################################################",
-"#TTTTTTTT............................................TTTT#",
-"#TTTTTT................................................TT#",
-"#TTTT...................................................T#",
-"#..........................................................#",
-"#.............TTTTTT.....................................#",
-"#.............T....T.....................................#",
-"#.............TTTTTT.....................................#",
-"#..........................................................#",
-"#.........................TTTTTT...........................#",
-"#.........................T....T...........................#",
-"#.........................TTTTTT...........................#",
-"#..........................................................#",
-"#........................................................R#",
-"#..........................................................#",
-"#..........................................................#",
-"#TTTT................................................TTTT#",
-"#TTTTTT............................................TTTTTT#",
-"############################################################"
+    "############################################################",
+
+    "#TTTTTTTT............................................TTTTTT#",
+
+    "#TTTTTT................................................TTTT#",
+
+    "#TTTT...................................................TT#",
+
+    "#..........................................................#",
+
+    "#.............TTTTTT.....................................#",
+
+    "#.............T....T.....................................#",
+
+    "#.............TTTTTT.....................................#",
+
+    "#..........................................................#",
+
+    "#.........................TTTTTT...........................#",
+
+    "#.........................T....T...........................#",
+
+    "#.........................TTTTTT...........................#",
+
+    "#..........................................................#",
+
+    "#........................................................R#",
+
+    "#..........................................................#",
+
+    "#..........................................................#",
+
+    "#TTTT................................................TTTTTT#",
+
+    "#TTTTTT............................................TTTTTTT#",
+
+    "############################################################"
 
 ];
 
 
 /*
 ==========================================================
-ETAT DE LA MAP
+ÉTAT
 ==========================================================
 */
+
+let WORLD = [...VILLAGE];
 
 let currentMap = "village";
 
 
 /*
 ==========================================================
-CHARGEMENT DE LA FORET
+CHARGER LE VILLAGE
 ==========================================================
 */
 
-function loadForest() {
+function loadVillage() {
 
-    currentMap = "forest";
+    currentMap =
+        "village";
 
-    WORLD = [...FOREST];
+    WORLD =
+        [...VILLAGE];
 
-    player.x = 2 * Game.tileSize;
-    player.y = 2 * Game.tileSize;
+
+    /*
+    Position de départ.
+    */
+
+    player.x =
+        29 * Game.tileSize;
+
+    player.y =
+        21 * Game.tileSize;
 
 }
 
 
 /*
 ==========================================================
-CHARGEMENT DU VILLAGE
+CHARGER LA FORÊT
 ==========================================================
 */
 
-function loadVillage() {
+function loadForest() {
 
-    currentMap = "village";
+    currentMap =
+        "forest";
 
-    WORLD = [...WORLD];
+    WORLD =
+        [...FOREST];
 
+
+    player.x =
+        2 * Game.tileSize;
+
+    player.y =
+        2 * Game.tileSize;
+
+}
+
+
+/*
+==========================================================
+SOLIDE
+==========================================================
+*/
+
+function solid(tile) {
+
+    if (tile === "D")
+        return !bridgeOpen;
+
+
+    return (
+        tile === "#" ||
+        tile === "T" ||
+        tile === "H" ||
+        tile === "P" ||
+        tile === "~"
+    );
 }
 
 
@@ -139,43 +230,36 @@ COLLISION
 ==========================================================
 */
 
-function solid(tile) {
+function collision(
+    x,
+    y,
+    w,
+    h
+) {
 
-    if (tile === "D")
-        return !bridgeOpen;
+    const T =
+        Game.tileSize;
 
-    return (
-        tile === "#" ||
-        tile === "T" ||
-        tile === "H" ||
-        tile === "P" ||
-        tile === "~"
-    );
-
-}
-
-
-/*
-==========================================================
-COLLISION RECTANGULAIRE
-==========================================================
-*/
-
-function collision(x, y, w, h) {
-
-    const T = Game.tileSize;
 
     const left =
-        Math.floor(x / T);
+        Math.floor(
+            x / T
+        );
 
     const right =
-        Math.floor((x + w - 1) / T);
+        Math.floor(
+            (x + w - 1) / T
+        );
 
     const top =
-        Math.floor(y / T);
+        Math.floor(
+            y / T
+        );
 
     const bottom =
-        Math.floor((y + h - 1) / T);
+        Math.floor(
+            (y + h - 1) / T
+        );
 
 
     if (
@@ -184,6 +268,7 @@ function collision(x, y, w, h) {
         bottom >= WORLD.length ||
         right >= WORLD[0].length
     ) {
+
         return true;
     }
 
@@ -194,7 +279,6 @@ function collision(x, y, w, h) {
         solid(WORLD[bottom][left]) ||
         solid(WORLD[bottom][right])
     );
-
 }
 
 
@@ -206,14 +290,17 @@ DESSIN DE LA MAP
 
 function drawMap() {
 
-    const ctx = Game.ctx;
-    const T = Game.tileSize;
+    const ctx =
+        Game.ctx;
+
+    const T =
+        Game.tileSize;
 
 
     /*
-    ------------------------------------------------------
+    ======================================================
     CAMERA
-    ------------------------------------------------------
+    ======================================================
     */
 
     Game.camera.x =
@@ -226,9 +313,42 @@ function drawMap() {
 
 
     /*
-    ------------------------------------------------------
+    Empêcher la caméra de sortir du monde.
+    */
+
+    const worldWidth =
+        WORLD[0].length * T;
+
+    const worldHeight =
+        WORLD.length * T;
+
+
+    Game.camera.x =
+        Math.max(
+            0,
+            Math.min(
+                Game.camera.x,
+                worldWidth -
+                Game.canvas.width
+            )
+        );
+
+
+    Game.camera.y =
+        Math.max(
+            0,
+            Math.min(
+                Game.camera.y,
+                worldHeight -
+                Game.canvas.height
+            )
+        );
+
+
+    /*
+    ======================================================
     TILES
-    ------------------------------------------------------
+    ======================================================
     */
 
     for (
@@ -248,15 +368,15 @@ function drawMap() {
 
 
             /*
-            Le pont devient un chemin
-            lorsqu'il est réparé.
+            Pont réparé
             */
 
             if (
                 tile === "D" &&
                 bridgeOpen
             ) {
-                tile = ".";
+
+                tile = "+";
             }
 
 
@@ -270,9 +390,9 @@ function drawMap() {
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             SOL DE BASE
-            --------------------------------------------------
+            ==================================================
             */
 
             ctx.fillStyle =
@@ -287,487 +407,951 @@ function drawMap() {
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             HERBE
-            --------------------------------------------------
+            ==================================================
             */
 
             if (tile === ".") {
 
-                ctx.fillStyle =
-                    "#72d45c";
-
-                ctx.fillRect(
+                drawGrass(
+                    ctx,
                     dx,
                     dy,
-                    T,
-                    T
+                    x,
+                    y
                 );
-
-
-                /*
-                petites variations
-                pour éviter un sol totalement plat
-                */
-
-                ctx.fillStyle =
-                    "rgba(45,110,45,.16)";
-
-                ctx.fillRect(
-                    dx + 8,
-                    dy + 12,
-                    4,
-                    8
-                );
-
-                ctx.fillRect(
-                    dx + 39,
-                    dy + 30,
-                    3,
-                    7
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
-            MUR / LIMITE
-            --------------------------------------------------
+            ==================================================
+            MUR
+            ==================================================
             */
 
             else if (tile === "#") {
 
-                ctx.fillStyle =
-                    "#263238";
-
-                ctx.fillRect(
+                drawWall(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-                ctx.fillStyle =
-                    "#37474f";
-
-                ctx.fillRect(
-                    dx + 4,
-                    dy + 4,
-                    T - 8,
-                    7
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             ARBRE
-            --------------------------------------------------
+            ==================================================
             */
 
             else if (tile === "T") {
 
-                /*
-                sol
-                */
-
-                ctx.fillStyle =
-                    "#5fa64f";
-
-                ctx.fillRect(
+                drawTree(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-
-                /*
-                tronc
-                */
-
-                ctx.fillStyle =
-                    "#5d4037";
-
-                ctx.fillRect(
-                    dx + 27,
-                    dy + 31,
-                    12,
-                    29
-                );
-
-
-                /*
-                feuillage
-                */
-
-                ctx.fillStyle =
-                    "#1b5e20";
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    dx + 32,
-                    dy + 27,
-                    25,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
-
-                ctx.fillStyle =
-                    "#2e7d32";
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    dx + 20,
-                    dy + 20,
-                    14,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    dx + 44,
-                    dy + 19,
-                    15,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
             }
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             MAISON
-            --------------------------------------------------
+            ==================================================
             */
 
             else if (tile === "H") {
 
-                ctx.fillStyle =
-                    "#bc8f5c";
-
-                ctx.fillRect(
+                drawHouse(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-
-                ctx.fillStyle =
-                    "#7b3f25";
-
-                ctx.fillRect(
-                    dx + 5,
-                    dy + 8,
-                    T - 10,
-                    10
-                );
-
-
-                ctx.fillStyle =
-                    "#4e342e";
-
-                ctx.fillRect(
-                    dx + 23,
-                    dy + 33,
-                    18,
-                    31
-                );
-
-
-                ctx.fillStyle =
-                    "#9bd7e8";
-
-                ctx.fillRect(
-                    dx + 8,
-                    dy + 35,
-                    13,
-                    13
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             PALAIS
-            --------------------------------------------------
+            ==================================================
             */
 
             else if (tile === "P") {
 
-                ctx.fillStyle =
-                    "#d8c49a";
-
-                ctx.fillRect(
+                drawPalaceTile(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-
-                /*
-                pierre
-                */
-
-                ctx.strokeStyle =
-                    "rgba(80,65,50,.20)";
-
-                ctx.lineWidth = 1;
-
-                ctx.strokeRect(
-                    dx + 2,
-                    dy + 2,
-                    T - 4,
-                    T - 4
-                );
-
-
-                /*
-                bande dorée
-                */
-
-                ctx.fillStyle =
-                    "#a98432";
-
-                ctx.fillRect(
-                    dx,
-                    dy,
-                    T,
-                    6
-                );
-
-
-                /*
-                fenêtre
-                */
-
-                ctx.fillStyle =
-                    "#31475a";
-
-                ctx.fillRect(
-                    dx + 20,
-                    dy + 18,
-                    24,
-                    24
-                );
-
-
-                ctx.fillStyle =
-                    "#d8b75a";
-
-                ctx.fillRect(
-                    dx + 30,
-                    dy + 18,
-                    4,
-                    24
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
-            PLACE ROYALE
-            --------------------------------------------------
+            ==================================================
+            PLACE
+            ==================================================
             */
 
             else if (tile === "S") {
 
-                ctx.fillStyle =
-                    "#c9a66b";
-
-                ctx.fillRect(
+                drawPlaza(
+                    ctx,
                     dx,
                     dy,
-                    T,
-                    T
+                    x,
+                    y
                 );
-
-
-                ctx.fillStyle =
-                    "rgba(95,70,40,.15)";
-
-                ctx.fillRect(
-                    dx + 2,
-                    dy + 2,
-                    T - 4,
-                    T - 4
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
+            ==================================================
+            CHEMIN
+            ==================================================
+            */
+
+            else if (tile === "+") {
+
+                drawPath(
+                    ctx,
+                    dx,
+                    dy
+                );
+            }
+
+
+            /*
+            ==================================================
+            FLEURS
+            ==================================================
+            */
+
+            else if (tile === "*") {
+
+                drawFlowers(
+                    ctx,
+                    dx,
+                    dy
+                );
+            }
+
+
+            /*
+            ==================================================
             EAU
-            --------------------------------------------------
+            ==================================================
             */
 
             else if (tile === "~") {
 
-                ctx.fillStyle =
-                    "#1976a8";
-
-                ctx.fillRect(
+                drawWater(
+                    ctx,
                     dx,
                     dy,
-                    T,
-                    T
+                    x
                 );
-
-
-                ctx.strokeStyle =
-                    "rgba(180,235,255,.55)";
-
-                ctx.lineWidth = 2;
-
-
-                const wave =
-                    Math.sin(
-                        performance.now() * .003 +
-                        x
-                    ) * 3;
-
-
-                ctx.beginPath();
-
-                ctx.moveTo(
-                    dx + 5,
-                    dy + 28 + wave
-                );
-
-                ctx.lineTo(
-                    dx + T - 5,
-                    dy + 28 + wave
-                );
-
-                ctx.stroke();
-
             }
 
 
             /*
-            --------------------------------------------------
+            ==================================================
             PONT
-            --------------------------------------------------
+            ==================================================
             */
 
             else if (tile === "D") {
 
-                ctx.fillStyle =
-                    "#795548";
-
-                ctx.fillRect(
+                drawBridge(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-
-                ctx.fillStyle =
-                    "#a66a3f";
-
-                ctx.fillRect(
-                    dx + 4,
-                    dy + 8,
-                    T - 8,
-                    8
-                );
-
-                ctx.fillRect(
-                    dx + 4,
-                    dy + 28,
-                    T - 8,
-                    8
-                );
-
-                ctx.fillRect(
-                    dx + 4,
-                    dy + 48,
-                    T - 8,
-                    8
-                );
-
             }
 
 
             /*
-            --------------------------------------------------
-            SORTIE FORET
-            --------------------------------------------------
+            ==================================================
+            SORTIE
+            ==================================================
             */
 
             else if (tile === "R") {
 
-                ctx.fillStyle =
-                    "#72d45c";
-
-                ctx.fillRect(
+                drawExit(
+                    ctx,
                     dx,
-                    dy,
-                    T,
-                    T
+                    dy
                 );
-
-
-                ctx.fillStyle =
-                    "#1b5e20";
-
-                ctx.beginPath();
-
-                ctx.arc(
-                    dx + 32,
-                    dy + 32,
-                    27,
-                    0,
-                    Math.PI * 2
-                );
-
-                ctx.fill();
-
             }
-
         }
-
     }
 
 
     /*
-    ------------------------------------------------------
-    DÉCOR DU PALAIS
-    ------------------------------------------------------
+    ======================================================
+    DÉCOR SUPPLÉMENTAIRE
+    ======================================================
     */
 
     drawPalaceDecoration();
 
+    drawVillageDecoration();
+}
+
+
+/*
+==========================================================
+HERBE
+==========================================================
+*/
+
+function drawGrass(
+    ctx,
+    x,
+    y,
+    gx,
+    gy
+) {
+
+    ctx.fillStyle =
+        "#72d45c";
+
+    ctx.fillRect(
+        x,
+        y,
+        Game.tileSize,
+        Game.tileSize
+    );
+
 
     /*
-    ------------------------------------------------------
-    DÉCOR DU VILLAGE
-    ------------------------------------------------------
+    Herbe sombre déterministe.
     */
 
-    drawVillageDecoration();
+    const seed =
+        (gx * 17 + gy * 31) % 7;
 
+
+    if (seed < 3) {
+
+        ctx.fillStyle =
+            "rgba(40,100,45,.20)";
+
+        ctx.fillRect(
+            x + 10,
+            y + 13,
+            3,
+            8
+        );
+
+        ctx.fillRect(
+            x + 38,
+            y + 34,
+            3,
+            7
+        );
+    }
+}
+
+
+/*
+==========================================================
+MUR
+==========================================================
+*/
+
+function drawWall(
+    ctx,
+    x,
+    y
+) {
+
+    ctx.fillStyle =
+        "#263238";
+
+    ctx.fillRect(
+        x,
+        y,
+        Game.tileSize,
+        Game.tileSize
+    );
+
+
+    ctx.fillStyle =
+        "#37474f";
+
+    ctx.fillRect(
+        x + 3,
+        y + 4,
+        Game.tileSize - 6,
+        8
+    );
+
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.25)";
+
+    ctx.fillRect(
+        x + 6,
+        y + 45,
+        Game.tileSize - 12,
+        5
+    );
+}
+
+
+/*
+==========================================================
+ARBRE
+==========================================================
+*/
+
+function drawTree(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    /*
+    Ombre
+    */
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.20)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x + T / 2,
+        y + T - 5,
+        23,
+        7,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    Tronc
+    */
+
+    ctx.fillStyle =
+        "#5d4037";
+
+    ctx.fillRect(
+        x + 26,
+        y + 31,
+        12,
+        29
+    );
+
+
+    /*
+    Feuillage principal
+    */
+
+    ctx.fillStyle =
+        "#1b5e20";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x + 32,
+        y + 26,
+        25,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    Feuillage clair
+    */
+
+    ctx.fillStyle =
+        "#2e7d32";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x + 20,
+        y + 20,
+        14,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x + 44,
+        y + 18,
+        15,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+}
+
+
+/*
+==========================================================
+MAISON
+==========================================================
+*/
+
+function drawHouse(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    /*
+    Mur
+    */
+
+    ctx.fillStyle =
+        "#bd8b57";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    /*
+    Ombre du toit
+    */
+
+    ctx.fillStyle =
+        "#6e3525";
+
+    ctx.fillRect(
+        x + 4,
+        y + 6,
+        T - 8,
+        12
+    );
+
+
+    /*
+    Toit
+    */
+
+    ctx.fillStyle =
+        "#8b4a2d";
+
+    ctx.fillRect(
+        x + 8,
+        y + 2,
+        T - 16,
+        9
+    );
+
+
+    /*
+    Porte
+    */
+
+    ctx.fillStyle =
+        "#4e342e";
+
+    ctx.fillRect(
+        x + 23,
+        y + 32,
+        18,
+        32
+    );
+
+
+    /*
+    Poignée
+    */
+
+    ctx.fillStyle =
+        "#d6b44f";
+
+    ctx.fillRect(
+        x + 35,
+        y + 48,
+        3,
+        3
+    );
+
+
+    /*
+    Fenêtre
+    */
+
+    ctx.fillStyle =
+        "#9bd7e8";
+
+    ctx.fillRect(
+        x + 8,
+        y + 35,
+        13,
+        13
+    );
+
+
+    ctx.strokeStyle =
+        "#496c78";
+
+    ctx.strokeRect(
+        x + 8,
+        y + 35,
+        13,
+        13
+    );
+}
+
+
+/*
+==========================================================
+PALAIS
+==========================================================
+*/
+
+function drawPalaceTile(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#d8c49a";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    /*
+    Pierres
+    */
+
+    ctx.strokeStyle =
+        "rgba(80,65,50,.20)";
+
+    ctx.strokeRect(
+        x + 2,
+        y + 2,
+        T - 4,
+        T - 4
+    );
+
+
+    /*
+    Bande dorée
+    */
+
+    ctx.fillStyle =
+        "#a98432";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        6
+    );
+
+
+    /*
+    Fenêtre
+    */
+
+    ctx.fillStyle =
+        "#31475a";
+
+    ctx.fillRect(
+        x + 20,
+        y + 18,
+        24,
+        24
+    );
+
+
+    ctx.fillStyle =
+        "#d8b75a";
+
+    ctx.fillRect(
+        x + 30,
+        y + 18,
+        4,
+        24
+    );
+}
+
+
+/*
+==========================================================
+PLACE
+==========================================================
+*/
+
+function drawPlaza(
+    ctx,
+    x,
+    y,
+    gx,
+    gy
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#c9a66b";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    ctx.fillStyle =
+        "rgba(95,70,40,.12)";
+
+    ctx.fillRect(
+        x + 2,
+        y + 2,
+        T - 4,
+        T - 4
+    );
+
+
+    /*
+    Dalles.
+    */
+
+    ctx.strokeStyle =
+        "rgba(80,60,35,.14)";
+
+    ctx.strokeRect(
+        x + 1,
+        y + 1,
+        T - 2,
+        T - 2
+    );
+}
+
+
+/*
+==========================================================
+CHEMIN
+==========================================================
+*/
+
+function drawPath(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#b89562";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    ctx.fillStyle =
+        "rgba(80,55,30,.13)";
+
+    ctx.fillRect(
+        x + 8,
+        y + 17,
+        5,
+        3
+    );
+
+    ctx.fillRect(
+        x + 41,
+        y + 43,
+        4,
+        3
+    );
+}
+
+
+/*
+==========================================================
+FLEURS
+==========================================================
+*/
+
+function drawFlowers(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#5fa64f";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    ctx.fillStyle =
+        "#f4d35e";
+
+    ctx.fillRect(
+        x + 20,
+        y + 18,
+        4,
+        4
+    );
+
+    ctx.fillRect(
+        x + 30,
+        y + 30,
+        4,
+        4
+    );
+
+
+    ctx.fillStyle =
+        "#e9a6c5";
+
+    ctx.fillRect(
+        x + 40,
+        y + 15,
+        4,
+        4
+    );
+}
+
+
+/*
+==========================================================
+EAU
+==========================================================
+*/
+
+function drawWater(
+    ctx,
+    x,
+    y,
+    gridX
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#1976a8";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    ctx.strokeStyle =
+        "rgba(180,235,255,.55)";
+
+    ctx.lineWidth =
+        2;
+
+
+    const wave =
+        Math.sin(
+            performance.now() * .003 +
+            gridX
+        ) * 3;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + 5,
+        y + 27 + wave
+    );
+
+    ctx.lineTo(
+        x + T - 5,
+        y + 27 + wave
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x + 18,
+        y + 47 - wave
+    );
+
+    ctx.lineTo(
+        x + T - 15,
+        y + 47 - wave
+    );
+
+    ctx.stroke();
+}
+
+
+/*
+==========================================================
+PONT
+==========================================================
+*/
+
+function drawBridge(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#795548";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    ctx.fillStyle =
+        "#a66a3f";
+
+    ctx.fillRect(
+        x + 4,
+        y + 8,
+        T - 8,
+        8
+    );
+
+    ctx.fillRect(
+        x + 4,
+        y + 28,
+        T - 8,
+        8
+    );
+
+    ctx.fillRect(
+        x + 4,
+        y + 48,
+        T - 8,
+        8
+    );
+}
+
+
+/*
+==========================================================
+SORTIE
+==========================================================
+*/
+
+function drawExit(
+    ctx,
+    x,
+    y
+) {
+
+    const T =
+        Game.tileSize;
+
+
+    ctx.fillStyle =
+        "#4f9b48";
+
+    ctx.fillRect(
+        x,
+        y,
+        T,
+        T
+    );
+
+
+    /*
+    Ouverture vers la forêt.
+    */
+
+    ctx.fillStyle =
+        "#173d20";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x + T / 2,
+        y + T / 2,
+        24,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        "#8acb62";
+
+    ctx.fillRect(
+        x + 26,
+        y + 9,
+        12,
+        42
+    );
 }
 
 
@@ -779,28 +1363,21 @@ DÉCOR DU PALAIS
 
 function drawPalaceDecoration() {
 
-    const ctx = Game.ctx;
-    const T = Game.tileSize;
+    const ctx =
+        Game.ctx;
 
+    const T =
+        Game.tileSize;
 
-    /*
-    Position du palais dans la map :
-    centre approximatif.
-    */
 
     const px =
-        23 * T -
+        25 * T -
         Game.camera.x;
 
     const py =
-        8 * T -
+        6 * T -
         Game.camera.y;
 
-
-    /*
-    Si le palais est hors écran,
-    on ne dessine rien.
-    */
 
     if (
         px < -300 ||
@@ -808,6 +1385,7 @@ function drawPalaceDecoration() {
         py < -300 ||
         py > Game.canvas.height + 300
     ) {
+
         return;
     }
 
@@ -821,7 +1399,7 @@ function drawPalaceDecoration() {
 
     ctx.fillRect(
         px + T * 3,
-        py + T * 2,
+        py + T * 3,
         T * 2,
         T * 2
     );
@@ -835,16 +1413,16 @@ function drawPalaceDecoration() {
         "#3e2723";
 
     ctx.fillRect(
-        px + T * 3.3,
-        py + T * 2.2,
-        T * .7,
+        px + T * 3.2,
+        py + T * 3.2,
+        T * .8,
         T * 1.8
     );
 
     ctx.fillRect(
         px + T * 4,
-        py + T * 2.2,
-        T * .7,
+        py + T * 3.2,
+        T * .8,
         T * 1.8
     );
 
@@ -859,8 +1437,8 @@ function drawPalaceDecoration() {
     ctx.beginPath();
 
     ctx.arc(
-        px + T * 3.8,
-        py + T * 1.25,
+        px + T * 3.9,
+        py + T * 2.2,
         15,
         0,
         Math.PI * 2
@@ -878,19 +1456,17 @@ function drawPalaceDecoration() {
 
     ctx.fillRect(
         px - T * .5,
-        py - T * .7,
+        py - T * .5,
         T,
         T * 3
     );
 
     ctx.fillRect(
         px + T * 4.8,
-        py - T * .7,
+        py - T * .5,
         T,
         T * 3
     );
-
-
 }
 
 
@@ -902,52 +1478,142 @@ DÉCOR DU VILLAGE
 
 function drawVillageDecoration() {
 
-    const ctx = Game.ctx;
-    const T = Game.tileSize;
+    const ctx =
+        Game.ctx;
+
+    const T =
+        Game.tileSize;
 
 
     /*
-    Chemin principal menant au palais.
+    ======================================================
+    FONTAINE CENTRALE
+    ======================================================
     */
 
-    const centerX =
-        25 * T -
+    const fx =
+        29.5 * T -
         Game.camera.x;
 
-
-    const centerY =
-        14 * T -
+    const fy =
+        12.5 * T -
         Game.camera.y;
 
 
     if (
-        centerX > -200 &&
-        centerX < Game.canvas.width + 200
+        fx > -100 &&
+        fx < Game.canvas.width + 100 &&
+        fy > -100 &&
+        fy < Game.canvas.height + 100
     ) {
 
-        ctx.fillStyle =
-            "rgba(122,91,55,.18)";
+        /*
+        Ombre.
+        */
 
-        ctx.fillRect(
-            centerX - T * 5,
-            centerY,
-            T * 10,
-            4
+        ctx.fillStyle =
+            "rgba(0,0,0,.20)";
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            fx,
+            fy + 22,
+            42,
+            12,
+            0,
+            0,
+            Math.PI * 2
         );
 
+        ctx.fill();
+
+
+        /*
+        Bassin.
+        */
+
+        ctx.fillStyle =
+            "#8a7358";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            fx,
+            fy,
+            34,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+        Eau.
+        */
+
+        ctx.fillStyle =
+            "#3c9bc2";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            fx,
+            fy,
+            25,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+        Pilier.
+        */
+
+        ctx.fillStyle =
+            "#c8b18a";
+
+        ctx.fillRect(
+            fx - 7,
+            fy - 30,
+            14,
+            30
+        );
+
+
+        /*
+        Petite couronne d'eau.
+        */
+
+        ctx.fillStyle =
+            "#7ccbe7";
+
+        ctx.fillRect(
+            fx - 3,
+            fy - 42,
+            6,
+            12
+        );
     }
 
 
     /*
-    Quelques lampes autour de la place.
+    ======================================================
+    LAMPES
+    ======================================================
     */
 
     const lamps = [
 
-        [19, 5],
-        [31, 5],
-        [19, 15],
-        [31, 15]
+        [18, 8],
+        [41, 8],
+        [18, 17],
+        [41, 17],
+        [23, 19],
+        [36, 19]
 
     ];
 
@@ -968,15 +1634,16 @@ function drawVillageDecoration() {
 
 
         if (
-            lx < -50 ||
-            lx > Game.canvas.width + 50
+            lx < -70 ||
+            lx > Game.canvas.width + 70
         ) {
+
             continue;
         }
 
 
         /*
-        halo
+        Halo.
         */
 
         const glow =
@@ -1013,7 +1680,7 @@ function drawVillageDecoration() {
 
 
         /*
-        poteau
+        Poteau.
         */
 
         ctx.fillStyle =
@@ -1028,7 +1695,7 @@ function drawVillageDecoration() {
 
 
         /*
-        lumière
+        Lampe.
         */
 
         ctx.fillStyle =
@@ -1045,7 +1712,5 @@ function drawVillageDecoration() {
         );
 
         ctx.fill();
-
     }
-
 }
