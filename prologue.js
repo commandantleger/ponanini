@@ -14,6 +14,9 @@ const Prologue = {
 
     visualTime: 0,
 
+    scene11Image: null,
+    scene11ImageLoaded: false,
+
     loadingStartTime: 0,
     minLoadingTime: 3200,
 
@@ -129,6 +132,32 @@ const Prologue = {
             duration: 13000,
             speed: 38,
             zoom: 1.08
+        },
+
+                {
+            title: "L'ÉTRANGER",
+
+            text:
+                "Mais cette histoire ne commence pas à Ponan. " +
+                "Elle commence ailleurs, dans un monde où les hommes " +
+                "ignorent jusqu'à l'existence de ce royaume. " +
+                "Un jour, un homme ordinaire fut arraché à son monde " +
+                "et projeté dans une dimension qui n'était pas la sienne. " +
+                "Lorsqu'il ouvrit les yeux, il n'était plus humain. " +
+                "Son corps avait changé. Son reflet lui était étranger. " +
+                "Il était devenu un canard. " +
+                "Il ne connaissait ni Ponan, ni ses rois, ni leur guerre. " +
+                "Il voulait seulement comprendre où il était... " +
+                "et trouver un moyen de rentrer chez lui. " +
+                "Mais en cherchant des réponses, il allait découvrir " +
+                "l'histoire d'un roi déchu, d'un frère traître... " +
+                "et d'un héritage qui allait changer son destin.",
+
+            duration: 30000,
+
+            textSpeed: 42,
+
+            visual: "stranger"
         }
     ],
 
@@ -141,10 +170,11 @@ const Prologue = {
         this.fade = 1;
         this.fadeDirection = -1;
         this.visualTime = 0;
+        this.scene11Image = null;
+        this.scene11ImageLoaded = false;
+        this.loadScene11Image();
         this.narratorSpeaking = false;
-
         this.loadingStartTime = performance.now();
-
         this.ready = false;
         this.loading = false;
         this.images = [];
