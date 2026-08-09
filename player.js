@@ -291,27 +291,21 @@ function updatePlayer() {
 DESSIN DU CANARD
 =========================================================
 */
-
 function drawPlayer() {
 
     const ctx = Game.ctx;
 
-    const x =
-        player.x -
-        Game.camera.x;
-
-    const y =
-        player.y -
-        Game.camera.y;
+    const x = player.x - Game.camera.x;
+    const y = player.y - Game.camera.y;
 
     let bob = 0;
 
     if (player.moving) {
-        bob =
-            Math.sin(player.walkTime) * 2;
+        bob = Math.sin(player.walkTime) * 1.5;
     }
 
-    const py = y + bob;
+    const cx = x + 20;
+    const cy = y + 20 + bob;
 
     ctx.save();
 
@@ -321,16 +315,15 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle =
-        "rgba(0,0,0,.25)";
+    ctx.fillStyle = "rgba(0,0,0,0.25)";
 
     ctx.beginPath();
 
     ctx.ellipse(
-        x + 20,
+        cx,
         y + 39,
-        17,
-        6,
+        16,
+        5,
         0,
         0,
         Math.PI * 2
@@ -345,39 +338,16 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle =
-        "#d8b94f";
+    ctx.fillStyle = "#d8b94f";
 
     ctx.beginPath();
 
     ctx.ellipse(
-        x + 20,
-        py + 27,
-        15,
-        13,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    /*
-    ==============================
-    TÊTE
-    ==============================
-    */
-
-    ctx.fillStyle =
-        "#e4c65b";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x + 20,
-        py + 14,
+        cx,
+        cy + 9,
         14,
+        12,
+        0,
         0,
         Math.PI * 2
     );
@@ -387,76 +357,73 @@ function drawPlayer() {
 
     /*
     ==============================
-    DIRECTION
+    DIRECTION : BAS
     ==============================
     */
 
-    /*
-    HAUT
-    */
-
-    if (player.direction === "up") {
+    if (player.direction === "down") {
 
         /*
-        Bec à l'arrière :
-        on voit surtout la tête.
+        Tête
         */
 
-        ctx.fillStyle =
-            "#c89a3c";
+        ctx.fillStyle = "#e4c65b";
 
-        ctx.fillRect(
-            x + 15,
-            py + 1,
-            10,
-            5
+        ctx.beginPath();
+
+        ctx.arc(
+            cx,
+            cy - 6,
+            13,
+            0,
+            Math.PI * 2
         );
 
+        ctx.fill();
+
 
         /*
-        Yeux vus de dos.
+        Yeux
         */
 
-        ctx.fillStyle =
-            "#17130b";
+        ctx.fillStyle = "#17130b";
 
         ctx.fillRect(
-            x + 11,
-            py + 9,
+            cx - 7,
+            cy - 10,
             4,
             4
         );
 
         ctx.fillRect(
-            x + 25,
-            py + 9,
+            cx + 3,
+            cy - 10,
             4,
             4
         );
 
 
         /*
-        Petite queue visible.
+        Bec
         */
 
-        ctx.fillStyle =
-            "#b89b3e";
+        ctx.fillStyle = "#d88732";
 
         ctx.beginPath();
 
         ctx.moveTo(
-            x + 11,
-            py + 30
+            cx - 6,
+            cy - 2
         );
 
         ctx.lineTo(
-            x + 20,
-            py + 21
+            cx,
+            cy + 4
         );
 
         ctx.lineTo(
-            x + 29,
-            py + 30
+            cx + 6,
+            cy - 2
         );
 
         ctx.closePath();
@@ -466,166 +433,221 @@ function drawPlayer() {
 
 
     /*
-    BAS
+    ==============================
+    DIRECTION : HAUT
+    ==============================
     */
 
-    else if (
-        player.direction === "down"
-    ) {
+    else if (player.direction === "up") {
 
         /*
-        Bec vers le bas.
+        Arrière de la tête.
         */
 
-        ctx.fillStyle =
-            "#d88732";
+        ctx.fillStyle = "#c8aa48";
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            x + 13,
-            py + 19
+        ctx.arc(
+            cx,
+            cy - 6,
+            13,
+            0,
+            Math.PI * 2
         );
-
-        ctx.lineTo(
-            x + 20,
-            py + 27
-        );
-
-        ctx.lineTo(
-            x + 27,
-            py + 19
-        );
-
-        ctx.closePath();
 
         ctx.fill();
 
 
         /*
-        Deux yeux.
+        Petite zone plus sombre
+        pour montrer l'arrière
+        de la tête.
         */
 
-        ctx.fillStyle =
-            "#17130b";
-
-        ctx.fillRect(
-            x + 11,
-            py + 10,
-            4,
-            4
-        );
-
-        ctx.fillRect(
-            x + 25,
-            py + 10,
-            4,
-            4
-        );
-    }
-
-
-    /*
-    GAUCHE
-    */
-
-    else if (
-        player.direction === "left"
-    ) {
-
-        /*
-        Bec gauche.
-        */
-
-        ctx.fillStyle =
-            "#d88732";
+        ctx.fillStyle = "#b59a40";
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            x + 8,
-            py + 14
+        ctx.arc(
+            cx,
+            cy - 4,
+            9,
+            Math.PI,
+            Math.PI * 2
         );
-
-        ctx.lineTo(
-            x - 4,
-            py + 18
-        );
-
-        ctx.lineTo(
-            x + 8,
-            py + 21
-        );
-
-        ctx.closePath();
 
         ctx.fill();
 
 
         /*
-        Un seul œil visible.
+        Queue du canard.
         */
 
-        ctx.fillStyle =
-            "#17130b";
+        ctx.fillStyle = "#b89b3e";
 
-        ctx.fillRect(
-            x + 7,
-            py + 9,
-            4,
-            4
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx - 7,
+            cy + 17
         );
+
+        ctx.lineTo(
+            cx,
+            cy + 10
+        );
+
+        ctx.lineTo(
+            cx + 7,
+            cy + 17
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
     }
 
 
     /*
-    DROITE
+    ==============================
+    DIRECTION : GAUCHE
+    ==============================
+    */
+
+    else if (player.direction === "left") {
+
+        /*
+        Tête légèrement décalée
+        vers la gauche.
+        */
+
+        ctx.fillStyle = "#e4c65b";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            cx - 3,
+            cy - 6,
+            13,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /*
+        Œil
+        */
+
+        ctx.fillStyle = "#17130b";
+
+        ctx.fillRect(
+            cx - 10,
+            cy - 10,
+            4,
+            4
+        );
+
+
+        /*
+        Bec
+        */
+
+        ctx.fillStyle = "#d88732";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx - 14,
+            cy - 2
+        );
+
+        ctx.lineTo(
+            cx - 24,
+            cy + 2
+        );
+
+        ctx.lineTo(
+            cx - 14,
+            cy + 5
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+    }
+
+
+    /*
+    ==============================
+    DIRECTION : DROITE
+    ==============================
     */
 
     else {
 
         /*
-        Bec droite.
+        Tête légèrement décalée
+        vers la droite.
         */
 
-        ctx.fillStyle =
-            "#d88732";
+        ctx.fillStyle = "#e4c65b";
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            x + 32,
-            py + 14
+        ctx.arc(
+            cx + 3,
+            cy - 6,
+            13,
+            0,
+            Math.PI * 2
         );
-
-        ctx.lineTo(
-            x + 44,
-            py + 18
-        );
-
-        ctx.lineTo(
-            x + 32,
-            py + 21
-        );
-
-        ctx.closePath();
 
         ctx.fill();
 
 
         /*
-        Un seul œil visible.
+        Œil
         */
 
-        ctx.fillStyle =
-            "#17130b";
+        ctx.fillStyle = "#17130b";
 
         ctx.fillRect(
-            x + 29,
-            py + 9,
+            cx + 6,
+            cy - 10,
             4,
             4
         );
+
+
+        /*
+        Bec
+        */
+
+        ctx.fillStyle = "#d88732";
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            cx + 14,
+            cy - 2
+        );
+
+        ctx.lineTo(
+            cx + 24,
+            cy + 2
+        );
+
+        ctx.lineTo(
+            cx + 14,
+            cy + 5
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
     }
 
 
@@ -635,17 +657,16 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle =
-        "#b89b3e";
+    ctx.fillStyle = "#b89b3e";
 
     ctx.beginPath();
 
     ctx.ellipse(
-        x + 12,
-        py + 27,
-        8,
-        11,
-        -0.35,
+        cx - 9,
+        cy + 8,
+        6,
+        9,
+        -0.25,
         0,
         Math.PI * 2
     );
@@ -659,32 +680,29 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle =
-        "#d88732";
-
-    let footOffset = 0;
+    let foot = 0;
 
     if (player.moving) {
-
-        footOffset =
-            Math.sin(
-                player.walkTime
-            ) * 2;
+        foot =
+            Math.sin(player.walkTime) * 2;
     }
 
+    ctx.fillStyle = "#d88732";
+
     ctx.fillRect(
-        x + 9,
-        py + 37 + footOffset,
+        cx - 11,
+        cy + 19 + foot,
         7,
         3
     );
 
     ctx.fillRect(
-        x + 25,
-        py + 37 - footOffset,
+        cx + 4,
+        cy + 19 - foot,
         7,
         3
     );
+
 
     ctx.restore();
 }
