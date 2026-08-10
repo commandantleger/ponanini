@@ -480,8 +480,13 @@ function finishPrologue() {
 
         Prologue.active = false;
     }
+    
 
-
+    if (typeof player !== "undefined") {
+        player.x = 29 * Game.tileSize;
+        player.y = 19 * Game.tileSize;
+    }
+    
     Game.running = true;
 
 
