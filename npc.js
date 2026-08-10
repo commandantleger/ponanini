@@ -1,1797 +1,392 @@
-/*
-=========================================================
-PONAN'S LEGACY
-NPC SYSTEM
-=========================================================
-*/
-
-
 const npcs = [
 
-    /*
-    =====================================================
-    L'ANCIEN
-    =====================================================
-    */
-
     {
-        id: "oldman",
-
-        name: "L'Ancien",
-
-        x: 24 * Game.tileSize,
-
-        y: 13 * Game.tileSize,
-
+        id: "marek",
+        name: "Marek",
+        x: 23 * Game.tileSize,
+        y: 29 * Game.tileSize,
         type: "oldman",
-
-        idleOffset: 0,
-
         dialogues: [
-
-    "Tu es tombé du ciel... Je t'ai vu apparaître près du village.",
-
-    "Ce n'est pas une façon ordinaire d'arriver à Ponan.",
-
-    "Tu affirmes venir d'un autre monde ?",
-
-    "Un monde où les humains existent encore... Voilà qui est étrange.",
-
-    "Tu es dans le royaume de Ponan, un royaume de canards.",
-
-    "Si tu veux comprendre ce qui t'est arrivé, interroge les habitants.",
-
-    "Mais reviens me voir ensuite. Il y a certaines choses que je ne peux pas raconter à n'importe qui."
-
-]
-        
-           },
-
-
-    /*
-    =====================================================
-    MILA
-    =====================================================
-    */
+            "Tu es tombé du ciel... Je t'ai vu apparaître près du Grand Lac.",
+            "Ce n'est pas une façon ordinaire d'arriver à Ponan.",
+            "Tu affirmes venir d'un autre monde ?",
+            "Alors écoute-moi bien : ce royaume est peuplé de canards, et ton arrivée n'est probablement pas un accident.",
+            "Il y a très longtemps, certains anciens étudiaient les passages entre les mondes.",
+            "Ils appelaient ces passages les Portes de l'Entre-Lac.",
+            "Ton portail a laissé un fragment. Garde-le caché.",
+            "Ponanini III s'intéressait lui aussi à ces passages avant sa disparition.",
+            "Si tu veux comprendre pourquoi tu es ici, commence par parler à Mila dans le village.",
+            "Et si tu entends une voix dans la forêt... ne lui réponds pas."
+        ]
+    },
 
     {
         id: "mila",
-
         name: "Mila",
-
-        x: 37 * Game.tileSize,
-
-        y: 13 * Game.tileSize,
-
+        x: 47 * Game.tileSize,
+        y: 25 * Game.tileSize,
         type: "mila",
-
-        idleOffset: 1.7,
-
         dialogues: [
-
-            "Oh ! Tu es le nouveau dont tout le monde parle.",
-
-            "Tu es vraiment étrange... Je n'ai jamais vu " +
-            "un canard comme toi.",
-
-            "Tu veux connaître l'histoire de Ponan ?",
-
-            "Notre roi actuel est Ponanini IV.",
-
-            "Il règne depuis la chute de son frère, " +
-            "Ponanini III.",
-
-            "Mais les anciens disent que les choses " +
-            "ne se sont pas passées comme on nous l'enseigne.",
-
-            "Personnellement... je préfère ne pas parler de ça."
-
+            "Tu es donc l'humain dont Marek parlait.",
+            "Je n'aurais jamais cru voir un humain de mes propres yeux.",
+            "Ponanini III étudiait les passages entre les mondes.",
+            "Après une découverte dans la forêt, il a interdit l'accès à toute la région.",
+            "Quelques semaines plus tard, il a disparu.",
+            "La version officielle dit qu'il a fui. Mais personne ici n'y croit vraiment.",
+            "Si tu veux la vérité, le garde royal en sait probablement plus qu'il ne le prétend."
         ]
     },
-
-
-    /*
-    =====================================================
-    GARDE ROYAL
-    =====================================================
-    */
 
     {
         id: "guard",
-
         name: "Garde royal",
-
-        x: 30 * Game.tileSize,
-
-        y: 19 * Game.tileSize,
-
+        x: 48 * Game.tileSize,
+        y: 22 * Game.tileSize,
         type: "guard",
-
-        idleOffset: 3.1,
-
         dialogues: [
-
-            "Halte !",
-
-            "Tu n'as rien à faire près du palais " +
-            "sans autorisation.",
-
-            "Oui, Ponanini IV est notre roi.",
-
-            "Et je te conseille de ne pas poser de questions " +
-            "sur celui qui occupait le trône avant lui.",
-
-            "Les affaires de la famille royale ne concernent " +
-            "pas les étrangers.",
-
-            "Si tu veux rencontrer le roi, " +
-            "présente-toi devant le palais."
-
+            "Halte. Tu n'as rien à faire près du palais sans autorisation.",
+            "Oui, je sais ce que tu es. Toute la place parle déjà de l'humain tombé du ciel.",
+            "Tu veux savoir ce qui est arrivé à Ponanini III ?",
+            "Officiellement, il a disparu après avoir été accusé de trahison.",
+            "Officieusement... il cherchait quelque chose dans la forêt.",
+            "Après sa disparition, Ponanini IV a interdit toute recherche sur cette affaire.",
+            "Si tu veux continuer, cherche les anciens symboles dans la forêt."
         ]
     },
 
-
-    /*
-    =====================================================
-    PONANINI IV
-    =====================================================
-    */
-
     {
         id: "king",
-
         name: "Ponanini IV",
-
-        x: 29 * Game.tileSize,
-
-        y: 10 * Game.tileSize,
-
+        x: 44 * Game.tileSize,
+        y: 12 * Game.tileSize,
         type: "king",
-
-        idleOffset: 4.6,
-
         dialogues: [
-
-            "Alors... c'est toi.",
-
-            "L'étranger qui serait apparu aux abords du royaume.",
-
-            "Bienvenue à Ponan.",
-
-            "Je suis Ponanini IV, roi de ce royaume.",
-
-            "On m'a raconté que tu cherchais un moyen " +
-            "de comprendre ce qui t'était arrivé.",
-
-            "Malheureusement, je crains que personne ici " +
-            "ne puisse t'aider à retourner dans ton monde.",
-
-            "Mais tu peux rester à Ponan.",
-
-            "Nous avons connu des temps difficiles, " +
-            "mais le royaume est désormais en paix.",
-
-            "Quant à mon frère, Ponanini III...",
-
-            "Il appartient au passé.",
-
-            "Je te conseille de ne pas écouter " +
-            "les vieilles histoires racontées par les anciens."
-
+            "Alors c'est toi. L'humain venu par le portail.",
+            "Je te conseille de ne pas fouiller dans les affaires de mon frère.",
+            "Ponanini III appartient au passé.",
+            "Si tu veux rester en vie à Ponan, apprends d'abord à qui tu peux faire confiance."
         ]
     }
-
 ];
 
-
 let dialogueOpen = false;
-
 let activeNPC = null;
-
 let dialogueIndex = 0;
-
 let dialogueCooldown = false;
-
 let gameFinished = false;
 
-
-/*
-=========================================================
-DISTANCES
-=========================================================
-*/
-
-const NPC_INTERACTION_DISTANCE =
-    Game.tileSize * 1.8;
-
-const DIALOGUE_MAX_DISTANCE =
-    Game.tileSize * 3;
-
-
-/*
-=========================================================
-TEMPS D'IDLE
-=========================================================
-*/
-
+const NPC_INTERACTION_DISTANCE = Game.tileSize * 1.7;
+const DIALOGUE_MAX_DISTANCE = Game.tileSize * 3;
 let npcIdleTime = 0;
 
+function getNPCDistance(npc) {
+    const dx = player.x - npc.x;
+    const dy = player.y - npc.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
 
-/*
-=========================================================
-FIN DE DIALOGUE
-=========================================================
-*/
+function getClosestNPC() {
+    let closest = null;
+    let distance = NPC_INTERACTION_DISTANCE;
 
+    npcs.forEach(npc => {
+        const d = getNPCDistance(npc);
+        if (d < distance) {
+            closest = npc;
+            distance = d;
+        }
+    });
+
+    return closest;
+}
+
+function startNPCDialogue(npc) {
+    if (!npc || dialogueOpen || dialogueCooldown)
+        return;
+
+    dialogueOpen = true;
+    activeNPC = npc;
+    dialogueIndex = 0;
+    dialogueCooldown = true;
+
+    openDialogue(
+        "<b>" + npc.name + "</b><br><br>" +
+        npc.dialogues[dialogueIndex]
+    );
+
+    setTimeout(() => {
+        dialogueCooldown = false;
+    }, 180);
+}
+
+function closeNPCDialogue() {
+    dialogueOpen = false;
+    activeNPC = null;
+    dialogueIndex = 0;
+    dialogueCooldown = true;
+    closeDialogue();
+
+    setTimeout(() => {
+        dialogueCooldown = false;
+    }, 180);
+}
 
 function finishNPCDialogue(npc) {
 
     if (!npc)
         return;
 
+    if (npc.id === "marek" && questStage === 0) {
+        completeObjective("marek");
+        return;
+    }
 
-    /*
-    =====================================================
-    L'ANCIEN
-    =====================================================
-    */
+    if (npc.id === "mila" && questStage === 1) {
+        completeObjective("mila");
+        return;
+    }
 
-    if (npc.id === "oldman") {
+    if (npc.id === "guard" && questStage === 2) {
+        completeObjective("guard");
+        return;
+    }
+}
 
-        /*
-        Première rencontre :
-        le héros découvre où il se trouve.
-        */
+window.addEventListener("keydown", event => {
 
-        if (questStage === 0) {
+    if (event.code !== "KeyE" || event.repeat)
+        return;
 
-            completeObjective(
-                "oldman"
-            );
+    event.preventDefault();
 
+    if (dialogueOpen) {
+
+        if (!activeNPC)
+            return;
+
+        if (getNPCDistance(activeNPC) > DIALOGUE_MAX_DISTANCE) {
+            closeNPCDialogue();
             return;
         }
 
-
-        /*
-        Deuxième rencontre :
-        l'Ancien fait partie de
-        l'enquête sur Ponan.
-        */
-
-        if (
-            questStage === 1 &&
-            !quests.village.objectives.oldman
-        ) {
-
-            completeObjective(
-                "oldman"
-            );
-        }
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    MILA
-    =====================================================
-    */
-
-    if (npc.id === "mila") {
-
-        if (questStage === 1) {
-
-            completeObjective(
-                "mila"
-            );
-        }
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    GARDE ROYAL
-    =====================================================
-    */
-
-    if (npc.id === "guard") {
-
-        if (questStage === 1) {
-
-            completeObjective(
-                "guard"
-            );
-        }
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    PONANINI IV
-    =====================================================
-    */
-
-    if (npc.id === "king") {
-
-        if (questStage === 2) {
-
-            quests.king.completed =
-                true;
-
-            advanceQuest(3);
-        }
-
-        return;
-    }
-}
-
-/*
-=========================================================
-DISTANCE JOUEUR / PNJ
-=========================================================
-*/
-
-function getNPCDistance(npc) {
-
-    const dx =
-        player.x - npc.x;
-
-    const dy =
-        player.y - npc.y;
-
-    return Math.sqrt(
-        dx * dx +
-        dy * dy
-    );
-}
-
-
-/*
-=========================================================
-OUVRIR DIALOGUE
-=========================================================
-*/
-
-function startDialogue(npc) {
-
-    if (
-        dialogueOpen ||
-        !npc
-    )
-        return;
-
-
-    dialogueOpen = true;
-
-    activeNPC = npc;
-
-    dialogueIndex = 0;
-
-    dialogueCooldown = true;
-
-
-    setTimeout(() => {
-
-        dialogueCooldown = false;
-
-    }, 150);
-}
-
-
-/*
-=========================================================
-FERMER DIALOGUE
-=========================================================
-*/
-
-function closeDialogue() {
-
-    dialogueOpen = false;
-
-    activeNPC = null;
-
-    dialogueIndex = 0;
-
-    dialogueCooldown = true;
-
-
-    setTimeout(() => {
-
-        dialogueCooldown = false;
-
-    }, 150);
-}
-
-
-/*
-=========================================================
-CHERCHER LE PNJ LE PLUS PROCHE
-=========================================================
-*/
-
-function getClosestNPC() {
-
-    let closestNPC = null;
-
-    let closestDistance =
-        NPC_INTERACTION_DISTANCE;
-
-
-    npcs.forEach(npc => {
-
-        const distance =
-            getNPCDistance(npc);
-
-
-        if (
-            distance <
-            closestDistance
-        ) {
-
-            closestNPC =
-                npc;
-
-            closestDistance =
-                distance;
-        }
-
-    });
-
-
-    return closestNPC;
-}
-
-
-/*
-=========================================================
-TOUCHE E
-=========================================================
-*/
-
-window.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.code !==
-            "KeyE"
-        )
-            return;
-
-
-        event.preventDefault();
-
-
-        /*
-        =================================================
-        DIALOGUE EN COURS
-        =================================================
-        */
-
-        if (dialogueOpen) {
-
-            if (!activeNPC)
-                return;
-
-
-            if (
-                getNPCDistance(
-                    activeNPC
-                ) >
-                DIALOGUE_MAX_DISTANCE
-            ) {
-
-                closeDialogue();
-
-                return;
-            }
-
-
-            dialogueIndex++;
-
-
-            /*
-            Fin du dialogue.
-            */
-
-            if (
-                dialogueIndex >=
-                activeNPC.dialogues.length
-            ) {
-
-                finishNPCDialogue(
-                    activeNPC
-                );
-
-                closeDialogue();
-
-                return;
-            }
-
-
+        dialogueIndex++;
+
+        if (dialogueIndex >= activeNPC.dialogues.length) {
+            finishNPCDialogue(activeNPC);
+            closeNPCDialogue();
             return;
         }
 
+        openDialogue(
+            "<b>" + activeNPC.name + "</b><br><br>" +
+            activeNPC.dialogues[dialogueIndex]
+        );
 
-        /*
-        =================================================
-        NOUVEAU DIALOGUE
-        =================================================
-        */
-
-        if (dialogueCooldown)
-            return;
-
-
-        const npc =
-            getClosestNPC();
-
-
-        if (npc)
-            startDialogue(npc);
-
+        return;
     }
-);
 
-
-/*
-=========================================================
-UPDATE PNJ
-=========================================================
-*/
+    const npc = getClosestNPC();
+    if (npc)
+        startNPCDialogue(npc);
+});
 
 function updateNPC() {
 
-    /*
-    Idle léger.
-    Les PNJ NE BOUGENT PAS.
-    */
+    npcIdleTime += .025;
 
-    npcIdleTime += 0.025;
-
-
-    /*
-    =====================================================
-    FERMETURE AUTOMATIQUE DU DIALOGUE
-    =====================================================
-    */
-
-    if (
-        dialogueOpen &&
-        activeNPC
-    ) {
-
-        const distance =
-            getNPCDistance(
-                activeNPC
-            );
-
-
-        if (
-            distance >
-            DIALOGUE_MAX_DISTANCE
-        ) {
-
-            closeDialogue();
-
-            return;
-        }
+    if (dialogueOpen && activeNPC) {
+        if (getNPCDistance(activeNPC) > DIALOGUE_MAX_DISTANCE)
+            closeNPCDialogue();
     }
 }
 
-
-/*
-=========================================================
-MARQUEUR DE QUÊTE
-=========================================================
-*/
-
 function shouldShowQuestMarker(npc) {
 
-    if (
-        typeof questStage ===
-        "undefined"
-    )
-        return false;
-
-
-    /*
-    =====================================================
-    QUÊTE 1 — ANCIEN
-    =====================================================
-    */
-
-    if (
-        npc.id === "oldman" &&
-        questStage === 0
-    ) {
-
+    if (questStage === 0 && npc.id === "marek")
         return true;
-    }
 
-
-    /*
-    =====================================================
-    QUÊTE 2 — ANCIEN
-    =====================================================
-    */
-
-    if (
-        npc.id === "oldman" &&
-        questStage === 1 &&
-        !quests.village.objectives.oldman
-    ) {
-
+    if (questStage === 1 && npc.id === "mila")
         return true;
-    }
 
-
-    /*
-    =====================================================
-    QUÊTE 2 — MILA
-    =====================================================
-    */
-
-    if (
-        npc.id === "mila" &&
-        questStage === 1 &&
-        !quests.village.objectives.mila
-    ) {
-
+    if (questStage === 2 && npc.id === "guard")
         return true;
-    }
-
-
-    /*
-    =====================================================
-    QUÊTE 2 — GARDE
-    =====================================================
-    */
-
-    if (
-        npc.id === "guard" &&
-        questStage === 1 &&
-        !quests.village.objectives.guard
-    ) {
-
-        return true;
-    }
-
-
-    /*
-    =====================================================
-    QUÊTE 3 — ROI
-    =====================================================
-    */
-
-    if (
-        npc.id === "king" &&
-        questStage === 2
-    ) {
-
-        return true;
-    }
-
 
     return false;
 }
 
-/*
-=========================================================
-DESSIN DES PNJ
-=========================================================
-*/
+function drawDuckNPC(ctx, npc, x, y) {
+
+    const bob = Math.sin(npcIdleTime + npc.x * .01) * .8;
+
+    ctx.save();
+
+    if (npc.type === "oldman") {
+        ctx.fillStyle = "#77705b";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 22 + bob, 16, 18, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#c9b66a";
+        ctx.beginPath();
+        ctx.arc(x, y - 2 + bob, 14, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#e7e0c7";
+        ctx.beginPath();
+        ctx.arc(x, y + 3 + bob, 10, 0, Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "#17130b";
+        ctx.fillRect(x - 7, y - 6 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 6 + bob, 4, 4);
+
+        ctx.fillStyle = "#d88732";
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y + bob);
+        ctx.lineTo(x, y + 5 + bob);
+        ctx.lineTo(x + 6, y + bob);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = "#5d4930";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(x + 17, y + 5 + bob);
+        ctx.lineTo(x + 20, y + 36 + bob);
+        ctx.stroke();
+
+    } else if (npc.type === "mila") {
+        ctx.fillStyle = "#9d6f50";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 22 + bob, 16, 18, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#d8b94f";
+        ctx.beginPath();
+        ctx.arc(x, y - 2 + bob, 14, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#9b3f4b";
+        ctx.fillRect(x - 13, y + 10 + bob, 26, 5);
+
+        ctx.fillStyle = "#17130b";
+        ctx.fillRect(x - 7, y - 6 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 6 + bob, 4, 4);
+
+        ctx.fillStyle = "#d88732";
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y + bob);
+        ctx.lineTo(x, y + 5 + bob);
+        ctx.lineTo(x + 6, y + bob);
+        ctx.closePath();
+        ctx.fill();
+
+    } else if (npc.type === "guard") {
+        ctx.fillStyle = "#5e6670";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 22 + bob, 17, 19, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#c9ad59";
+        ctx.beginPath();
+        ctx.arc(x, y - 3 + bob, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#89939d";
+        ctx.fillRect(x - 14, y - 13 + bob, 28, 8);
+
+        ctx.fillStyle = "#17130b";
+        ctx.fillRect(x - 7, y - 7 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 7 + bob, 4, 4);
+
+        ctx.fillStyle = "#d88732";
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y + bob);
+        ctx.lineTo(x, y + 5 + bob);
+        ctx.lineTo(x + 6, y + bob);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = "#6d5435";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(x + 20, y - 12 + bob);
+        ctx.lineTo(x + 20, y + 38 + bob);
+        ctx.stroke();
+
+    } else {
+        ctx.fillStyle = "#702d38";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 22 + bob, 18, 20, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#d9bb5b";
+        ctx.beginPath();
+        ctx.arc(x, y - 3 + bob, 14, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#d5a932";
+        ctx.beginPath();
+        ctx.moveTo(x - 13, y - 12 + bob);
+        ctx.lineTo(x - 8, y - 25 + bob);
+        ctx.lineTo(x - 2, y - 15 + bob);
+        ctx.lineTo(x + 3, y - 26 + bob);
+        ctx.lineTo(x + 8, y - 15 + bob);
+        ctx.lineTo(x + 13, y - 24 + bob);
+        ctx.lineTo(x + 12, y - 10 + bob);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "#17130b";
+        ctx.fillRect(x - 7, y - 8 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 8 + bob, 4, 4);
+
+        ctx.fillStyle = "#d88732";
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y - 1 + bob);
+        ctx.lineTo(x, y + 4 + bob);
+        ctx.lineTo(x + 6, y - 1 + bob);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+function drawQuestMarker(ctx, x, y) {
+    const bounce = Math.sin(npcIdleTime * 2) * 3;
+    ctx.textAlign = "center";
+    ctx.font = "bold 24px Arial";
+    ctx.fillStyle = "#e6c54c";
+    ctx.fillText("!", x, y - 50 + bounce);
+}
 
 function drawNPC() {
 
-    const ctx =
-        Game.ctx;
-
+    const ctx = Game.ctx;
 
     npcs.forEach(npc => {
+        const x = npc.x - Game.camera.x + 20;
+        const y = npc.y - Game.camera.y;
+        const distance = getNPCDistance(npc);
 
-        const x =
-            npc.x -
-            Game.camera.x;
+        drawDuckNPC(ctx, npc, x, y);
 
-        const baseY =
-            npc.y -
-            Game.camera.y;
+        if (distance < Game.tileSize * 2.5) {
+            ctx.textAlign = "center";
+            ctx.font = "bold 13px Arial";
+            ctx.fillStyle = "#f2e7c9";
+            ctx.fillText(npc.name, x, y - 48);
 
-
-        /*
-        Petite respiration.
-        Le PNJ reste parfaitement à sa place.
-        */
-
-        const idle =
-            Math.sin(
-                npcIdleTime +
-                npc.idleOffset
-            ) * 0.7;
-
-        const y =
-            baseY +
-            idle;
-
-
-        /*
-        =================================================
-        OMBRE
-        =================================================
-        */
-
-        ctx.fillStyle =
-            "rgba(0,0,0,.25)";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            baseY + 39,
-            17,
-            5,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        =================================================
-        PERSONNAGE
-        =================================================
-        */
-
-        drawNPCCharacter(
-            ctx,
-            npc,
-            x,
-            y
-        );
-
-
-        /*
-        =================================================
-        DISTANCE
-        =================================================
-        */
-
-        const distance =
-            getNPCDistance(npc);
-
-
-        /*
-        =================================================
-        NOM
-        =================================================
-        */
-
-        if (
-            distance <
-            Game.tileSize * 2.4
-        ) {
-
-            ctx.textAlign =
-                "center";
-
-            ctx.textBaseline =
-                "middle";
-
-            ctx.font =
-                "bold 13px Arial";
-
-            ctx.fillStyle =
-                "#f2e7c9";
-
-            ctx.fillText(
-                npc.name,
-                x,
-                y - 42
-            );
-
-
-            /*
-            Interaction
-            */
-
-            if (
-                !dialogueOpen &&
-                distance <=
-                NPC_INTERACTION_DISTANCE
-            ) {
-
-                ctx.font =
-                    "12px Arial";
-
-                ctx.fillStyle =
-                    "#d4b85c";
-
-                ctx.fillText(
-                    "E — Parler",
-                    x,
-                    y - 58
-                );
+            if (!dialogueOpen && distance <= NPC_INTERACTION_DISTANCE) {
+                ctx.font = "12px Arial";
+                ctx.fillStyle = "#d4b85c";
+                ctx.fillText("E — Parler", x, y - 64);
             }
         }
 
-
-        /*
-        =================================================
-        MARQUEUR DE QUÊTE
-        =================================================
-        */
-
-        if (
-            shouldShowQuestMarker(npc) &&
-            !dialogueOpen
-        ) {
-
-            drawQuestMarker(
-                ctx,
-                x,
-                y - 66
-            );
-        }
-
+        if (!dialogueOpen && shouldShowQuestMarker(npc))
+            drawQuestMarker(ctx, x, y);
     });
-
-
-    /*
-    =====================================================
-    DIALOGUE
-    =====================================================
-    */
-
-    if (
-        dialogueOpen &&
-        activeNPC
-    ) {
-
-        drawDialogue(
-            activeNPC
-        );
-    }
-
-
-    /*
-    =====================================================
-    FIN DU JEU
-    =====================================================
-    */
-
-    if (gameFinished) {
-
-        ctx.fillStyle =
-            "rgba(0,0,0,.75)";
-
-        ctx.fillRect(
-            0,
-            0,
-            Game.canvas.width,
-            Game.canvas.height
-        );
-
-
-        ctx.fillStyle =
-            "#ffffff";
-
-        ctx.font =
-            "50px Arial";
-
-        ctx.textAlign =
-            "center";
-
-        ctx.fillText(
-            "CHAUDDDD PONANN !",
-            Game.canvas.width / 2,
-            Game.canvas.height / 2
-        );
-    }
 }
 
-
-/*
-=========================================================
-MARQUEUR !
-=========================================================
-*/
-
-function drawQuestMarker(
-    ctx,
-    x,
-    y
-) {
-
-    const bounce =
-        Math.sin(
-            npcIdleTime * 2
-        ) * 3;
-
-
-    ctx.font =
-        "bold 22px Arial";
-
-    ctx.textAlign =
-        "center";
-
-    ctx.textBaseline =
-        "middle";
-
-    ctx.fillStyle =
-        "#e6c54c";
-
-    ctx.fillText(
-        "!",
-        x,
-        y + bounce
-    );
-}
-
-
-/*
-=========================================================
-DESSIN DES PERSONNAGES
-=========================================================
-*/
-
-function drawNPCCharacter(
-    ctx,
-    npc,
-    x,
-    y
-) {
-
-    /*
-    =====================================================
-    ANCIEN
-    =====================================================
-    */
-
-    if (
-        npc.type ===
-        "oldman"
-    ) {
-
-        /*
-        Corps
-        */
-
-        ctx.fillStyle =
-            "#77705b";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            y + 19,
-            15,
-            17,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Tête
-        */
-
-        ctx.fillStyle =
-            "#c9b66a";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 5,
-            13,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Plumage blanc
-        */
-
-        ctx.fillStyle =
-            "#e7e0c7";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y + 1,
-            10,
-            0,
-            Math.PI
-        );
-
-        ctx.fill();
-
-
-        /*
-        Yeux
-        */
-
-        drawEyes(
-            ctx,
-            x,
-            y - 8
-        );
-
-
-        /*
-        Bec
-        */
-
-        drawBeak(
-            ctx,
-            x,
-            y
-        );
-
-
-        /*
-        Canne
-        */
-
-        ctx.strokeStyle =
-            "#5d4930";
-
-        ctx.lineWidth =
-            3;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x + 16,
-            y + 5
-        );
-
-        ctx.lineTo(
-            x + 19,
-            y + 32
-        );
-
-        ctx.stroke();
-
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    MILA
-    =====================================================
-    */
-
-    if (
-        npc.type ===
-        "mila"
-    ) {
-
-        /*
-        Corps
-        */
-
-        ctx.fillStyle =
-            "#9d6f50";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            y + 19,
-            15,
-            17,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Tête
-        */
-
-        ctx.fillStyle =
-            "#d8b94f";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 5,
-            13,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Foulard
-        */
-
-        ctx.fillStyle =
-            "#9b3f4b";
-
-        ctx.fillRect(
-            x - 12,
-            y + 7,
-            24,
-            5
-        );
-
-
-        drawEyes(
-            ctx,
-            x,
-            y - 8
-        );
-
-
-        drawBeak(
-            ctx,
-            x,
-            y
-        );
-
-
-        /*
-        Ailes
-        */
-
-        ctx.fillStyle =
-            "#8d6348";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x - 11,
-            y + 20,
-            6,
-            10,
-            -0.2,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x + 11,
-            y + 20,
-            6,
-            10,
-            0.2,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    GARDE
-    =====================================================
-    */
-
-    if (
-        npc.type ===
-        "guard"
-    ) {
-
-        /*
-        Armure
-        */
-
-        ctx.fillStyle =
-            "#5e6670";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            y + 19,
-            16,
-            18,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Casque
-        */
-
-        ctx.fillStyle =
-            "#89939d";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 6,
-            14,
-            Math.PI,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        ctx.fillRect(
-            x - 13,
-            y - 6,
-            26,
-            7
-        );
-
-
-        /*
-        Tête
-        */
-
-        ctx.fillStyle =
-            "#c9ad59";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 4,
-            10,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        drawEyes(
-            ctx,
-            x,
-            y - 7
-        );
-
-
-        drawBeak(
-            ctx,
-            x,
-            y
-        );
-
-
-        /*
-        Lance
-        */
-
-        ctx.strokeStyle =
-            "#6d5435";
-
-        ctx.lineWidth =
-            3;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x + 18,
-            y - 10
-        );
-
-        ctx.lineTo(
-            x + 18,
-            y + 35
-        );
-
-        ctx.stroke();
-
-
-        /*
-        Pointe
-        */
-
-        ctx.fillStyle =
-            "#c4c9cf";
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x + 18,
-            y - 17
-        );
-
-        ctx.lineTo(
-            x + 14,
-            y - 9
-        );
-
-        ctx.lineTo(
-            x + 22,
-            y - 9
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
-
-
-        return;
-    }
-
-
-    /*
-    =====================================================
-    PONANINI IV
-    =====================================================
-    */
-
-    if (
-        npc.type ===
-        "king"
-    ) {
-
-        /*
-        Cape
-        */
-
-        ctx.fillStyle =
-            "#702d38";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            y + 20,
-            17,
-            19,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Corps
-        */
-
-        ctx.fillStyle =
-            "#263d58";
-
-        ctx.beginPath();
-
-        ctx.ellipse(
-            x,
-            y + 18,
-            12,
-            15,
-            0,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Tête
-        */
-
-        ctx.fillStyle =
-            "#d9bb5b";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            x,
-            y - 6,
-            13,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /*
-        Couronne
-        */
-
-        ctx.fillStyle =
-            "#d5a932";
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            x - 12,
-            y - 15
-        );
-
-        ctx.lineTo(
-            x - 8,
-            y - 25
-        );
-
-        ctx.lineTo(
-            x - 2,
-            y - 17
-        );
-
-        ctx.lineTo(
-            x + 3,
-            y - 26
-        );
-
-        ctx.lineTo(
-            x + 8,
-            y - 17
-        );
-
-        ctx.lineTo(
-            x + 13,
-            y - 24
-        );
-
-        ctx.lineTo(
-            x + 12,
-            y - 12
-        );
-
-        ctx.closePath();
-
-        ctx.fill();
-
-
-        drawEyes(
-            ctx,
-            x,
-            y - 9
-        );
-
-
-        drawBeak(
-            ctx,
-            x,
-            y - 1
-        );
-
-
-        return;
-    }
-}
-
-
-/*
-=========================================================
-YEUX
-=========================================================
-*/
-
-function drawEyes(
-    ctx,
-    x,
-    y
-) {
-
-    ctx.fillStyle =
-        "#17130b";
-
-    ctx.fillRect(
-        x - 7,
-        y,
-        4,
-        4
-    );
-
-    ctx.fillRect(
-        x + 3,
-        y,
-        4,
-        4
-    );
-}
-
-
-/*
-=========================================================
-BEC
-=========================================================
-*/
-
-function drawBeak(
-    ctx,
-    x,
-    y
-) {
-
-    ctx.fillStyle =
-        "#d88732";
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        x - 6,
-        y - 1
-    );
-
-    ctx.lineTo(
-        x,
-        y + 4
-    );
-
-    ctx.lineTo(
-        x + 6,
-        y - 1
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
-}
-
-
-/*
-=========================================================
-BOÎTE DE DIALOGUE
-=========================================================
-*/
-
-function drawDialogue(npc) {
-
-        if (
-        !npc ||
-        !npc.dialogues ||
-        !npc.dialogues.length
-    )
-        return;
-
-    if (
-        dialogueIndex < 0 ||
-        dialogueIndex >= npc.dialogues.length
-    ) {
-        dialogueIndex = 0;
-    }
-
-    const ctx =
-        Game.ctx;
-
-    const width =
-        Game.canvas.width;
-
-    const height =
-        Game.canvas.height;
-
-
-    /*
-    Assombrissement
-    */
-
-    ctx.fillStyle =
-        "rgba(0,0,0,.30)";
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-
-    /*
-    Boîte
-    */
-
-    const boxWidth =
-        Math.min(
-            900,
-            width * 0.82
-        );
-
-    const boxHeight =
-        190;
-
-    const x =
-        (width - boxWidth) / 2;
-
-    const y =
-        height - 235;
-
-
-    ctx.fillStyle =
-        "rgba(7,8,12,.96)";
-
-    ctx.fillRect(
-        x,
-        y,
-        boxWidth,
-        boxHeight
-    );
-
-
-    /*
-    Bordure
-    */
-
-    ctx.strokeStyle =
-        "#b9973e";
-
-    ctx.lineWidth =
-        2;
-
-    ctx.strokeRect(
-        x,
-        y,
-        boxWidth,
-        boxHeight
-    );
-
-
-    /*
-    Nom
-    */
-
-    ctx.textAlign =
-        "left";
-
-    ctx.textBaseline =
-        "alphabetic";
-
-    ctx.font =
-        "bold 20px Georgia";
-
-    ctx.fillStyle =
-        "#d9b441";
-
-    ctx.fillText(
-        npc.name,
-        x + 25,
-        y + 32
-    );
-
-
-    /*
-    Texte
-    */
-
-    ctx.font =
-        "21px Georgia";
-
-    ctx.fillStyle =
-        "#eee9dc";
-
-
-    drawDialogueText(
-        npc.dialogues[
-            dialogueIndex
-        ],
-        x + 25,
-        y + 72,
-        boxWidth - 50,
-        30
-    );
-
-
-    /*
-    Indication
-    */
-
-    ctx.textAlign =
-        "right";
-
-    ctx.font =
-        "14px Arial";
-
-    ctx.fillStyle =
-        "rgba(255,255,255,.55)";
-
-    ctx.fillText(
-        "E — continuer",
-        x + boxWidth - 25,
-        y + boxHeight - 18
-    );
-}
-
-
-/*
-=========================================================
-TEXTE
-=========================================================
-*/
-
-function drawDialogueText(
-    text,
-    x,
-    y,
-    maxWidth,
-    lineHeight
-) {
-
-        if (!text)
-        return;
-    
-    const ctx =
-        Game.ctx;
-
-    const words =
-        text.split(" ");
-
-    let line = "";
-
-
-    for (
-        let i = 0;
-        i < words.length;
-        i++
-    ) {
-
-        const test =
-            line +
-            words[i] +
-            " ";
-
-
-        if (
-            ctx.measureText(test).width >
-            maxWidth &&
-            line !== ""
-        ) {
-
-            ctx.fillText(
-                line,
-                x,
-                y
-            );
-
-            line =
-                words[i] +
-                " ";
-
-            y +=
-                lineHeight;
-
-        } else {
-
-            line =
-                test;
-        }
-    }
-
-
-    ctx.fillText(
-        line,
-        x,
-        y
-    );
-}

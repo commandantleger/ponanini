@@ -1,372 +1,112 @@
 const quests = {
 
-    /*
-    =====================================================
-    QUÊTE 1
-    =====================================================
-    */
-
     intro: {
-
         name: "Un monde étranger",
-
-        description:
-            "Trouver quelqu'un capable de t'expliquer où tu es.",
-
-        objectives: {
-
-            oldman: false
-
-        },
-
-        completed: false
+        description: "Trouver quelqu'un capable de t'expliquer où tu es.",
+        completed: false,
+        objective: false
     },
-
-
-    /*
-    =====================================================
-    QUÊTE 2
-    =====================================================
-    */
 
     village: {
-
-        name: "Le royaume de Ponan",
-
-        description:
-            "Enquêter sur le royaume et découvrir ce qui s'est passé.",
-
-        objectives: {
-
-            mila: false,
-
-            guard: false,
-
-            oldman: false
-
-        },
-
-        completed: false
+        name: "Les portes de l'Entre-Lac",
+        description: "Rejoindre Mila et découvrir ce que Ponan cache sur les portails.",
+        completed: false,
+        objective: false
     },
-
-
-    /*
-    =====================================================
-    QUÊTE 3
-    =====================================================
-    */
 
     king: {
-
-        name: "Le roi",
-
-        description:
-            "Rencontrer Ponanini IV et découvrir qui dirige réellement Ponan.",
-
-        completed: false
-    },
-
-
-    /*
-    =====================================================
-    QUÊTE 4
-    =====================================================
-    */
-
-    secrets: {
-
-        name: "Les secrets de Ponan",
-
-        description:
-            "Quelque chose ne semble pas normal dans l'histoire du royaume.",
-
-        completed: false
+        name: "L'ancien roi",
+        description: "Découvrir ce qui est arrivé à Ponanini III.",
+        completed: false,
+        objective: false
     }
-
 };
-
 
 let questStage = 0;
 
-
-/*
-=========================================================
-MISE À JOUR DE LA QUÊTE
-=========================================================
-*/
-
 function updateQuest() {
 
-    const quest =
-        document.getElementById("quest");
-
+    const quest = document.getElementById("quest");
     if (!quest)
         return;
 
-
-    /*
-    =====================================================
-    QUÊTE 1
-    =====================================================
-    */
-
     if (questStage === 0) {
-
-        const objective =
-            quests.intro.objectives.oldman;
-
         quest.innerHTML =
-            "📜 " +
-            quests.intro.name +
-            "<br><br>" +
-            (
-                objective
-                    ? "✓ Parler à l'Ancien"
-                    : "□ Parler à l'Ancien"
-            );
-
+            "📜 <b>" + quests.intro.name + "</b><br>" +
+            "□ Parler à Marek, l'ancien du lac";
         return;
     }
-
-
-    /*
-    =====================================================
-    QUÊTE 2
-    =====================================================
-    */
 
     if (questStage === 1) {
-
-        const objectives =
-            quests.village.objectives;
-
-
-        let text =
-            "📜 " +
-            quests.village.name +
-            "<br><br>";
-
-
-        text +=
-            objectives.mila
-                ? "✓ Parler à Mila"
-                : "□ Parler à Mila";
-
-
-        text += "<br>";
-
-
-        text +=
-            objectives.guard
-                ? "✓ Interroger le garde royal"
-                : "□ Interroger le garde royal";
-
-
-        text += "<br>";
-
-
-        text +=
-            objectives.oldman
-                ? "✓ Découvrir ce que sait l'Ancien"
-                : "□ Découvrir ce que sait l'Ancien";
-
-
         quest.innerHTML =
-            text;
-
+            "📜 <b>" + quests.village.name + "</b><br>" +
+            "□ Retrouver Mila dans le village";
         return;
     }
-
-
-    /*
-    =====================================================
-    QUÊTE 3
-    =====================================================
-    */
 
     if (questStage === 2) {
-
         quest.innerHTML =
-            "👑 " +
-            quests.king.name +
-            "<br><small>" +
-            quests.king.description +
-            "</small>";
-
+            "📜 <b>" + quests.king.name + "</b><br>" +
+            "□ Interroger le garde royal sur Ponanini III";
         return;
     }
 
-
-    /*
-    =====================================================
-    QUÊTE 4
-    =====================================================
-    */
-
-    if (questStage >= 3) {
-
-        quest.innerHTML =
-            "❓ " +
-            quests.secrets.name +
-            "<br><small>" +
-            quests.secrets.description +
-            "</small>";
-    }
+    quest.innerHTML =
+        "❓ <b>Les secrets de Ponan</b><br>" +
+        "Une signature inconnue semble liée à ton arrivée.";
 }
-
-
-/*
-=========================================================
-VALIDATION D'UN OBJECTIF
-=========================================================
-*/
 
 function completeObjective(objective) {
 
-    /*
-    ==============================
-    QUÊTE 1
-    ==============================
-    */
-
-    if (questStage === 0) {
-
-        if (objective === "oldman") {
-
-            quests.intro.objectives.oldman =
-                true;
-
-            quests.intro.completed =
-                true;
-
-            questStage = 1;
-
-            updateQuest();
-
-            return;
-        }
-
+    if (questStage === 0 && objective === "marek") {
+        quests.intro.objective = true;
+        quests.intro.completed = true;
+        questStage = 1;
+        const quest = document.getElementById("quest");
+        if (quest)
+            quest.innerHTML = "✓ <b>QUÊTE TERMINÉE</b><br>Tu sais maintenant où tu es.";
+        setTimeout(updateQuest, 2200);
         return;
     }
 
-
-    /*
-    ==============================
-    QUÊTE 2
-    ==============================
-    */
-
-    if (questStage === 1) {
-
-        if (
-            !quests.village.objectives
-                .hasOwnProperty(objective)
-        )
-            return;
-
-
-        quests.village.objectives[
-            objective
-        ] = true;
-
-
-        checkVillageQuest();
-
-        updateQuest();
-
-        return;
-    }
-}
-
-
-/*
-=========================================================
-VÉRIFIER LA QUÊTE DU VILLAGE
-=========================================================
-*/
-
-function checkVillageQuest() {
-
-    const objectives =
-        quests.village.objectives;
-
-
-    if (
-        objectives.oldman &&
-        objectives.mila &&
-        objectives.guard
-    ) {
-
-        quests.village.completed =
-            true;
-
-
+    if (questStage === 1 && objective === "mila") {
+        quests.village.objective = true;
+        quests.village.completed = true;
         questStage = 2;
+        const quest = document.getElementById("quest");
+        if (quest)
+            quest.innerHTML = "✓ <b>NOUVELLE PISTE</b><br>Mila t'a parlé de Ponanini III.";
+        setTimeout(updateQuest, 2200);
+        return;
+    }
 
-        updateQuest();
+    if (questStage === 2 && objective === "guard") {
+        quests.king.objective = true;
+        quests.king.completed = true;
+        questStage = 3;
+        const quest = document.getElementById("quest");
+        if (quest)
+            quest.innerHTML = "✓ <b>INFORMATION OBTENUE</b><br>La forêt pourrait contenir la réponse.";
+        setTimeout(updateQuest, 2200);
     }
 }
-
-
-/*
-=========================================================
-AVANCER DANS LA QUÊTE
-=========================================================
-*/
 
 function advanceQuest(stage) {
-
-    if (
-        stage <= questStage
-    )
+    if (stage <= questStage)
         return;
-
-
-    questStage =
-        stage;
-
-
+    questStage = stage;
     updateQuest();
 }
 
-
-/*
-=========================================================
-RÉINITIALISER LA QUÊTE
-=========================================================
-*/
 
 function resetQuests() {
-
     questStage = 0;
-
-
-    quests.intro.completed =
-        false;
-
-    quests.village.completed =
-        false;
-
-    quests.king.completed =
-        false;
-
-    quests.secrets.completed =
-        false;
-
-
-    quests.intro.objectives.oldman =
-        false;
-
-
-    quests.village.objectives.oldman =
-        false;
-
-    quests.village.objectives.mila =
-        false;
-
-    quests.village.objectives.guard =
-        false;
-
-
+    quests.intro.completed = false;
+    quests.intro.objective = false;
+    quests.village.completed = false;
+    quests.village.objective = false;
+    quests.king.completed = false;
+    quests.king.objective = false;
     updateQuest();
 }
+
