@@ -14,9 +14,6 @@ const Prologue = {
 
     visualTime: 0,
 
-    scene11Image: null,
-    scene11ImageLoaded: false,
-
     scene11ImageLoaded: false,
 
     loadingStartTime: 0,
@@ -178,36 +175,6 @@ const Prologue = {
         this.loading = false;
         this.images = [];
         this.imagesLoaded = 0;
-
-        /*
-         * SCENE 11
-         */
-        this.scene11Image =
-            new Image();
-
-        this.scene11Image.onload = () => {
-
-            this.scene11ImageLoaded =
-                true;
-
-            console.log(
-                "Scene 11 chargee."
-            );
-        };
-
-        this.scene11Image.onerror = () => {
-
-            this.scene11ImageLoaded =
-                false;
-
-            console.error(
-                "Impossible de charger " +
-                "assets/prologue/scene11.png"
-            );
-        };
-
-        this.scene11Image.src =
-            "assets/prologue/scene11.png";
 
         this.hideHUD();
 
@@ -394,19 +361,6 @@ const Prologue = {
 
         const current =
             this.scenes[this.scene];
-
-        /*
-         * La scène 11 utilise son image
-         * chargée explicitement.
-         */
-
-        if (
-            this.scene === 10 &&
-            this.scene11ImageLoaded
-        ) {
-            this.drawScene11();
-            return;
-        }
 
         if (!current)
             return;
@@ -608,109 +562,6 @@ const Prologue = {
                 height
             );
         }
-    },
-
-    drawScene11() {
-
-        const ctx =
-            Game.ctx;
-
-        const width =
-            Game.canvas.width;
-
-        const height =
-            Game.canvas.height;
-
-        /*
-         * Fond de secours.
-         */
-
-        ctx.fillStyle =
-            "#050608";
-
-        ctx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
-
-
-        const image =
-            this.scene11Image;
-
-        if (
-            !image ||
-            !this.scene11ImageLoaded
-        ) {
-            return;
-        }
-
-
-        /*
-         * Affichage COVER
-         */
-
-        const imageRatio =
-            image.width /
-            image.height;
-
-        const screenRatio =
-            width /
-            height;
-
-        let drawWidth;
-        let drawHeight;
-
-        if (
-            imageRatio >
-            screenRatio
-        ) {
-
-            drawHeight =
-                height;
-
-            drawWidth =
-                height *
-                imageRatio;
-
-        } else {
-
-            drawWidth =
-                width;
-
-            drawHeight =
-                width /
-                imageRatio;
-        }
-
-
-        /*
-         * Petit mouvement cinématique.
-         */
-
-        const moveY =
-            Math.sin(
-                this.visualTime * 0.35
-            ) * 8;
-
-
-        const x =
-            (width - drawWidth) / 2;
-
-        const y =
-            (height - drawHeight) /
-            2 +
-            moveY;
-
-
-        ctx.drawImage(
-            image,
-            x,
-            y,
-            drawWidth,
-            drawHeight
-        );
     },
 
     drawLoading() {
