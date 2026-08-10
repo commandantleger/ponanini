@@ -14,10 +14,21 @@ const piecesHUD =
     document.getElementById("pieces");
 
 let duckPieces = 0;
-
 const inventory = [];
-
 let typingInterval = null;
+
+window.dialogueTyping = false;
+
+
+function cleanDialogueText(value) {
+
+    if (typeof value !== "string")
+        return "";
+
+    return value
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<[^>]*>/g, "");
+}
 
 
 function openDialogue(text) {
@@ -27,92 +38,98 @@ function openDialogue(text) {
 
     clearInterval(typingInterval);
 
+    const source =
+        typeof text === "string"
+            ? text
+            : "";
+
     dialogue.classList.remove("hidden");
 
-    let html = text.replace(/\n/g, "<br>");
+    const titleMatch =
+        source.match(/<b>(.*?)<\/b>/i);
 
-    let plainText =
-        html.replace(/<br\s*\/?>/gi, "\n")
-            .replace(/<[^>]*>/g, "");
+    const title =
+        titleMatch ? titleMatch[1] : "";
 
-    let index = 0;
+    const body =
+        cleanDialogueText(
+            source.replace(/<b>.*?<\/b>/i, "")
+        ).trim();
 
     dialogueText.innerHTML = "";
 
+    const titleElement =
+        document.createElement("div");
+
+    titleElement.style.fontWeight = "700";
+    titleElement.style.marginBottom = "10px";
+    titleElement.textContent = title;
+
+    const bodyElement =
+        document.createElement("div");
+
+    dialogueText.appendChild(titleElement);
+    dialogueText.appendChild(bodyElement);
+
+    window.dialogueTyping = true;
+
+    let index = 0;
+
     typingInterval = setInterval(() => {
 
-        if (index >= plainText.length) {
+        if (index >= body.length) {
 
             clearInterval(typingInterval);
-
-            dialogueText.innerHTML = html;
-
+            window.dialogueTyping = false;
+            bodyElement.textContent = body;
             return;
         }
 
-        const visible =
-            plainText.substring(0, index + 1);
-
-        const parts =
-            visible.split("\n");
-
-        let result = "";
-
-        for (let i = 0; i < parts.length; i++) {
-
-            if (i > 0)
-                result += "<br>";
-
-            result += parts[i];
-        }
-
-        dialogueText.innerHTML = result;
+        bodyElement.textContent =
+            body.substring(0, index + 1);
 
         index++;
 
-    }, 20);
+    }, 18);
 }
 
 
 function closeDialogue() {
 
     clearInterval(typingInterval);
+    window.dialogueTyping = false;
 
     if (dialogue)
         dialogue.classList.add("hidden");
 }
 
 
-window.addEventListener(
-    "keydown",
-    event => {
+window.openDialogue = openDialogue;
+window.closeDialogue = closeDialogue;
 
-        if (event.key === "Escape") {
-            closeDialogue();
-        }
 
-        if (
-            event.key === "i" ||
-            event.key === "I"
-        ) {
+window.addEventListener("keydown", event => {
 
-            if (!inventoryBox)
-                return;
+    if (event.key === "Escape")
+        closeDialogue();
 
-            inventoryBox.classList.toggle(
-                "hidden"
-            );
+    if (
+        event.key === "i" ||
+        event.key === "I"
+    ) {
 
-            updateInventory();
-        }
+        if (!inventoryBox)
+            return;
+
+        inventoryBox.classList.toggle("hidden");
+        updateInventory();
     }
-);
+});
 
 
 function addItem(item) {
 
     inventory.push(item);
-
     updateInventory();
 }
 
@@ -129,7 +146,10 @@ function updateInventory() {
         const li =
             document.createElement("li");
 
-        li.innerHTML = item;
+        li.textContent =
+            typeof item === "string"
+                ? cleanDialogueText(item)
+                : String(item);
 
         inventoryList.appendChild(li);
     });
@@ -141,12 +161,14 @@ function addDuckPiece(name) {
     duckPieces++;
 
     if (piecesHUD) {
-
-        piecesHUD.innerHTML =
-            "🦆 " +
-            duckPieces +
-            " / 3";
+        piecesHUD.textContent =
+            "🦆 " + duckPieces + " / 3";
     }
 
     addItem(name);
 }
+
+
+window.addItem = addItem;
+window.addDuckPiece = addDuckPiece;
+window.updateInventory = updateInventory;

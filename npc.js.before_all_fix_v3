@@ -114,14 +114,6 @@ function getClosestNPC() {
 }
 
 function startNPCDialogue(npc) {
-
-    if (
-        !npc ||
-        !Array.isArray(npc.dialogues) ||
-        npc.dialogues.length === 0
-    )
-        return;
-
     if (
         !npc ||
         dialogueOpen ||
@@ -138,16 +130,11 @@ function startNPCDialogue(npc) {
     dialogueIndex = 0;
     dialogueCooldown = true;
 
-    const firstLine =
-        typeof npc.dialogues[0] === "string"
-            ? npc.dialogues[0]
-            : "";
-
     openDialogue(
         "<b>" +
         npc.name +
         "</b><br><br>" +
-        firstLine
+        npc.dialogues[0]
     );
 
     setTimeout(() => {
@@ -214,12 +201,6 @@ window.addEventListener(
                 return;
 
             if (
-                typeof window.dialogueTyping !== "undefined" &&
-                window.dialogueTyping
-            )
-                return;
-
-            if (
                 getNPCDistance(activeNPC) >
                 DIALOGUE_MAX_DISTANCE
             ) {
@@ -241,20 +222,13 @@ window.addEventListener(
                 return;
             }
 
-            const line =
-                typeof activeNPC.dialogues[
-                    dialogueIndex
-                ] === "string"
-                    ? activeNPC.dialogues[
-                        dialogueIndex
-                    ]
-                    : "";
-
             openDialogue(
                 "<b>" +
                 activeNPC.name +
                 "</b><br><br>" +
-                line
+                activeNPC.dialogues[
+                    dialogueIndex
+                ]
             );
 
             return;
