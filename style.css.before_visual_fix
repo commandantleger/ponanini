@@ -17,17 +17,11 @@ body {
 }
 
 #game {
-    position: fixed;
-    inset: 0;
     display: block;
     width: 100vw;
     height: 100vh;
-    margin: 0;
-    padding: 0;
-    border: 0;
     image-rendering: pixelated;
     background: #000;
-    z-index: 0;
 }
 
 /* =========================================================

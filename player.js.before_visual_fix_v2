@@ -399,7 +399,7 @@ function drawArrivalImpact(x, y) {
 }
 
 function drawDuckBody(ctx, cx, cy) {
-    ctx.fillStyle = "#f2c94c";
+    ctx.fillStyle = "#d8b94f";
 
     ctx.beginPath();
 
@@ -415,7 +415,7 @@ function drawDuckBody(ctx, cx, cy) {
 
     ctx.fill();
 
-    ctx.fillStyle = "#ffd95a";
+    ctx.fillStyle = "#e4c65b";
 
     ctx.beginPath();
 
@@ -574,7 +574,7 @@ function drawPlayer() {
 
     } else if (player.direction === "up") {
 
-        ctx.fillStyle = "#f2c94c";
+        ctx.fillStyle = "#d8b94f";
 
         ctx.beginPath();
 
@@ -590,7 +590,7 @@ function drawPlayer() {
 
         ctx.fill();
 
-        ctx.fillStyle = "#e4bd3f";
+        ctx.fillStyle = "#c5a845";
 
         ctx.beginPath();
 
