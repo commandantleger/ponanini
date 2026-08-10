@@ -1,4 +1,5 @@
 const npcs = [
+
     {
         id: "marek",
         name: "Marek",
@@ -74,36 +75,22 @@ let dialogueIndex = 0;
 let dialogueCooldown = false;
 let gameFinished = false;
 
-const NPC_INTERACTION_DISTANCE =
-    Game.tileSize * 1.7;
-
-const DIALOGUE_MAX_DISTANCE =
-    Game.tileSize * 3;
-
+const NPC_INTERACTION_DISTANCE = Game.tileSize * 1.7;
+const DIALOGUE_MAX_DISTANCE = Game.tileSize * 3;
 let npcIdleTime = 0;
 
 function getNPCDistance(npc) {
-    const dx =
-        player.x - npc.x;
-
-    const dy =
-        player.y - npc.y;
-
-    return Math.sqrt(
-        dx * dx +
-        dy * dy
-    );
+    const dx = player.x - npc.x;
+    const dy = player.y - npc.y;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
 function getClosestNPC() {
     let closest = null;
-    let distance =
-        NPC_INTERACTION_DISTANCE;
+    let distance = NPC_INTERACTION_DISTANCE;
 
     npcs.forEach(npc => {
-        const d =
-            getNPCDistance(npc);
-
+        const d = getNPCDistance(npc);
         if (d < distance) {
             closest = npc;
             distance = d;
@@ -114,15 +101,7 @@ function getClosestNPC() {
 }
 
 function startNPCDialogue(npc) {
-    if (
-        !npc ||
-        dialogueOpen ||
-        dialogueCooldown ||
-        (
-            typeof playerArrival !== "undefined" &&
-            playerArrival.active
-        )
-    )
+    if (!npc || dialogueOpen || dialogueCooldown)
         return;
 
     dialogueOpen = true;
@@ -131,10 +110,8 @@ function startNPCDialogue(npc) {
     dialogueCooldown = true;
 
     openDialogue(
-        "<b>" +
-        npc.name +
-        "</b><br><br>" +
-        npc.dialogues[0]
+        "<b>" + npc.name + "</b><br><br>" +
+        npc.dialogues[dialogueIndex]
     );
 
     setTimeout(() => {
@@ -147,7 +124,6 @@ function closeNPCDialogue() {
     activeNPC = null;
     dialogueIndex = 0;
     dialogueCooldown = true;
-
     closeDialogue();
 
     setTimeout(() => {
@@ -156,184 +132,113 @@ function closeNPCDialogue() {
 }
 
 function finishNPCDialogue(npc) {
+
     if (!npc)
         return;
 
-    if (
-        npc.id === "marek" &&
-        questStage === 0
-    ) {
+    if (npc.id === "marek" && questStage === 0) {
         completeObjective("marek");
         return;
     }
 
-    if (
-        npc.id === "mila" &&
-        questStage === 1
-    ) {
+    if (npc.id === "mila" && questStage === 1) {
         completeObjective("mila");
         return;
     }
 
-    if (
-        npc.id === "guard" &&
-        questStage === 2
-    ) {
+    if (npc.id === "guard" && questStage === 2) {
         completeObjective("guard");
+        return;
     }
 }
 
-window.addEventListener(
-    "keydown",
-    event => {
+window.addEventListener("keydown", event => {
 
-        if (
-            event.code !== "KeyE" ||
-            event.repeat
-        )
+    if (event.code !== "KeyE" || event.repeat)
+        return;
+
+    event.preventDefault();
+
+    if (dialogueOpen) {
+
+        if (!activeNPC)
             return;
 
-        event.preventDefault();
-
-        if (dialogueOpen) {
-
-            if (!activeNPC)
-                return;
-
-            if (
-                getNPCDistance(activeNPC) >
-                DIALOGUE_MAX_DISTANCE
-            ) {
-                closeNPCDialogue();
-                return;
-            }
-
-            dialogueIndex++;
-
-            if (
-                dialogueIndex >=
-                activeNPC.dialogues.length
-            ) {
-                finishNPCDialogue(
-                    activeNPC
-                );
-
-                closeNPCDialogue();
-                return;
-            }
-
-            openDialogue(
-                "<b>" +
-                activeNPC.name +
-                "</b><br><br>" +
-                activeNPC.dialogues[
-                    dialogueIndex
-                ]
-            );
-
-            return;
-        }
-
-        const npc =
-            getClosestNPC();
-
-        if (npc)
-            startNPCDialogue(npc);
-    }
-);
-
-window.addEventListener(
-    "keydown",
-    event => {
-        if (event.code === "Escape" &&
-            dialogueOpen) {
-            event.preventDefault();
+        if (getNPCDistance(activeNPC) > DIALOGUE_MAX_DISTANCE) {
             closeNPCDialogue();
+            return;
         }
+
+        dialogueIndex++;
+
+        if (dialogueIndex >= activeNPC.dialogues.length) {
+            finishNPCDialogue(activeNPC);
+            closeNPCDialogue();
+            return;
+        }
+
+        openDialogue(
+            "<b>" + activeNPC.name + "</b><br><br>" +
+            activeNPC.dialogues[dialogueIndex]
+        );
+
+        return;
     }
-);
+
+    const npc = getClosestNPC();
+    if (npc)
+        startNPCDialogue(npc);
+});
 
 function updateNPC() {
+
     npcIdleTime += .025;
 
-    if (
-        dialogueOpen &&
-        activeNPC &&
-        getNPCDistance(activeNPC) >
-        DIALOGUE_MAX_DISTANCE
-    ) {
-        closeNPCDialogue();
+    if (dialogueOpen && activeNPC) {
+        if (getNPCDistance(activeNPC) > DIALOGUE_MAX_DISTANCE)
+            closeNPCDialogue();
     }
 }
 
 function shouldShowQuestMarker(npc) {
 
-    if (
-        questStage === 0 &&
-        npc.id === "marek"
-    )
+    if (questStage === 0 && npc.id === "marek")
         return true;
 
-    if (
-        questStage === 1 &&
-        npc.id === "mila"
-    )
+    if (questStage === 1 && npc.id === "mila")
         return true;
 
-    if (
-        questStage === 2 &&
-        npc.id === "guard"
-    )
+    if (questStage === 2 && npc.id === "guard")
         return true;
 
     return false;
 }
 
 function drawDuckNPC(ctx, npc, x, y) {
-    const bob =
-        Math.sin(
-            npcIdleTime +
-            npc.x * .01
-        ) * .8;
+
+    const bob = Math.sin(npcIdleTime + npc.x * .01) * .8;
 
     ctx.save();
 
     if (npc.type === "oldman") {
-
         ctx.fillStyle = "#77705b";
         ctx.beginPath();
-        ctx.ellipse(
-            x, y + 22 + bob,
-            16, 18,
-            0, 0, Math.PI * 2
-        );
+        ctx.ellipse(x, y + 22 + bob, 16, 18, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#c9b66a";
         ctx.beginPath();
-        ctx.arc(
-            x, y - 2 + bob,
-            14,
-            0, Math.PI * 2
-        );
+        ctx.arc(x, y - 2 + bob, 14, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#e7e0c7";
         ctx.beginPath();
-        ctx.arc(
-            x, y + 3 + bob,
-            10,
-            0, Math.PI
-        );
+        ctx.arc(x, y + 3 + bob, 10, 0, Math.PI);
         ctx.fill();
 
         ctx.fillStyle = "#17130b";
-        ctx.fillRect(
-            x - 7, y - 6 + bob, 4, 4
-        );
-        ctx.fillRect(
-            x + 3, y - 6 + bob, 4, 4
-        );
+        ctx.fillRect(x - 7, y - 6 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 6 + bob, 4, 4);
 
         ctx.fillStyle = "#d88732";
         ctx.beginPath();
@@ -346,51 +251,27 @@ function drawDuckNPC(ctx, npc, x, y) {
         ctx.strokeStyle = "#5d4930";
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(
-            x + 17,
-            y + 5 + bob
-        );
-        ctx.lineTo(
-            x + 20,
-            y + 36 + bob
-        );
+        ctx.moveTo(x + 17, y + 5 + bob);
+        ctx.lineTo(x + 20, y + 36 + bob);
         ctx.stroke();
 
     } else if (npc.type === "mila") {
-
         ctx.fillStyle = "#9d6f50";
         ctx.beginPath();
-        ctx.ellipse(
-            x, y + 22 + bob,
-            16, 18,
-            0, 0, Math.PI * 2
-        );
+        ctx.ellipse(x, y + 22 + bob, 16, 18, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#d8b94f";
         ctx.beginPath();
-        ctx.arc(
-            x, y - 2 + bob,
-            14,
-            0, Math.PI * 2
-        );
+        ctx.arc(x, y - 2 + bob, 14, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#9b3f4b";
-        ctx.fillRect(
-            x - 13,
-            y + 10 + bob,
-            26,
-            5
-        );
+        ctx.fillRect(x - 13, y + 10 + bob, 26, 5);
 
         ctx.fillStyle = "#17130b";
-        ctx.fillRect(
-            x - 7, y - 6 + bob, 4, 4
-        );
-        ctx.fillRect(
-            x + 3, y - 6 + bob, 4, 4
-        );
+        ctx.fillRect(x - 7, y - 6 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 6 + bob, 4, 4);
 
         ctx.fillStyle = "#d88732";
         ctx.beginPath();
@@ -401,40 +282,22 @@ function drawDuckNPC(ctx, npc, x, y) {
         ctx.fill();
 
     } else if (npc.type === "guard") {
-
         ctx.fillStyle = "#5e6670";
         ctx.beginPath();
-        ctx.ellipse(
-            x, y + 22 + bob,
-            17, 19,
-            0, 0, Math.PI * 2
-        );
+        ctx.ellipse(x, y + 22 + bob, 17, 19, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#c9ad59";
         ctx.beginPath();
-        ctx.arc(
-            x, y - 3 + bob,
-            12,
-            0, Math.PI * 2
-        );
+        ctx.arc(x, y - 3 + bob, 12, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#89939d";
-        ctx.fillRect(
-            x - 14,
-            y - 13 + bob,
-            28,
-            8
-        );
+        ctx.fillRect(x - 14, y - 13 + bob, 28, 8);
 
         ctx.fillStyle = "#17130b";
-        ctx.fillRect(
-            x - 7, y - 7 + bob, 4, 4
-        );
-        ctx.fillRect(
-            x + 3, y - 7 + bob, 4, 4
-        );
+        ctx.fillRect(x - 7, y - 7 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 7 + bob, 4, 4);
 
         ctx.fillStyle = "#d88732";
         ctx.beginPath();
@@ -447,34 +310,19 @@ function drawDuckNPC(ctx, npc, x, y) {
         ctx.strokeStyle = "#6d5435";
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(
-            x + 20,
-            y - 12 + bob
-        );
-        ctx.lineTo(
-            x + 20,
-            y + 38 + bob
-        );
+        ctx.moveTo(x + 20, y - 12 + bob);
+        ctx.lineTo(x + 20, y + 38 + bob);
         ctx.stroke();
 
     } else {
-
         ctx.fillStyle = "#702d38";
         ctx.beginPath();
-        ctx.ellipse(
-            x, y + 22 + bob,
-            18, 20,
-            0, 0, Math.PI * 2
-        );
+        ctx.ellipse(x, y + 22 + bob, 18, 20, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#d9bb5b";
         ctx.beginPath();
-        ctx.arc(
-            x, y - 3 + bob,
-            14,
-            0, Math.PI * 2
-        );
+        ctx.arc(x, y - 3 + bob, 14, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#d5a932";
@@ -490,12 +338,8 @@ function drawDuckNPC(ctx, npc, x, y) {
         ctx.fill();
 
         ctx.fillStyle = "#17130b";
-        ctx.fillRect(
-            x - 7, y - 8 + bob, 4, 4
-        );
-        ctx.fillRect(
-            x + 3, y - 8 + bob, 4, 4
-        );
+        ctx.fillRect(x - 7, y - 8 + bob, 4, 4);
+        ctx.fillRect(x + 3, y - 8 + bob, 4, 4);
 
         ctx.fillStyle = "#d88732";
         ctx.beginPath();
@@ -510,82 +354,39 @@ function drawDuckNPC(ctx, npc, x, y) {
 }
 
 function drawQuestMarker(ctx, x, y) {
-    const bounce =
-        Math.sin(npcIdleTime * 2) * 3;
-
+    const bounce = Math.sin(npcIdleTime * 2) * 3;
     ctx.textAlign = "center";
     ctx.font = "bold 24px Arial";
     ctx.fillStyle = "#e6c54c";
-
-    ctx.fillText(
-        "!",
-        x,
-        y - 50 + bounce
-    );
+    ctx.fillText("!", x, y - 50 + bounce);
 }
 
 function drawNPC() {
+
     const ctx = Game.ctx;
 
     npcs.forEach(npc => {
+        const x = npc.x - Game.camera.x + 20;
+        const y = npc.y - Game.camera.y;
+        const distance = getNPCDistance(npc);
 
-        const x =
-            npc.x -
-            Game.camera.x +
-            20;
+        drawDuckNPC(ctx, npc, x, y);
 
-        const y =
-            npc.y -
-            Game.camera.y;
-
-        const distance =
-            getNPCDistance(npc);
-
-        drawDuckNPC(
-            ctx,
-            npc,
-            x,
-            y
-        );
-
-        if (
-            distance <
-            Game.tileSize * 2.5
-        ) {
+        if (distance < Game.tileSize * 2.5) {
             ctx.textAlign = "center";
             ctx.font = "bold 13px Arial";
             ctx.fillStyle = "#f2e7c9";
+            ctx.fillText(npc.name, x, y - 48);
 
-            ctx.fillText(
-                npc.name,
-                x,
-                y - 48
-            );
-
-            if (
-                !dialogueOpen &&
-                distance <=
-                NPC_INTERACTION_DISTANCE
-            ) {
+            if (!dialogueOpen && distance <= NPC_INTERACTION_DISTANCE) {
                 ctx.font = "12px Arial";
                 ctx.fillStyle = "#d4b85c";
-
-                ctx.fillText(
-                    "E — Parler",
-                    x,
-                    y - 64
-                );
+                ctx.fillText("E — Parler", x, y - 64);
             }
         }
 
-        if (
-            !dialogueOpen &&
-            shouldShowQuestMarker(npc)
-        )
-            drawQuestMarker(
-                ctx,
-                x,
-                y
-            );
+        if (!dialogueOpen && shouldShowQuestMarker(npc))
+            drawQuestMarker(ctx, x, y);
     });
 }
+

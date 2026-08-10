@@ -230,43 +230,13 @@ function drawMap() {
     ------------------------------------------------------
     */
 
-    const mapWidth =
-        WORLD[0].length * Game.tileSize;
-
-    const mapHeight =
-        WORLD.length * Game.tileSize;
-
-    const viewWidth =
-        Game.canvas.width;
-
-    const viewHeight =
-        Game.canvas.height;
-
     Game.camera.x =
-        player.x + 20 -
-        viewWidth / 2;
+        player.x -
+        Game.canvas.width / 2;
 
     Game.camera.y =
-        player.y + 20 -
-        viewHeight / 2;
-
-    Game.camera.x =
-        Math.max(
-            0,
-            Math.min(
-                Game.camera.x,
-                Math.max(0, mapWidth - viewWidth)
-            )
-        );
-
-    Game.camera.y =
-        Math.max(
-            0,
-            Math.min(
-                Game.camera.y,
-                Math.max(0, mapHeight - viewHeight)
-            )
-        );
+        player.y -
+        Game.canvas.height / 2;
 
 
     /*
@@ -811,77 +781,7 @@ function drawMap() {
     */
 
     drawVillageDecoration();
-    drawLakeArrivalDecoration();
 
-}
-
-function drawLakeArrivalDecoration() {
-    if (currentMap !== "village")
-        return;
-
-    const ctx = Game.ctx;
-    const T = Game.tileSize;
-
-    const reeds = [
-        [20, 68],
-        [20, 71],
-        [20, 74],
-        [21, 66],
-        [21, 72]
-    ];
-
-    reeds.forEach(pos => {
-        const x =
-            pos[0] * T -
-            Game.camera.x;
-
-        const y =
-            pos[1] * T -
-            Game.camera.y;
-
-        if (
-            x < -T ||
-            x > Game.canvas.width + T ||
-            y < -T ||
-            y > Game.canvas.height + T
-        )
-            return;
-
-        ctx.strokeStyle = "#467c3f";
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.moveTo(x + 20, y + 50);
-        ctx.lineTo(x + 16, y + 20);
-        ctx.moveTo(x + 20, y + 50);
-        ctx.lineTo(x + 25, y + 16);
-        ctx.stroke();
-    });
-
-    const sx =
-        21 * T -
-        Game.camera.x;
-
-    const sy =
-        69 * T -
-        Game.camera.y;
-
-    ctx.fillStyle =
-        "rgba(210,190,130,.18)";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        sx + 20,
-        sy + 48,
-        34,
-        8,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
 }
 
 
