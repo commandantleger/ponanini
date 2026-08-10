@@ -1525,6 +1525,20 @@ BOÎTE DE DIALOGUE
 
 function drawDialogue(npc) {
 
+        if (
+        !npc ||
+        !npc.dialogues ||
+        !npc.dialogues.length
+    )
+        return;
+
+    if (
+        dialogueIndex < 0 ||
+        dialogueIndex >= npc.dialogues.length
+    ) {
+        dialogueIndex = 0;
+    }
+
     const ctx =
         Game.ctx;
 
@@ -1679,6 +1693,9 @@ function drawDialogueText(
     lineHeight
 ) {
 
+        if (!text)
+        return;
+    
     const ctx =
         Game.ctx;
 
