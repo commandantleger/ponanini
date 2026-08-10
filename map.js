@@ -1,3 +1,4 @@
+
 let bridgeOpen = false;
 
 /*
@@ -1062,4 +1063,3 @@ function drawVillageDecoration() {
     }
 
 }
-

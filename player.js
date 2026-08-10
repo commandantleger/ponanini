@@ -1,12 +1,12 @@
 const player = {
 
-    x: 25 * Game.tileSize,
-    y: 30 * Game.tileSize,
+    x: 20 * Game.tileSize,
+    y: 72 * Game.tileSize,
 
     w: 40,
     h: 40,
 
-    speed: 4,
+    speed: 3,
 
     direction: "down",
 
@@ -322,7 +322,7 @@ function drawPlayer() {
     const bob = player.moving ? Math.sin(player.walkTime) * 1.5 : 0;
 
     if (playerArrival.active) {
-        drawArrivalPortal(cx, groundY - 560);
+        drawArrivalPortal(cx, groundY - 760);
         drawArrivalImpact(cx, groundY);
     }
 
@@ -355,4 +355,3 @@ function drawPlayer() {
 
     ctx.restore();
 }
-

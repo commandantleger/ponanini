@@ -1158,7 +1158,7 @@ const Prologue = {
             (width - boxWidth) / 2;
 
         const y =
-            height - 215;
+            height - boxHeight - 55;
 
         ctx.fillStyle =
             "rgba(0,0,0,.78)";
