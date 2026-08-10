@@ -11,6 +11,7 @@ const player = {
     direction: "down",
 
     walkTime: 0,
+
     moving: false
 };
 
@@ -21,21 +22,622 @@ let portalPressed = false;
 let portalMessage = false;
 
 
-window.addEventListener("keydown", event => {
+/*
+=========================================================
+ARRIVÉE DU JOUEUR — PORTAIL + CHUTE DU CIEL
+=========================================================
 
-    keys[event.key.toLowerCase()] = true;
+Le joueur reste immobile au-dessus de son point de spawn.
+Le portail s'ouvre d'abord, puis le joueur tombe réellement
+vers le sol avant de rendre le contrôle au joueur.
+*/
 
-});
+const playerArrival = {
+
+    active: false,
+
+    started: false,
+
+    timer: 0,
+
+    z: 560,
+
+    velocity: 0,
+
+    gravity: 950,
+
+    portalZ: 430,
+
+    impact: 0,
+
+    impactParticles: [],
+
+    portalParticles: []
+};
 
 
-window.addEventListener("keyup", event => {
+function startPlayerArrival() {
 
-    keys[event.key.toLowerCase()] = false;
+    if (
+        playerArrival.started ||
+        currentMap !== "village"
+    )
+        return;
 
-    if (event.key.toLowerCase() === "e")
-        portalPressed = false;
+    playerArrival.started = true;
 
-});
+    playerArrival.active = true;
+
+    playerArrival.timer = 0;
+
+    playerArrival.z = 560;
+
+    playerArrival.velocity = 0;
+
+    playerArrival.impact = 0;
+
+    playerArrival.impactParticles = [];
+
+    playerArrival.portalParticles = [];
+
+    player.moving = false;
+}
+
+
+function updatePlayerArrival(dt) {
+
+    if (!playerArrival.active)
+        return;
+
+
+    playerArrival.timer += dt;
+
+
+    /*
+    ==============================================
+    OUVERTURE DU PORTAIL
+    ==============================================
+    */
+
+    if (
+        playerArrival.timer < 0.55
+    ) {
+
+        playerArrival.z = 560;
+
+        playerArrival.velocity = 0;
+
+        return;
+    }
+
+
+    /*
+    ==============================================
+    CHUTE
+    ==============================================
+    */
+
+    if (
+        playerArrival.z > 0
+    ) {
+
+        playerArrival.velocity +=
+            playerArrival.gravity * dt;
+
+        playerArrival.z -=
+            playerArrival.velocity * dt;
+
+
+        if (
+            playerArrival.z <= 0
+        ) {
+
+            playerArrival.z = 0;
+
+            playerArrival.velocity = 0;
+
+            playerArrival.impact = 1;
+
+            createArrivalImpact();
+        }
+
+        return;
+    }
+
+
+    /*
+    ==============================================
+    IMPACT
+    ==============================================
+    */
+
+    if (
+        playerArrival.impact > 0
+    ) {
+
+        playerArrival.impact -=
+            dt * 2.8;
+
+        updateArrivalParticles(dt);
+
+        return;
+    }
+
+
+    /*
+    ==============================================
+    FIN
+    ==============================================
+    */
+
+    if (
+        playerArrival.timer > 2.85
+    ) {
+
+        playerArrival.active = false;
+
+        playerArrival.impactParticles = [];
+
+        playerArrival.portalParticles = [];
+
+        player.moving = false;
+    }
+}
+
+
+function createArrivalImpact() {
+
+    playerArrival.impactParticles = [];
+
+
+    for (
+        let i = 0;
+        i < 28;
+        i++
+    ) {
+
+        playerArrival.impactParticles.push({
+
+            angle:
+                Math.random() *
+                Math.PI * 2,
+
+            speed:
+                45 +
+                Math.random() * 120,
+
+            life:
+                0.35 +
+                Math.random() * 0.45,
+
+            size:
+                2 +
+                Math.random() * 4,
+
+            distance: 0
+        });
+    }
+}
+
+
+function updateArrivalParticles(dt) {
+
+    playerArrival.impactParticles.forEach(
+        particle => {
+
+            particle.life -= dt;
+
+            particle.distance +=
+                particle.speed * dt;
+        }
+    );
+
+
+    playerArrival.impactParticles =
+        playerArrival.impactParticles.filter(
+            particle =>
+                particle.life > 0
+        );
+}
+
+
+function drawArrivalPortal(
+    x,
+    y
+) {
+
+    const ctx =
+        Game.ctx;
+
+    const time =
+        playerArrival.timer;
+
+
+    /*
+    Ouverture progressive.
+    */
+
+    const open =
+        Math.min(
+            1,
+            time / 0.55
+        );
+
+
+    /*
+    Fermeture après l'impact.
+    */
+
+    let close = 1;
+
+    if (
+        time > 2.15
+    ) {
+
+        close =
+            1 -
+            Math.min(
+                1,
+                (time - 2.15) / 0.70
+            );
+    }
+
+
+    const pulse =
+        1 +
+        Math.sin(
+            time * 5
+        ) * 0.045;
+
+
+    const scale =
+        open *
+        close *
+        pulse;
+
+
+    if (
+        scale <= 0
+    )
+        return;
+
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+
+    /*
+    ==============================================
+    HALO
+    ==============================================
+    */
+
+    const halo =
+        ctx.createRadialGradient(
+            0,
+            0,
+            20,
+            0,
+            0,
+            145
+        );
+
+
+    halo.addColorStop(
+        0,
+        "rgba(93,117,255,.30)"
+    );
+
+    halo.addColorStop(
+        .45,
+        "rgba(93,117,255,.12)"
+    );
+
+    halo.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+
+    ctx.fillStyle =
+        halo;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        145,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ==============================================
+    PORTAIL
+    ==============================================
+    */
+
+    ctx.strokeStyle =
+        "rgba(112,132,255,.95)";
+
+    ctx.lineWidth = 8;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        58,
+        88,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    ctx.strokeStyle =
+        "rgba(190,200,255,.70)";
+
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        44,
+        72,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    /*
+    ==============================================
+    INTERIEUR
+    ==============================================
+    */
+
+    const inside =
+        ctx.createRadialGradient(
+            0,
+            0,
+            4,
+            0,
+            0,
+            70
+        );
+
+
+    inside.addColorStop(
+        0,
+        "rgba(110,130,255,.38)"
+    );
+
+    inside.addColorStop(
+        .55,
+        "rgba(50,55,130,.22)"
+    );
+
+    inside.addColorStop(
+        1,
+        "rgba(0,0,0,.78)"
+    );
+
+
+    ctx.fillStyle =
+        inside;
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        52,
+        82,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+    ==============================================
+    PARTICULES
+    ==============================================
+    */
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
+
+        const angle =
+            time * 1.8 +
+            i * 0.35;
+
+        const radius =
+            60 +
+            Math.sin(
+                time * 3 +
+                i
+            ) * 18;
+
+        const px =
+            Math.cos(angle) *
+            radius;
+
+        const py =
+            Math.sin(angle) *
+            radius *
+            1.35;
+
+
+        ctx.fillStyle =
+            "rgba(150,170,255,.70)";
+
+        ctx.fillRect(
+            px,
+            py,
+            3,
+            3
+        );
+    }
+
+
+    ctx.restore();
+}
+
+
+function drawArrivalImpact(
+    x,
+    y
+) {
+
+    const ctx =
+        Game.ctx;
+
+
+    if (
+        playerArrival.impact <= 0
+    )
+        return;
+
+
+    const progress =
+        1 -
+        playerArrival.impact;
+
+
+    /*
+    Onde de choc.
+    */
+
+    ctx.save();
+
+    ctx.strokeStyle =
+        "rgba(215,225,255," +
+        playerArrival.impact +
+        ")";
+
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        y + 38,
+        25 +
+        progress * 75,
+        8 +
+        progress * 20,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    /*
+    Poussière / éclats.
+    */
+
+    playerArrival.impactParticles.forEach(
+        particle => {
+
+            const px =
+                x +
+                Math.cos(
+                    particle.angle
+                ) *
+                particle.distance;
+
+            const py =
+                y +
+                38 -
+                Math.sin(
+                    particle.angle
+                ) *
+                particle.distance;
+
+
+            ctx.globalAlpha =
+                Math.max(
+                    0,
+                    particle.life / 0.8
+                );
+
+
+            ctx.fillStyle =
+                "#d8d0bd";
+
+
+            ctx.fillRect(
+                px,
+                py,
+                particle.size,
+                particle.size
+            );
+        }
+    );
+
+
+    ctx.globalAlpha = 1;
+
+    ctx.restore();
+}
+
+
+window.addEventListener(
+    "keydown",
+    event => {
+
+        keys[
+            event.key.toLowerCase()
+        ] = true;
+    }
+);
+
+
+window.addEventListener(
+    "keyup",
+    event => {
+
+        keys[
+            event.key.toLowerCase()
+        ] = false;
+
+
+        if (
+            event.key.toLowerCase() === "e"
+        )
+            portalPressed = false;
+    }
+);
 
 
 function updatePlayer() {
@@ -44,11 +646,43 @@ function updatePlayer() {
         return;
 
 
+    /*
+    Première frame de gameplay :
+    le joueur arrive du ciel.
+    */
+
+    if (
+        !playerArrival.started &&
+        currentMap === "village"
+    ) {
+
+        startPlayerArrival();
+    }
+
+
+    /*
+    Tant que la chute n'est pas terminée,
+    aucun déplacement manuel n'est accepté.
+    */
+
+    if (
+        playerArrival.active
+    ) {
+
+        updatePlayerArrival(
+            1 / 60
+        );
+
+        return;
+    }
+
+
     let nx = player.x;
+
     let ny = player.y;
 
-
     let dx = 0;
+
     let dy = 0;
 
 
@@ -120,6 +754,7 @@ function updatePlayer() {
     ) {
 
         dx *= Math.SQRT1_2;
+
         dy *= Math.SQRT1_2;
     }
 
@@ -156,6 +791,7 @@ function updatePlayer() {
         dx *
         player.speed;
 
+
     if (
         !collision(
             nx,
@@ -178,6 +814,7 @@ function updatePlayer() {
     ny +=
         dy *
         player.speed;
+
 
     if (
         !collision(
@@ -239,6 +876,7 @@ function updatePlayer() {
                 portalMessage =
                     true;
 
+
                 openDialogue(
                     "🌲 PASSAGE VERS LA FORÊT<br><br>" +
                     "Appuie sur E pour traverser."
@@ -253,6 +891,7 @@ function updatePlayer() {
 
                 portalPressed = true;
 
+
                 if (
                     typeof closeDialogue ===
                     "function"
@@ -260,6 +899,7 @@ function updatePlayer() {
 
                     closeDialogue();
                 }
+
 
                 loadForest();
             }
@@ -275,6 +915,7 @@ function updatePlayer() {
         portalMessage =
             false;
 
+
         if (
             typeof closeDialogue ===
             "function"
@@ -285,29 +926,93 @@ function updatePlayer() {
     }
 }
 
-
 /*
 =========================================================
 DESSIN DU CANARD
 =========================================================
 */
+
 function drawPlayer() {
 
-    const ctx = Game.ctx;
+    const ctx =
+        Game.ctx;
 
-    const x = player.x - Game.camera.x;
-    const y = player.y - Game.camera.y;
+
+    const x =
+        player.x -
+        Game.camera.x;
+
+
+    const groundY =
+        player.y -
+        Game.camera.y;
+
+
+    const z =
+        playerArrival.active
+            ? playerArrival.z
+            : 0;
+
+
+    const y =
+        groundY -
+        z;
+
+
+    const cx =
+        x + 20;
+
+
+    /*
+    Portail dans le ciel,
+    exactement au-dessus
+    du point d'atterrissage.
+    */
+
+    if (
+        playerArrival.active
+    ) {
+
+        const portalY =
+            groundY -
+            playerArrival.portalZ;
+
+
+        drawArrivalPortal(
+            cx,
+            portalY
+        );
+
+
+        drawArrivalImpact(
+            cx,
+            groundY
+        );
+    }
+
 
     let bob = 0;
 
-    if (player.moving) {
-        bob = Math.sin(player.walkTime) * 1.5;
+
+    if (
+        player.moving
+    ) {
+
+        bob =
+            Math.sin(
+                player.walkTime
+            ) * 1.5;
     }
 
-    const cx = x + 20;
-    const cy = y + 20 + bob;
+
+    const cy =
+        y +
+        20 +
+        bob;
+
 
     ctx.save();
+
 
     /*
     ==============================
@@ -315,19 +1020,23 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    ctx.fillStyle =
+        "rgba(0,0,0,0.25)";
+
 
     ctx.beginPath();
 
+
     ctx.ellipse(
         cx,
-        y + 39,
+        groundY + 39,
         16,
         5,
         0,
         0,
         Math.PI * 2
     );
+
 
     ctx.fill();
 
@@ -338,9 +1047,12 @@ function drawPlayer() {
     ==============================
     */
 
-    ctx.fillStyle = "#d8b94f";
+    ctx.fillStyle =
+        "#d8b94f";
+
 
     ctx.beginPath();
+
 
     ctx.ellipse(
         cx,
@@ -352,15 +1064,29 @@ function drawPlayer() {
         Math.PI * 2
     );
 
+
     ctx.fill();
 
 
+    /*
+    ==============================
+    PATTES
+    ==============================
+    */
+
     let foot = 0;
 
-if (player.moving) {
-    foot =
-        Math.sin(player.walkTime) * 2;
-}
+
+    if (
+        player.moving
+    ) {
+
+        foot =
+            Math.sin(
+                player.walkTime
+            ) * 2;
+    }
+
 
     /*
     ==============================
@@ -368,15 +1094,20 @@ if (player.moving) {
     ==============================
     */
 
-    if (player.direction === "down") {
+    if (
+        player.direction === "down"
+    ) {
 
         /*
         Tête
         */
 
-        ctx.fillStyle = "#e4c65b";
+        ctx.fillStyle =
+            "#e4c65b";
+
 
         ctx.beginPath();
+
 
         ctx.arc(
             cx,
@@ -386,6 +1117,7 @@ if (player.moving) {
             Math.PI * 2
         );
 
+
         ctx.fill();
 
 
@@ -393,7 +1125,9 @@ if (player.moving) {
         Yeux
         */
 
-        ctx.fillStyle = "#17130b";
+        ctx.fillStyle =
+            "#17130b";
+
 
         ctx.fillRect(
             cx - 7,
@@ -401,6 +1135,7 @@ if (player.moving) {
             4,
             4
         );
+
 
         ctx.fillRect(
             cx + 3,
@@ -414,26 +1149,33 @@ if (player.moving) {
         Bec
         */
 
-        ctx.fillStyle = "#d88732";
+        ctx.fillStyle =
+            "#d88732";
+
 
         ctx.beginPath();
+
 
         ctx.moveTo(
             cx - 6,
             cy - 2
         );
 
+
         ctx.lineTo(
             cx,
             cy + 4
         );
+
 
         ctx.lineTo(
             cx + 6,
             cy - 2
         );
 
+
         ctx.closePath();
+
 
         ctx.fill();
     }
@@ -445,183 +1187,204 @@ if (player.moving) {
     ==============================
     */
 
+    else if (
+        player.direction === "up"
+    ) {
 
-    else if (player.direction === "up") {
+        /*
+        Vue arrière du canard
+        */
 
-    /*
-    ==============================
-    VUE ARRIÈRE DU CANARD
-    ==============================
-    */
-
-    /*
-    Corps
-    */
-
-    ctx.fillStyle = "#d8b94f";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        cx,
-        cy + 8,
-        14,
-        13,
-        0,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
+        ctx.fillStyle =
+            "#d8b94f";
 
 
-    /*
-    Tête vue de dos
-    */
-
-    ctx.fillStyle = "#e4c65b";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        cx,
-        cy - 7,
-        12,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
+        ctx.beginPath();
 
 
-    /*
-    Petite partie sombre à l'arrière
-    de la tête pour donner du volume.
-    */
-
-    ctx.fillStyle = "#c5a845";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        cx,
-        cy - 6,
-        9,
-        0,
-        Math.PI
-    );
-
-    ctx.fill();
+        ctx.ellipse(
+            cx,
+            cy + 8,
+            14,
+            13,
+            0,
+            0,
+            Math.PI * 2
+        );
 
 
-    /*
-    Aile gauche
-    */
-
-    ctx.fillStyle = "#b89b3e";
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-        cx - 11,
-        cy + 8,
-        6,
-        10,
-        -0.15,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
+        ctx.fill();
 
 
-    /*
-    Aile droite
-    */
+        /*
+        Tête vue de dos
+        */
 
-    ctx.beginPath();
-
-    ctx.ellipse(
-        cx + 11,
-        cy + 8,
-        6,
-        10,
-        0.15,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
+        ctx.fillStyle =
+            "#e4c65b";
 
 
-    /*
-    ==============================
-    QUEUE
-    ==============================
-    */
-
-    ctx.fillStyle = "#c09f3f";
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        cx - 8,
-        cy + 18
-    );
-
-    ctx.lineTo(
-        cx,
-        cy + 11
-    );
-
-    ctx.lineTo(
-        cx + 8,
-        cy + 18
-    );
-
-    ctx.lineTo(
-        cx + 4,
-        cy + 22
-    );
-
-    ctx.lineTo(
-        cx,
-        cy + 18
-    );
-
-    ctx.lineTo(
-        cx - 4,
-        cy + 22
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
+        ctx.beginPath();
 
 
-    /*
-    ==============================
-    PATTES
-    ==============================
-    */
+        ctx.arc(
+            cx,
+            cy - 7,
+            12,
+            0,
+            Math.PI * 2
+        );
 
-    ctx.fillStyle = "#d88732";
 
-    ctx.fillRect(
-        cx - 10,
-        cy + 19 + foot,
-        7,
-        3
-    );
+        ctx.fill();
 
-    ctx.fillRect(
-        cx + 3,
-        cy + 19 - foot,
-        7,
-        3
-    );
-}
-    
+
+        /*
+        Partie sombre à l'arrière
+        */
+
+        ctx.fillStyle =
+            "#c5a845";
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            cx,
+            cy - 6,
+            9,
+            0,
+            Math.PI
+        );
+
+
+        ctx.fill();
+
+
+        /*
+        Aile gauche
+        */
+
+        ctx.fillStyle =
+            "#b89b3e";
+
+
+        ctx.beginPath();
+
+
+        ctx.ellipse(
+            cx - 11,
+            cy + 8,
+            6,
+            10,
+            -0.15,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+
+        /*
+        Aile droite
+        */
+
+        ctx.beginPath();
+
+
+        ctx.ellipse(
+            cx + 11,
+            cy + 8,
+            6,
+            10,
+            0.15,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+
+        /*
+        Queue
+        */
+
+        ctx.fillStyle =
+            "#c09f3f";
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            cx - 8,
+            cy + 18
+        );
+
+
+        ctx.lineTo(
+            cx,
+            cy + 11
+        );
+
+
+        ctx.lineTo(
+            cx + 8,
+            cy + 18
+        );
+
+
+        ctx.lineTo(
+            cx + 4,
+            cy + 22
+        );
+
+
+        ctx.lineTo(
+            cx,
+            cy + 18
+        );
+
+
+        ctx.lineTo(
+            cx - 4,
+            cy + 22
+        );
+
+
+        ctx.closePath();
+
+
+        ctx.fill();
+
+
+        /*
+        Pattes
+        */
+
+        ctx.fillStyle =
+            "#d88732";
+
+
+        ctx.fillRect(
+            cx - 10,
+            cy + 19 + foot,
+            7,
+            3
+        );
+
+
+        ctx.fillRect(
+            cx + 3,
+            cy + 19 - foot,
+            7,
+            3
+        );
+    }
+
 
     /*
     ==============================
@@ -629,16 +1392,21 @@ if (player.moving) {
     ==============================
     */
 
-    else if (player.direction === "left") {
+    else if (
+        player.direction === "left"
+    ) {
 
         /*
         Tête légèrement décalée
         vers la gauche.
         */
 
-        ctx.fillStyle = "#e4c65b";
+        ctx.fillStyle =
+            "#e4c65b";
+
 
         ctx.beginPath();
+
 
         ctx.arc(
             cx - 3,
@@ -648,6 +1416,7 @@ if (player.moving) {
             Math.PI * 2
         );
 
+
         ctx.fill();
 
 
@@ -655,7 +1424,9 @@ if (player.moving) {
         Œil
         */
 
-        ctx.fillStyle = "#17130b";
+        ctx.fillStyle =
+            "#17130b";
+
 
         ctx.fillRect(
             cx - 10,
@@ -669,26 +1440,33 @@ if (player.moving) {
         Bec
         */
 
-        ctx.fillStyle = "#d88732";
+        ctx.fillStyle =
+            "#d88732";
+
 
         ctx.beginPath();
+
 
         ctx.moveTo(
             cx - 14,
             cy - 2
         );
 
+
         ctx.lineTo(
             cx - 24,
             cy + 2
         );
+
 
         ctx.lineTo(
             cx - 14,
             cy + 5
         );
 
+
         ctx.closePath();
+
 
         ctx.fill();
     }
@@ -707,9 +1485,12 @@ if (player.moving) {
         vers la droite.
         */
 
-        ctx.fillStyle = "#e4c65b";
+        ctx.fillStyle =
+            "#e4c65b";
+
 
         ctx.beginPath();
+
 
         ctx.arc(
             cx + 3,
@@ -719,6 +1500,7 @@ if (player.moving) {
             Math.PI * 2
         );
 
+
         ctx.fill();
 
 
@@ -726,7 +1508,9 @@ if (player.moving) {
         Œil
         */
 
-        ctx.fillStyle = "#17130b";
+        ctx.fillStyle =
+            "#17130b";
+
 
         ctx.fillRect(
             cx + 6,
@@ -740,26 +1524,33 @@ if (player.moving) {
         Bec
         */
 
-        ctx.fillStyle = "#d88732";
+        ctx.fillStyle =
+            "#d88732";
+
 
         ctx.beginPath();
+
 
         ctx.moveTo(
             cx + 14,
             cy - 2
         );
 
+
         ctx.lineTo(
             cx + 24,
             cy + 2
         );
+
 
         ctx.lineTo(
             cx + 14,
             cy + 5
         );
 
+
         ctx.closePath();
+
 
         ctx.fill();
     }
@@ -771,9 +1562,12 @@ if (player.moving) {
     ==============================
     */
 
-    ctx.fillStyle = "#b89b3e";
+    ctx.fillStyle =
+        "#b89b3e";
+
 
     ctx.beginPath();
+
 
     ctx.ellipse(
         cx - 9,
@@ -785,6 +1579,7 @@ if (player.moving) {
         Math.PI * 2
     );
 
+
     ctx.fill();
 
 
@@ -794,8 +1589,9 @@ if (player.moving) {
     ==============================
     */
 
+    ctx.fillStyle =
+        "#d88732";
 
-    ctx.fillStyle = "#d88732";
 
     ctx.fillRect(
         cx - 11,
@@ -803,6 +1599,7 @@ if (player.moving) {
         7,
         3
     );
+
 
     ctx.fillRect(
         cx + 4,
