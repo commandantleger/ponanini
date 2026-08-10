@@ -29,23 +29,23 @@ const npcs = [
 
         dialogues: [
 
-            "Étranger... Tu n'es pas d'ici, n'est-ce pas ?",
+    "Tu es tombé du ciel... Je t'ai vu apparaître près du village.",
 
-            "Ton regard me le confirme. Tu ne connais rien de Ponan.",
+    "Ce n'est pas une façon ordinaire d'arriver à Ponan.",
 
-            "Tu es dans le royaume de Ponan.",
+    "Tu affirmes venir d'un autre monde ?",
 
-            "Un royaume de canards qui existe depuis bien plus " +
-            "longtemps que les histoires racontées aux jeunes générations.",
+    "Un monde où les humains existent encore... Voilà qui est étrange.",
 
-            "Si tu veux comprendre où tu es, commence par observer " +
-            "les habitants du village.",
+    "Tu es dans le royaume de Ponan, un royaume de canards.",
 
-            "Mais souviens-toi d'une chose : à Ponan, " +
-            "tout le monde ne raconte pas la même histoire."
+    "Si tu veux comprendre ce qui t'est arrivé, interroge les habitants.",
 
-        ]
-    },
+    "Mais reviens me voir ensuite. Il y a certaines choses que je ne peux pas raconter à n'importe qui."
+
+]
+        
+           },
 
 
     /*
@@ -223,6 +223,7 @@ FIN DE DIALOGUE
 =========================================================
 */
 
+
 function finishNPCDialogue(npc) {
 
     if (!npc)
@@ -231,11 +232,16 @@ function finishNPCDialogue(npc) {
 
     /*
     =====================================================
-    ANCIEN
+    L'ANCIEN
     =====================================================
     */
 
     if (npc.id === "oldman") {
+
+        /*
+        Première rencontre :
+        le héros découvre où il se trouve.
+        */
 
         if (questStage === 0) {
 
@@ -243,7 +249,24 @@ function finishNPCDialogue(npc) {
                 "oldman"
             );
 
-            advanceQuest(1);
+            return;
+        }
+
+
+        /*
+        Deuxième rencontre :
+        l'Ancien fait partie de
+        l'enquête sur Ponan.
+        */
+
+        if (
+            questStage === 1 &&
+            !quests.village.objectives.oldman
+        ) {
+
+            completeObjective(
+                "oldman"
+            );
         }
 
         return;
@@ -271,7 +294,7 @@ function finishNPCDialogue(npc) {
 
     /*
     =====================================================
-    GARDE
+    GARDE ROYAL
     =====================================================
     */
 
@@ -290,7 +313,7 @@ function finishNPCDialogue(npc) {
 
     /*
     =====================================================
-    ROI
+    PONANINI IV
     =====================================================
     */
 
@@ -307,7 +330,6 @@ function finishNPCDialogue(npc) {
         return;
     }
 }
-
 
 /*
 =========================================================
@@ -580,7 +602,9 @@ function shouldShowQuestMarker(npc) {
 
 
     /*
-    Ancien
+    =====================================================
+    QUÊTE 1 — ANCIEN
+    =====================================================
     */
 
     if (
@@ -593,7 +617,25 @@ function shouldShowQuestMarker(npc) {
 
 
     /*
-    Mila
+    =====================================================
+    QUÊTE 2 — ANCIEN
+    =====================================================
+    */
+
+    if (
+        npc.id === "oldman" &&
+        questStage === 1 &&
+        !quests.village.objectives.oldman
+    ) {
+
+        return true;
+    }
+
+
+    /*
+    =====================================================
+    QUÊTE 2 — MILA
+    =====================================================
     */
 
     if (
@@ -607,7 +649,9 @@ function shouldShowQuestMarker(npc) {
 
 
     /*
-    Garde
+    =====================================================
+    QUÊTE 2 — GARDE
+    =====================================================
     */
 
     if (
@@ -621,7 +665,9 @@ function shouldShowQuestMarker(npc) {
 
 
     /*
-    Roi
+    =====================================================
+    QUÊTE 3 — ROI
+    =====================================================
     */
 
     if (
@@ -635,7 +681,6 @@ function shouldShowQuestMarker(npc) {
 
     return false;
 }
-
 
 /*
 =========================================================

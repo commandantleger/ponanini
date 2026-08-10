@@ -13,6 +13,12 @@ const quests = {
         description:
             "Trouver quelqu'un capable de t'expliquer où tu es.",
 
+        objectives: {
+
+            oldman: false
+
+        },
+
         completed: false
     },
 
@@ -32,11 +38,11 @@ const quests = {
 
         objectives: {
 
-            oldman: false,
-
             mila: false,
 
-            guard: false
+            guard: false,
+
+            oldman: false
 
         },
 
@@ -106,12 +112,18 @@ function updateQuest() {
 
     if (questStage === 0) {
 
+        const objective =
+            quests.intro.objectives.oldman;
+
         quest.innerHTML =
             "📜 " +
             quests.intro.name +
-            "<br><small>" +
-            quests.intro.description +
-            "</small>";
+            "<br><br>" +
+            (
+                objective
+                    ? "✓ Parler à l'Ancien"
+                    : "□ Parler à l'Ancien"
+            );
 
         return;
     }
@@ -209,29 +221,61 @@ VALIDATION D'UN OBJECTIF
 =========================================================
 */
 
-function completeObjective(
-    objective
-) {
+function completeObjective(objective) {
 
-    if (questStage !== 1)
+    /*
+    ==============================
+    QUÊTE 1
+    ==============================
+    */
+
+    if (questStage === 0) {
+
+        if (objective === "oldman") {
+
+            quests.intro.objectives.oldman =
+                true;
+
+            quests.intro.completed =
+                true;
+
+            questStage = 1;
+
+            updateQuest();
+
+            return;
+        }
+
         return;
+    }
 
 
-    if (
-        !quests.village.objectives
-            .hasOwnProperty(objective)
-    )
+    /*
+    ==============================
+    QUÊTE 2
+    ==============================
+    */
+
+    if (questStage === 1) {
+
+        if (
+            !quests.village.objectives
+                .hasOwnProperty(objective)
+        )
+            return;
+
+
+        quests.village.objectives[
+            objective
+        ] = true;
+
+
+        checkVillageQuest();
+
+        updateQuest();
+
         return;
-
-
-    quests.village.objectives[
-        objective
-    ] = true;
-
-
-    checkVillageQuest();
-
-    updateQuest();
+    }
 }
 
 
@@ -307,6 +351,10 @@ function resetQuests() {
         false;
 
     quests.secrets.completed =
+        false;
+
+
+    quests.intro.objectives.oldman =
         false;
 
 
