@@ -40,13 +40,13 @@ const playerArrival = {
 
     timer: 0,
 
-    z: 560,
+    z: 700,
 
     velocity: 0,
 
-    gravity: 950,
+    gravity: 650,
 
-    portalZ: 430,
+    portalZ: 550,
 
     impact: 0,
 
@@ -64,13 +64,88 @@ function startPlayerArrival() {
     )
         return;
 
+
+    /*
+    =====================================================
+    POINT D'ARRIVÉE
+    =====================================================
+
+    On cherche automatiquement une case libre
+    dans le coin sud-ouest de la map.
+
+    Le joueur n'arrive donc plus près du garde.
+    */
+
+    const T =
+        Game.tileSize;
+
+    let found = false;
+
+
+    for (
+        let y = WORLD.length - 5;
+        y >= 3 && !found;
+        y--
+    ) {
+
+        for (
+            let x = 3;
+            x < 18;
+            x++
+        ) {
+
+            if (
+                WORLD[y][x] !== "." &&
+                WORLD[y][x] !== "+"
+            ) {
+
+                continue;
+            }
+
+
+            const testX =
+                x * T;
+
+            const testY =
+                y * T;
+
+
+            if (
+                !collision(
+                    testX,
+                    testY,
+                    player.w,
+                    player.h
+                )
+            ) {
+
+                player.x =
+                    testX;
+
+                player.y =
+                    testY;
+
+                found = true;
+
+                break;
+            }
+        }
+    }
+
+
+    /*
+    =====================================================
+    INITIALISATION DE LA CHUTE
+    =====================================================
+    */
+
     playerArrival.started = true;
 
     playerArrival.active = true;
 
     playerArrival.timer = 0;
 
-    playerArrival.z = 560;
+    playerArrival.z = 700;
 
     playerArrival.velocity = 0;
 
@@ -82,7 +157,6 @@ function startPlayerArrival() {
 
     player.moving = false;
 }
-
 
 function updatePlayerArrival(dt) {
 
@@ -100,7 +174,7 @@ function updatePlayerArrival(dt) {
     */
 
     if (
-        playerArrival.timer < 0.55
+        playerArrival.timer < 1.2
     ) {
 
         playerArrival.z = 560;
