@@ -1,10 +1,17 @@
-const dialogue = document.getElementById("dialogue");
-const dialogueText = document.getElementById("dialogueText");
+const dialogue =
+    document.getElementById("dialogue");
 
-const inventoryBox = document.getElementById("inventory");
-const inventoryList = document.getElementById("inventoryList");
+const dialogueText =
+    document.getElementById("dialogueText");
 
-const piecesHUD = document.getElementById("pieces");
+const inventoryBox =
+    document.getElementById("inventory");
+
+const inventoryList =
+    document.getElementById("inventoryList");
+
+const piecesHUD =
+    document.getElementById("pieces");
 
 let duckPieces = 0;
 
@@ -12,87 +19,134 @@ const inventory = [];
 
 let typingInterval = null;
 
+
 function openDialogue(text) {
 
-    dialogue.classList.remove("hidden");
+    if (!dialogue || !dialogueText)
+        return;
 
     clearInterval(typingInterval);
 
-    const html = text.replace(/\n/g, "<br>");
+    dialogue.classList.remove("hidden");
 
-    let i = 0;
+    let html = text.replace(/\n/g, "<br>");
+
+    let plainText =
+        html.replace(/<br\s*\/?>/gi, "\n")
+            .replace(/<[^>]*>/g, "");
+
+    let index = 0;
 
     dialogueText.innerHTML = "";
 
     typingInterval = setInterval(() => {
 
-        dialogueText.innerHTML = html.substring(0, i);
-
-        i++;
-
-        if (i > html.length) {
+        if (index >= plainText.length) {
 
             clearInterval(typingInterval);
 
+            dialogueText.innerHTML = html;
+
+            return;
         }
 
-    }, 12);
+        const visible =
+            plainText.substring(0, index + 1);
 
+        const parts =
+            visible.split("\n");
+
+        let result = "";
+
+        for (let i = 0; i < parts.length; i++) {
+
+            if (i > 0)
+                result += "<br>";
+
+            result += parts[i];
+        }
+
+        dialogueText.innerHTML = result;
+
+        index++;
+
+    }, 20);
 }
+
 
 function closeDialogue() {
 
     clearInterval(typingInterval);
 
-    dialogue.classList.add("hidden");
-
+    if (dialogue)
+        dialogue.classList.add("hidden");
 }
 
-window.addEventListener("keydown", e => {
 
-    if (e.key === "Escape")
-        closeDialogue();
+window.addEventListener(
+    "keydown",
+    event => {
 
-    if (e.key === "i" || e.key === "I") {
+        if (event.key === "Escape") {
+            closeDialogue();
+        }
 
-        inventoryBox.classList.toggle("hidden");
+        if (
+            event.key === "i" ||
+            event.key === "I"
+        ) {
 
-        updateInventory();
+            if (!inventoryBox)
+                return;
 
+            inventoryBox.classList.toggle(
+                "hidden"
+            );
+
+            updateInventory();
+        }
     }
+);
 
-});
 
 function addItem(item) {
 
     inventory.push(item);
 
     updateInventory();
-
 }
 
+
 function updateInventory() {
+
+    if (!inventoryList)
+        return;
 
     inventoryList.innerHTML = "";
 
     inventory.forEach(item => {
 
-        const li = document.createElement("li");
+        const li =
+            document.createElement("li");
 
         li.innerHTML = item;
 
         inventoryList.appendChild(li);
-
     });
-
 }
+
 
 function addDuckPiece(name) {
 
     duckPieces++;
 
-    piecesHUD.innerHTML = "🦆 " + duckPieces + " / 3";
+    if (piecesHUD) {
+
+        piecesHUD.innerHTML =
+            "🦆 " +
+            duckPieces +
+            " / 3";
+    }
 
     addItem(name);
-
 }
