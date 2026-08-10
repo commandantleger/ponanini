@@ -1,6 +1,6 @@
 const player = {
     x: 21 * Game.tileSize,
-    y: 69 * Game.tileSize,
+    y: 34 * Game.tileSize,
 
     w: 40,
     h: 40,
@@ -16,7 +16,7 @@ let portalPressed = false;
 let portalMessage = false;
 
 const ARRIVAL_X = 21;
-const ARRIVAL_Y = 69;
+const ARRIVAL_Y = 34;
 const ARRIVAL_Z = 760;
 
 const playerArrival = {
