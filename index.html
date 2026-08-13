@@ -147,7 +147,7 @@
 
 
         /* =========================================
-           PETIT INDICATEUR DE CHARGEMENT
+           PETIT INDICATEUR INTRO
         ========================================= */
 
         #introLoading {
@@ -177,15 +177,16 @@
 
 <body>
 
+
     <!-- ========================================= -->
     <!-- MUSIQUE DU MENU -->
     <!-- ========================================= -->
 
     <audio
         id="menuMusic"
-        src="assets/audio/menu.waw"
-        loop
-        preload="auto">
+        src="assets/audio/menu.wav"
+        preload="auto"
+        loop>
     </audio>
 
 
@@ -199,8 +200,8 @@
         <video
             id="introVideoPlayer"
             preload="auto"
-	    playsinline	        
-	>
+            playsinline>
+
             <source
                 src="assets/intro/ponan.mp4"
                 type="video/mp4">
@@ -229,11 +230,13 @@
          class="intro-hidden">
 
         <div class="menu-overlay"></div>
-	<div class="menu-particles"></div>
+
+        <div class="menu-particles"></div>
 
         <div class="menu-content">
 
             <div class="menu-logo">
+
                 <h1>
                     PONAN'S LEGACY
                 </h1>
@@ -448,41 +451,57 @@
 
 
     <!-- ========================================= -->
-    <!-- MENU CONTROLLER
-    ========================================== -->
+    <!-- MENU CONTROLLER + AUDIO -->
+    <!-- ========================================= -->
 
     <script>
 
         const menu =
-            document.getElementById("menu");
+            document.getElementById(
+                "menu"
+            );
 
 
         const playButton =
-            document.getElementById("playButton");
+            document.getElementById(
+                "playButton"
+            );
 
 
         const continueButton =
-            document.getElementById("continueButton");
+            document.getElementById(
+                "continueButton"
+            );
 
 
         const optionsButton =
-            document.getElementById("optionsButton");
+            document.getElementById(
+                "optionsButton"
+            );
 
 
         const creditsButton =
-            document.getElementById("creditsButton");
+            document.getElementById(
+                "creditsButton"
+            );
 
 
         const quitButton =
-            document.getElementById("quitButton");
+            document.getElementById(
+                "quitButton"
+            );
 
 
         const loadingScreen =
-            document.getElementById("loadingScreen");
+            document.getElementById(
+                "loadingScreen"
+            );
 
 
         const loadingProgress =
-            document.getElementById("loadingProgress");
+            document.getElementById(
+                "loadingProgress"
+            );
 
 
         const loadingText =
@@ -490,6 +509,184 @@
                 ".loading-text"
             );
 
+
+        /* ==========================================
+           AUDIO
+        ========================================== */
+
+        const menuMusic =
+            document.getElementById(
+                "menuMusic"
+            );
+
+
+        let menuMusicStarted =
+            false;
+
+
+        const MENU_VOLUME =
+            0.42;
+
+
+        if (menuMusic) {
+
+            menuMusic.volume = 0;
+
+            menuMusic.loop = true;
+
+
+            menuMusic.addEventListener(
+                "canplay",
+                () => {
+
+                    console.log(
+                        "✅ menu.wav chargé et prêt."
+                    );
+
+                }
+            );
+
+
+            menuMusic.addEventListener(
+                "error",
+                () => {
+
+                    console.error(
+                        "❌ Impossible de charger assets/audio/menu.wav"
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ==========================================
+           DEMARRER LA MUSIQUE
+        ========================================== */
+
+        function startMenuMusic() {
+
+            if (!menuMusic)
+                return;
+
+
+            if (!menuMusic.paused)
+                return;
+
+
+            menuMusic.volume =
+                MENU_VOLUME;
+
+
+            const promise =
+                menuMusic.play();
+
+
+            if (promise) {
+
+                promise.then(
+                    () => {
+
+                        menuMusicStarted =
+                            true;
+
+                        console.log(
+                            "🎵 Musique du menu lancée."
+                        );
+
+                    }
+                ).catch(
+                    error => {
+
+                        menuMusicStarted =
+                            false;
+
+                        console.warn(
+                            "⚠️ Lecture de la musique bloquée :",
+                            error
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================
+           ARRETER LA MUSIQUE
+        ========================================== */
+
+        function stopMenuMusic() {
+
+            if (!menuMusic)
+                return;
+
+
+            menuMusic.pause();
+
+
+            menuMusic.currentTime =
+                0;
+
+
+            menuMusic.volume =
+                0;
+
+
+            menuMusicStarted =
+                false;
+
+
+            console.log(
+                "🎵 Musique du menu arrêtée."
+            );
+
+        }
+
+
+        /* ==========================================
+           INTERACTION UTILISATEUR
+        ========================================== */
+
+        document.addEventListener(
+            "pointerdown",
+            () => {
+
+                if (
+                    typeof introFinished !==
+                    "undefined" &&
+                    introFinished
+                ) {
+
+                    startMenuMusic();
+
+                }
+
+            },
+            true
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            () => {
+
+                if (
+                    typeof introFinished !==
+                    "undefined" &&
+                    introFinished
+                ) {
+
+                    startMenuMusic();
+
+                }
+
+            },
+            true
+        );
 
 
         /* ==========================================
@@ -503,6 +700,9 @@
                 console.log(
                     "NOUVELLE PARTIE"
                 );
+
+
+                stopMenuMusic();
 
 
                 playButton.disabled =
@@ -525,7 +725,6 @@
         );
 
 
-
         /* ==========================================
            CHARGEMENT
         ========================================== */
@@ -533,6 +732,10 @@
         function startLoading() {
 
             let progress = 0;
+
+
+            loadingProgress.style.width =
+                "0%";
 
 
             const messages = [
@@ -559,8 +762,11 @@
 
                         if (
                             progress > 100
-                        )
+                        ) {
+
                             progress = 100;
+
+                        }
 
 
                         loadingProgress.style.width =
@@ -600,7 +806,6 @@
         }
 
 
-
         /* ==========================================
            ATTENDRE GAME.JS
         ========================================== */
@@ -617,7 +822,7 @@
 
                         if (
                             typeof Game !==
-                                "undefined" &&
+                            "undefined" &&
                             Game.ready === true
                         ) {
 
@@ -649,7 +854,6 @@
         }
 
 
-
         /* ==========================================
            LANCEMENT
         ========================================== */
@@ -679,7 +883,6 @@
         }
 
 
-
         /* ==========================================
            CONTINUER
         ========================================== */
@@ -700,6 +903,7 @@
                         "Aucune partie sauvegardée."
                     );
 
+
                     return;
 
                 }
@@ -709,7 +913,6 @@
 
             }
         );
-
 
 
         /* ==========================================
@@ -729,7 +932,6 @@
         );
 
 
-
         /* ==========================================
            CRÉDITS
         ========================================== */
@@ -746,7 +948,6 @@
 
             }
         );
-
 
 
         /* ==========================================
@@ -796,8 +997,8 @@
             );
 
 
-        let introFinished = false;
-
+        let introFinished =
+            false;
 
 
         /* ==========================================
@@ -818,7 +1019,6 @@
         }
 
 
-
         /* ==========================================
            TERMINER L'INTRO
         ========================================== */
@@ -829,7 +1029,8 @@
                 return;
 
 
-            introFinished = true;
+            introFinished =
+                true;
 
 
             console.log(
@@ -847,11 +1048,22 @@
 
             showMainMenu();
 
+
             /*
-             * Lance la musique du menu
-             * lorsque l'intro est terminée.
+             * On tente de démarrer la musique.
+             *
+             * Si le navigateur bloque l'autoplay,
+             * le premier clic dans le menu la lancera.
              */
-            startMenuMusic();
+
+            if (
+                typeof startMenuMusic ===
+                "function"
+            ) {
+
+                startMenuMusic();
+
+            }
 
 
             setTimeout(
@@ -867,7 +1079,6 @@
         }
 
 
-
         /* ==========================================
            FIN NATURELLE
         ========================================== */
@@ -876,7 +1087,6 @@
             "ended",
             finishIntro
         );
-
 
 
         /* ==========================================
@@ -889,7 +1099,6 @@
         );
 
 
-
         /* ==========================================
            ESPACE
         ========================================== */
@@ -899,8 +1108,7 @@
             event => {
 
                 if (
-                    event.code ===
-                        "Space" &&
+                    event.code === "Space" &&
                     !introFinished
                 ) {
 
@@ -914,16 +1122,11 @@
         );
 
 
-
         /* ==========================================
-           LANCEMENT DE LA VIDÉO
+           LANCEMENT DE LA VIDEO
         ========================================== */
 
         function startIntro() {
-
-            /*
-             * Le menu reste caché.
-             */
 
             menu.classList.add(
                 "intro-hidden"
@@ -933,10 +1136,6 @@
             introLoading.textContent =
                 "PONAN'S LEGACY";
 
-
-            /*
-             * On essaie l'autoplay.
-             */
 
             introPlayer
                 .play()
@@ -951,11 +1150,6 @@
                 )
                 .catch(
                     () => {
-
-                        /*
-                         * Firefox / navigateur
-                         * peut bloquer l'autoplay.
-                         */
 
                         introLoading.textContent =
                             "CLIQUE POUR COMMENCER";
@@ -979,7 +1173,6 @@
         }
 
 
-
         /* ==========================================
            DÉMARRAGE APRÈS CLIC
         ========================================== */
@@ -987,11 +1180,6 @@
         function startIntroFromClick(
             event
         ) {
-
-            /*
-             * Ne pas considérer le bouton
-             * PASSER comme un démarrage.
-             */
 
             if (
                 event.target ===
@@ -1024,7 +1212,6 @@
         }
 
 
-
         /* ==========================================
            DÉMARRAGE
         ========================================== */
@@ -1043,374 +1230,6 @@
 
     </script>
 
-
-    <!-- ========================================= -->
-    <!-- MUSIQUE DU MENU -->
-    <!-- ========================================= -->
-
-    <script>
-
-        const menuMusic =
-            document.getElementById(
-                "menuMusic"
-            );
-
-
-        let menuMusicStarted =
-            false;
-
-
-        /*
-         * Volume initial.
-         */
-
-        if (menuMusic) {
-
-            menuMusic.volume = 0;
-
-        }
-
-
-        /*
-         * Démarrage de la musique.
-         */
-
-        function startMenuMusic() {
-
-            if (
-                !menuMusic ||
-                menuMusicStarted
-            ) {
-                return;
-            }
-
-
-            menuMusicStarted =
-                true;
-
-
-            menuMusic.volume =
-                0;
-
-
-            const promise =
-                menuMusic.play();
-
-
-            if (
-                promise &&
-                typeof promise.catch ===
-                "function"
-            ) {
-
-                promise.catch(
-                    error => {
-
-                        console.warn(
-                            "Lecture automatique de la musique bloquée.",
-                            error
-                        );
-
-                        menuMusicStarted =
-                            false;
-
-                    }
-                );
-
-            }
-
-
-            /*
-             * Fade-in.
-             */
-
-            let volume = 0;
-
-
-            const fade =
-                setInterval(
-                    () => {
-
-                        volume += 0.02;
-
-
-                        if (
-                            volume >= 0.42
-                        ) {
-
-                            volume =
-                                0.42;
-
-                            clearInterval(
-                                fade
-                            );
-
-                        }
-
-
-                        menuMusic.volume =
-                            volume;
-
-                    },
-                    100
-                );
-
-        }
-
-
-        /*
-         * Si le navigateur bloque
-         * l'autoplay, le premier clic
-         * démarre la musique.
-         */
-
-        document.addEventListener(
-            "click",
-            () => {
-
-                if (
-                    introFinished
-                ) {
-
-                    startMenuMusic();
-
-                }
-
-            }
-        );
-
-
-        /*
-         * Arrêt propre de la musique
-         * avant le lancement du jeu.
-         */
-
-        function stopMenuMusic() {
-
-            if (!menuMusic)
-                return;
-
-
-            menuMusic.pause();
-
-            menuMusic.currentTime =
-                0;
-
-            menuMusic.volume =
-                0;
-
-            menuMusicStarted =
-                false;
-
-        }
-
-
-        /*
-         * On intercepte le lancement
-         * de Nouvelle Partie.
-         */
-
-        if (playButton) {
-
-            playButton.addEventListener(
-                "click",
-                () => {
-
-                    stopMenuMusic();
-
-                }
-            );
-
-        }
-
-    </script>
-
-
-
-<script id="ponan-menu-audio">
-
-const menuMusic =
-    document.getElementById("menuMusic");
-
-let menuMusicStarted = false;
-
-const MENU_VOLUME = 0.42;
-
-
-/* =========================================
-   LANCER LA MUSIQUE
-========================================= */
-
-function startMenuMusic() {
-
-    if (!menuMusic)
-        return;
-
-    if (
-        menuMusicStarted &&
-        !menuMusic.paused
-    ) {
-        return;
-    }
-
-    menuMusicStarted = true;
-
-    menuMusic.volume = 0;
-
-    const promise =
-        menuMusic.play();
-
-    if (promise) {
-
-        promise.catch(() => {
-
-            console.warn(
-                "Lecture audio bloquée. " +
-                "Une interaction est nécessaire."
-            );
-
-            menuMusicStarted = false;
-
-        });
-
-    }
-
-
-    /* Fade-in */
-
-    let volume = 0;
-
-    const fade =
-        setInterval(() => {
-
-            if (
-                !menuMusicStarted
-            ) {
-
-                clearInterval(fade);
-                return;
-
-            }
-
-            volume += 0.02;
-
-            if (
-                volume >= MENU_VOLUME
-            ) {
-
-                volume =
-                    MENU_VOLUME;
-
-                clearInterval(fade);
-
-            }
-
-            menuMusic.volume =
-                volume;
-
-        }, 100);
-
-
-    console.log(
-        "🎵 Musique du menu lancée."
-    );
-}
-
-
-/* =========================================
-   ARRETER LA MUSIQUE
-========================================= */
-
-function stopMenuMusic() {
-
-    if (!menuMusic)
-        return;
-
-    menuMusic.pause();
-
-    menuMusic.currentTime = 0;
-
-    menuMusic.volume = 0;
-
-    menuMusicStarted = false;
-
-    console.log(
-        "🎵 Musique du menu arrêtée."
-    );
-}
-
-
-/* =========================================
-   PREMIER CLIC
-========================================= */
-
-document.addEventListener(
-    "pointerdown",
-    () => {
-
-        if (
-            typeof introFinished !==
-            "undefined" &&
-            introFinished
-        ) {
-
-            startMenuMusic();
-
-        }
-
-    },
-    true
-);
-
-
-/* =========================================
-   PREMIERE TOUCHE CLAVIER
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    () => {
-
-        if (
-            typeof introFinished !==
-            "undefined" &&
-            introFinished
-        ) {
-
-            startMenuMusic();
-
-        }
-
-    },
-    true
-);
-
-
-/* =========================================
-   NOUVELLE PARTIE
-========================================= */
-
-const playButton =
-    document.getElementById(
-        "playButton"
-    );
-
-
-if (playButton) {
-
-    playButton.addEventListener(
-        "click",
-        () => {
-
-            stopMenuMusic();
-
-        },
-        true
-    );
-
-}
-
-</script>
 
 </body>
 
