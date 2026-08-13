@@ -202,7 +202,7 @@
 	    playsinline	        
 	>
             <source
-                src="assets/intro/ponans_intro.mp4"
+                src="assets/intro/ponan.mp4"
                 type="video/mp4">
 
         </video>
@@ -1225,6 +1225,192 @@
 
     </script>
 
+
+
+<script id="ponan-menu-audio">
+
+const menuMusic =
+    document.getElementById("menuMusic");
+
+let menuMusicStarted = false;
+
+const MENU_VOLUME = 0.42;
+
+
+/* =========================================
+   LANCER LA MUSIQUE
+========================================= */
+
+function startMenuMusic() {
+
+    if (!menuMusic)
+        return;
+
+    if (
+        menuMusicStarted &&
+        !menuMusic.paused
+    ) {
+        return;
+    }
+
+    menuMusicStarted = true;
+
+    menuMusic.volume = 0;
+
+    const promise =
+        menuMusic.play();
+
+    if (promise) {
+
+        promise.catch(() => {
+
+            console.warn(
+                "Lecture audio bloquée. " +
+                "Une interaction est nécessaire."
+            );
+
+            menuMusicStarted = false;
+
+        });
+
+    }
+
+
+    /* Fade-in */
+
+    let volume = 0;
+
+    const fade =
+        setInterval(() => {
+
+            if (
+                !menuMusicStarted
+            ) {
+
+                clearInterval(fade);
+                return;
+
+            }
+
+            volume += 0.02;
+
+            if (
+                volume >= MENU_VOLUME
+            ) {
+
+                volume =
+                    MENU_VOLUME;
+
+                clearInterval(fade);
+
+            }
+
+            menuMusic.volume =
+                volume;
+
+        }, 100);
+
+
+    console.log(
+        "🎵 Musique du menu lancée."
+    );
+}
+
+
+/* =========================================
+   ARRETER LA MUSIQUE
+========================================= */
+
+function stopMenuMusic() {
+
+    if (!menuMusic)
+        return;
+
+    menuMusic.pause();
+
+    menuMusic.currentTime = 0;
+
+    menuMusic.volume = 0;
+
+    menuMusicStarted = false;
+
+    console.log(
+        "🎵 Musique du menu arrêtée."
+    );
+}
+
+
+/* =========================================
+   PREMIER CLIC
+========================================= */
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+
+        if (
+            typeof introFinished !==
+            "undefined" &&
+            introFinished
+        ) {
+
+            startMenuMusic();
+
+        }
+
+    },
+    true
+);
+
+
+/* =========================================
+   PREMIERE TOUCHE CLAVIER
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    () => {
+
+        if (
+            typeof introFinished !==
+            "undefined" &&
+            introFinished
+        ) {
+
+            startMenuMusic();
+
+        }
+
+    },
+    true
+);
+
+
+/* =========================================
+   NOUVELLE PARTIE
+========================================= */
+
+const playButton =
+    document.getElementById(
+        "playButton"
+    );
+
+
+if (playButton) {
+
+    playButton.addEventListener(
+        "click",
+        () => {
+
+            stopMenuMusic();
+
+        },
+        true
+    );
+
+}
+
+</script>
 
 </body>
 
