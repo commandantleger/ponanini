@@ -177,6 +177,18 @@
 
 <body>
 
+    <!-- ========================================= -->
+    <!-- MUSIQUE DU MENU -->
+    <!-- ========================================= -->
+
+    <audio
+        id="menuMusic"
+        src="assets/audio/menu.mp3"
+        loop
+        preload="auto">
+    </audio>
+
+
 
     <!-- ========================================= -->
     <!-- INTRO CINÉMATIQUE -->
@@ -187,10 +199,8 @@
         <video
             id="introVideoPlayer"
             preload="auto"
-            playsinline
-            muted
-        >
-
+	    playsinline	        
+	>
             <source
                 src="assets/intro/ponans_intro.mp4"
                 type="video/mp4">
@@ -219,15 +229,11 @@
          class="intro-hidden">
 
         <div class="menu-overlay"></div>
+	<div class="menu-particles"></div>
 
         <div class="menu-content">
 
             <div class="menu-logo">
-
-                <div class="logo-duck">
-                    🦆
-                </div>
-
                 <h1>
                     PONAN'S LEGACY
                 </h1>
@@ -841,6 +847,12 @@
 
             showMainMenu();
 
+            /*
+             * Lance la musique du menu
+             * lorsque l'intro est terminée.
+             */
+            startMenuMusic();
+
 
             setTimeout(
                 () => {
@@ -1030,6 +1042,189 @@
         );
 
     </script>
+
+
+    <!-- ========================================= -->
+    <!-- MUSIQUE DU MENU -->
+    <!-- ========================================= -->
+
+    <script>
+
+        const menuMusic =
+            document.getElementById(
+                "menuMusic"
+            );
+
+
+        let menuMusicStarted =
+            false;
+
+
+        /*
+         * Volume initial.
+         */
+
+        if (menuMusic) {
+
+            menuMusic.volume = 0;
+
+        }
+
+
+        /*
+         * Démarrage de la musique.
+         */
+
+        function startMenuMusic() {
+
+            if (
+                !menuMusic ||
+                menuMusicStarted
+            ) {
+                return;
+            }
+
+
+            menuMusicStarted =
+                true;
+
+
+            menuMusic.volume =
+                0;
+
+
+            const promise =
+                menuMusic.play();
+
+
+            if (
+                promise &&
+                typeof promise.catch ===
+                "function"
+            ) {
+
+                promise.catch(
+                    error => {
+
+                        console.warn(
+                            "Lecture automatique de la musique bloquée.",
+                            error
+                        );
+
+                        menuMusicStarted =
+                            false;
+
+                    }
+                );
+
+            }
+
+
+            /*
+             * Fade-in.
+             */
+
+            let volume = 0;
+
+
+            const fade =
+                setInterval(
+                    () => {
+
+                        volume += 0.02;
+
+
+                        if (
+                            volume >= 0.42
+                        ) {
+
+                            volume =
+                                0.42;
+
+                            clearInterval(
+                                fade
+                            );
+
+                        }
+
+
+                        menuMusic.volume =
+                            volume;
+
+                    },
+                    100
+                );
+
+        }
+
+
+        /*
+         * Si le navigateur bloque
+         * l'autoplay, le premier clic
+         * démarre la musique.
+         */
+
+        document.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    introFinished
+                ) {
+
+                    startMenuMusic();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Arrêt propre de la musique
+         * avant le lancement du jeu.
+         */
+
+        function stopMenuMusic() {
+
+            if (!menuMusic)
+                return;
+
+
+            menuMusic.pause();
+
+            menuMusic.currentTime =
+                0;
+
+            menuMusic.volume =
+                0;
+
+            menuMusicStarted =
+                false;
+
+        }
+
+
+        /*
+         * On intercepte le lancement
+         * de Nouvelle Partie.
+         */
+
+        if (playButton) {
+
+            playButton.addEventListener(
+                "click",
+                () => {
+
+                    stopMenuMusic();
+
+                }
+            );
+
+        }
+
+    </script>
+
 
 </body>
 
