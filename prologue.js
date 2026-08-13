@@ -27,141 +27,209 @@ const Prologue = {
     loading: false,
     ready: false,
 
-    scenes: [
-        {
-            title: "IL ÉTAIT UNE FOIS...",
-            text:
-                "Dans une vallée oubliée des hommes, " +
-                "un ancien royaume vivait derrière ses murailles. " +
-                "Ponan dormait sous la brume, protégé par ses montagnes. " +
-                "Au centre du royaume s'élevait le palais royal.",
-            duration: 11000,
-            speed: 42,
-            zoom: 1.00
-        },
-        {
-            title: "LE ROYAUME DE PONAN",
-            text:
-                "Depuis des générations, la couronne appartenait " +
-                "à la lignée des Ponanini. Mais derrière les murs " +
-                "du palais, la paix n'était déjà plus qu'un souvenir.",
-            duration: 11000,
-            speed: 42,
-            zoom: 1.08
-        },
-        {
-            title: "PONANINI III, ROI JUSTE",
-            text:
-                "Ponanini III régnait avec justice. " +
-                "Son peuple l'aimait. Son royaume prospérait. " +
-                "Et pourtant, dans l'ombre, quelqu'un attendait son heure.",
-            duration: 11000,
-            speed: 42,
-            zoom: 1.04
-        },
-        {
-            title: "LE FRÈRE DANS L'OMBRE",
-            text:
-                "Son propre frère observait le trône. " +
-                "Il ne voulait ni patience, ni héritage. " +
-                "Il voulait le pouvoir. Et pour l'obtenir, " +
-                "il était prêt à sacrifier son propre sang.",
-            duration: 11000,
-            speed: 42,
-            zoom: 1.08
-        },
-        {
-            title: "LE MENSONGE",
-            text:
-                "Les rumeurs commencèrent à courir dans les rues. " +
-                "Puis vinrent les accusations. " +
-                "Un mensonge répété assez longtemps finit toujours " +
-                "par ressembler à la vérité.",
-            duration: 11000,
-            speed: 42,
-            zoom: 1.06
-        },
-        {
-            title: "LA PRISE DU POUVOIR",
-            text:
-                "Ponanini III fut accusé de trahison. " +
-                "Des gardes furent achetés. " +
-                "La foule se retourna contre lui. " +
-                "Et son frère prit enfin la place qu'il convoitait.",
-            duration: 12000,
-            speed: 42,
-            zoom: 1.08
-        },
-        {
-            title: "LE BANNISSEMENT",
-            text:
-                "Dans la cour du palais, les gardes escortèrent " +
-                "Ponanini III jusqu'au portail interdit. " +
-                "Il fut jeté dans le Nether. " +
-                "Le portail se referma presque aussitôt derrière lui.",
-            duration: 12000,
-            speed: 40,
-            zoom: 1.10
-        },
-        {
-            title: "LE SCEAU",
-            text:
-                "Mais le Nether ne fut pas sa seule prison. " +
-                "Un ancien sceau fut gravé sur les portes du royaume. " +
-                "Même si quelqu'un venait le libérer, " +
-                "Ponanini III ne pourrait jamais sortir.",
-            duration: 12000,
-            speed: 40,
-            zoom: 1.08
-        },
-        {
-            title: "LES TROIS FRAGMENTS",
-            text:
-                "Trois fragments furent dispersés à travers les terres. " +
-                "Ils sont les seuls capables de briser le sceau. " +
-                "Sans eux, aucun chemin ne mène hors du Nether.",
-            duration: 12000,
-            speed: 40,
-            zoom: 1.06
-        },
-        {
-            title: "L'HÉRITAGE",
-            text:
-                "Alors Ponanini III attendit. " +
-                "Il lui fallait quelqu'un du monde des vivants. " +
-                "Quelqu'un capable de retrouver les trois fragments. " +
-                "Et cette personne... c'est vous.",
-            duration: 13000,
-            speed: 38,
-            zoom: 1.08
-        },
 
-                {
-            title: "L'ÉTRANGER",
+	scenes: [
 
-            text:
-                "Mais cette histoire ne commence pas à Ponan. " +
-                "Elle commence ailleurs, dans un monde où les hommes " +
-                "ignorent jusqu'à l'existence de ce royaume. " +
-                "Un jour, un homme ordinaire fut arraché à son monde " +
-                "et projeté dans une dimension qui n'était pas la sienne. " +
-                "Lorsqu'il ouvrit les yeux, il n'était plus humain. " +
-                "Son corps avait changé. Son reflet lui était étranger. " +
-                "Il était devenu un canard. " +
-                "Il ne connaissait ni Ponan, ni ses rois, ni leur guerre. " +
-                "Il voulait seulement comprendre où il était... " +
-                "et trouver un moyen de rentrer chez lui. " +
-                "Mais en cherchant des réponses, il allait découvrir " +
-                "l'histoire d'un roi déchu, d'un frère traître... " +
-                "et d'un héritage qui allait changer son destin.",
+    /* =====================================================
+       SCÈNE 1
+    ===================================================== */
 
-            duration: 30000,
+    {
+        title: "IL ÉTAIT UNE FOIS...",
 
-            textSpeed: 42,
+        text:
+            "Dans une vallée oubliée, entre les montagnes " +
+            "et la brume, s'étendait un royaume nommé Ponan. " +
+            "Un royaume ancien, paisible en apparence... " +
+            "où les histoires de la couronne se transmettaient " +
+            "depuis des générations.",
 
-            visual: "stranger"
-        }
-    ],
+        duration: 11000
+    },
+
+
+    /* =====================================================
+       SCÈNE 2
+    ===================================================== */
+
+    {
+        title: "PONAN",
+
+        text:
+            "Au cœur de Ponan s'élevait le palais royal. " +
+            "Sous ses tours vivaient des générations de canards, " +
+            "protégées par les montagnes et les eaux sacrées. " +
+            "Mais derrière les murs du palais, quelque chose " +
+            "avait commencé à changer.",
+
+        duration: 11000
+    },
+
+
+    /* =====================================================
+       SCÈNE 3
+    ===================================================== */
+
+    {
+        title: "LE ROI",
+
+        text:
+            "Ponanini III était le roi de Ponan. " +
+            "Un souverain respecté, attaché à son peuple " +
+            "et à la paix du royaume. " +
+            "Il ignorait encore que la plus grande menace " +
+            "ne viendrait pas de ses ennemis... " +
+            "mais de sa propre famille.",
+
+        duration: 12000
+    },
+
+
+    /* =====================================================
+       SCÈNE 4
+    ===================================================== */
+
+    {
+        title: "L'OMBRE",
+
+        text:
+            "Ponanini IV observait le trône depuis longtemps. " +
+            "Il attendait son heure, silencieux, patient. " +
+            "Chaque jour qui passait rapprochait un peu plus " +
+            "le royaume d'un changement que nul ne pourrait arrêter.",
+
+        duration: 10500
+    },
+
+
+    /* =====================================================
+       SCÈNE 5
+    ===================================================== */
+
+    {
+        title: "LE MENSONGE",
+
+        text:
+            "Puis les murmures commencèrent. " +
+            "Des rumeurs circulèrent dans les rues. " +
+            "Les doutes gagnèrent la cour. " +
+            "Et peu à peu, la vérité devint impossible " +
+            "à distinguer du mensonge.",
+
+        duration: 10000
+    },
+
+
+    /* =====================================================
+       SCÈNE 6
+    ===================================================== */
+
+    {
+        title: "LA COURONNE",
+
+        text:
+            "Une nuit, tout bascula. " +
+            "La couronne changea de tête. " +
+            "En quelques instants, l'ordre ancien disparut... " +
+            "et Ponanini IV s'empara du pouvoir.",
+
+        duration: 9500
+    },
+
+
+    /* =====================================================
+       SCÈNE 7
+    ===================================================== */
+
+    {
+        title: "L'EXIL",
+
+        text:
+            "Pour Ponanini III, il ne restait plus de place " +
+            "à Ponan. " +
+            "Un ancien portail fut réveillé dans la cour du palais. " +
+            "Il franchit une dernière fois les portes de son royaume... " +
+            "sans savoir s'il reverrait un jour les terres " +
+            "qu'il avait juré de protéger.",
+
+        duration: 12000
+    },
+
+
+    /* =====================================================
+       SCÈNE 8
+    ===================================================== */
+
+    {
+        title: "LE NETHER",
+
+        text:
+            "De l'autre côté du portail, il n'y avait ni royaume... " +
+            "ni lumière. " +
+            "Seulement une terre inconnue, brûlée par les flammes " +
+            "et enveloppée de ténèbres. " +
+            "Ponanini III venait d'être condamné à l'exil.",
+
+        duration: 11500
+    },
+
+
+    /* =====================================================
+       SCÈNE 9
+    ===================================================== */
+
+    {
+        title: "LES FRAGMENTS",
+
+        text:
+            "Pourtant, au cœur de ces terres oubliées, " +
+            "il découvrit quelque chose. " +
+            "Trois fragments anciens, porteurs d'une magie " +
+            "qu'il ne comprenait pas encore. " +
+            "Peut-être n'était-il pas arrivé ici par hasard.",
+
+        duration: 11500
+    },
+
+
+    /* =====================================================
+       SCÈNE 10
+    ===================================================== */
+
+    {
+        title: "LE PORTAIL",
+
+        text:
+            "Les fragments réveillèrent une ancienne porte " +
+            "entre les mondes. " +
+            "Derrière elle se trouvait une présence inconnue. " +
+            "Un être qui ne ressemblait à aucun habitant de Ponan. " +
+            "Et pourtant... son arrivée semblait écrite " +
+            "depuis longtemps.",
+
+        duration: 12000
+    },
+
+
+    /* =====================================================
+       SCÈNE 11
+    ===================================================== */
+
+    {
+        title: "L'ÉTRANGER",
+
+        text:
+            "Un homme venu d'un autre monde franchit alors le portail. " +
+            "Il ne connaissait ni Ponan, ni sa couronne, " +
+            "ni les secrets de ses anciens royaumes. " +
+            "Mais son arrivée allait changer le destin " +
+            "de tous ceux qui vivaient derrière le portail.",
+
+        duration: 13000
+    }
+
+]
+
 
     start() {
         this.active = true;
