@@ -449,8 +449,6 @@
     <script src="prologue-video.js"></script>
 
     <script src="game.js"></script>
-    <script src="ponan_overhaul.js"></script>
-    <script src="gameplay_v2.js"></script>
     <script src="game_enhancements.js"></script>
 
 
