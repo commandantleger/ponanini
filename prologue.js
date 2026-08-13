@@ -1,5 +1,5 @@
 const Prologue = {
-    narratorEnabled: true,
+    narratorEnabled: false,
     narratorSpeaking: false,
     narratorVoice: null,
 
