@@ -17,8 +17,6 @@ const Prologue = {
     scene11Image: null,
     scene11ImageLoaded: false,
 
-    scene11ImageLoaded: false,
-
     loadingStartTime: 0,
     minLoadingTime: 3200,
 
@@ -28,7 +26,7 @@ const Prologue = {
     ready: false,
 
 
-	scenes: [
+    scenes: [
 
     /* =====================================================
        SCÈNE 1
@@ -228,7 +226,7 @@ const Prologue = {
         duration: 13000
     }
 
-]
+    ],
 
 
     start() {
