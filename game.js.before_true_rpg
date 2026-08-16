@@ -123,13 +123,6 @@ function startEngine() {
             return;
         }
 
-        if (window.PonanTrueRPG && PonanTrueRPG.active) {
-            PonanTrueRPG.update(dt);
-            PonanTrueRPG.draw();
-            requestAnimationFrame(loop);
-            return;
-        }
-
         if (!Game.running) {
             requestAnimationFrame(loop);
             return;
@@ -205,12 +198,27 @@ window.startGame = startGame;
 ========================================================== */
 
 function finishPrologue() {
+
+    if (typeof loadVillage === "function")
+        loadVillage();
+
+    if (typeof resetQuests === "function")
+        resetQuests();
+
+    if (typeof playerArrival !== "undefined") {
+        playerArrival.started = false;
+        playerArrival.active = false;
+    }
+
     Game.running = true;
+
     const hud = document.getElementById("hud");
-    if (hud) hud.style.display = "none";
+    if (hud)
+        hud.style.display = "flex";
+
     const menu = document.getElementById("menu");
-    if (menu) menu.style.display = "none";
-    if (window.PonanTrueRPG) window.PonanTrueRPG.start();
+    if (menu)
+        menu.style.display = "none";
 }
 
 window.finishPrologue = finishPrologue;

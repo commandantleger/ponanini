@@ -1933,11 +1933,3 @@ body {
     opacity: .45;
 }
 
-
-/* PONAN TRUE RPG 4.0 */
-
-#true-rpg-hud{display:none;position:fixed;right:20px;top:20px;width:255px;z-index:10000;pointer-events:none;padding:15px;color:#eee5c7;background:linear-gradient(145deg,rgba(8,12,10,.95),rgba(28,25,16,.93));border:1px solid rgba(222,194,99,.62);box-shadow:0 18px 55px rgba(0,0,0,.5);font-family:Georgia,serif}
-.tr-top{display:flex;justify-content:space-between}.tr-top b{font-size:10px;letter-spacing:.12em}.tr-top strong{color:#e1c45f;font-size:10px}.true-rpg-hud small{opacity:.5}.tr-row{display:flex;justify-content:space-between;margin-top:8px;font-size:8px;opacity:.7}.tr-bar{height:5px;background:#ffffff12;margin-top:3px}.tr-bar i{display:block;height:100%;width:100%;background:#ad5048}.tr-bar.st i{background:#6c9b75}.tr-bar.xp i{background:#d0b45b}#tr-sub{display:block;margin-top:4px;font-size:8px}.tr-controls{display:block;margin-top:10px;font-size:7px;line-height:1.6}.tr-top+small{display:block;margin-top:3px}#tr-q{margin-top:12px;padding-top:9px;border-top:1px solid #ffffff12;color:#dfc45f;font-size:10px}#tr-fr{margin-top:8px;color:#d7bd64;font-size:9px}
-#ponan-dialogue{display:none;position:fixed;left:50%;bottom:35px;transform:translateX(-50%);width:min(760px,86vw);z-index:11000;padding:20px 25px;color:#eee5c9;background:rgba(8,11,10,.96);border:1px solid rgba(222,194,99,.65);box-shadow:0 25px 80px #000a;font-family:Georgia,serif}#ponan-dialogue.show{display:block}#ponan-dialogue strong{color:#e0c461;font-size:11px;letter-spacing:.13em}#ponan-dialogue p{font-size:14px;line-height:1.5}#ponan-dialogue small{display:block;text-align:right;opacity:.45}
-#ponan-toast{position:fixed;left:50%;bottom:125px;transform:translate(-50%,12px);opacity:0;z-index:12000;padding:10px 18px;color:#f1e5bc;background:#070a08ee;border:1px solid #dec26399;font:12px Georgia,serif;transition:.18s;pointer-events:none}#ponan-toast.show{opacity:1;transform:translate(-50%,0)}
-#true-rpg-inv{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:13000;width:min(430px,85vw);padding:25px;color:#eee5c9;background:#0a0d0bf7;border:1px solid #dec263aa;box-shadow:0 35px 90px #000b;font-family:Georgia,serif}#true-rpg-inv.show{display:block}#true-rpg-inv h2{color:#e0c461;letter-spacing:.14em}
