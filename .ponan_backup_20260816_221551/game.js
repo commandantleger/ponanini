@@ -136,12 +136,6 @@ function startEngine() {
         }
 
         if (typeof updatePlayer === "function") updatePlayer();
-        if (
-            typeof PonanGameplayRuntime !== "undefined" &&
-            typeof PonanGameplayRuntime.update === "function"
-        ) {
-            PonanGameplayRuntime.update(dt);
-        }
         if (typeof updateQuest === "function") updateQuest();
         if (typeof updateNPC === "function") updateNPC();
         if (typeof updateItems === "function") updateItems();
@@ -154,12 +148,6 @@ function startEngine() {
         if (typeof drawEnemies === "function") drawEnemies();
         if (typeof drawBoss === "function") drawBoss();
         if (typeof drawPlayer === "function") drawPlayer();
-        if (
-            typeof PonanGameplayRuntime !== "undefined" &&
-            typeof PonanGameplayRuntime.draw === "function"
-        ) {
-            PonanGameplayRuntime.draw();
-        }
 
         requestAnimationFrame(loop);
     }

@@ -1941,9 +1941,3 @@ body {
 #ponan-dialogue{display:none;position:fixed;left:50%;bottom:35px;transform:translateX(-50%);width:min(760px,86vw);z-index:11000;padding:20px 25px;color:#eee5c9;background:rgba(8,11,10,.96);border:1px solid rgba(222,194,99,.65);box-shadow:0 25px 80px #000a;font-family:Georgia,serif}#ponan-dialogue.show{display:block}#ponan-dialogue strong{color:#e0c461;font-size:11px;letter-spacing:.13em}#ponan-dialogue p{font-size:14px;line-height:1.5}#ponan-dialogue small{display:block;text-align:right;opacity:.45}
 #ponan-toast{position:fixed;left:50%;bottom:125px;transform:translate(-50%,12px);opacity:0;z-index:12000;padding:10px 18px;color:#f1e5bc;background:#070a08ee;border:1px solid #dec26399;font:12px Georgia,serif;transition:.18s;pointer-events:none}#ponan-toast.show{opacity:1;transform:translate(-50%,0)}
 #true-rpg-inv{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:13000;width:min(430px,85vw);padding:25px;color:#eee5c9;background:#0a0d0bf7;border:1px solid #dec263aa;box-shadow:0 35px 90px #000b;font-family:Georgia,serif}#true-rpg-inv.show{display:block}#true-rpg-inv h2{color:#e0c461;letter-spacing:.14em}
-
-
-/* PONAN'S LEGACY — GAMEPLAY GLOBAL */
-#ponanRpgHUD { display:none; }
-body.panon-menu #ponanRpgHUD,
-body.panon-prologue #ponanRpgHUD { display:none !important; }
